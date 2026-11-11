@@ -64,8 +64,7 @@ border-radius:50%;animation:spin .8s linear infinite}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
 @media(max-width:700px){.stats{grid-template-columns:repeat(2,1fr)}}
 .stat{background:#fff;border:1px solid var(--line);border-radius:var(--radius);
-padding:14px 16px;position:relative;overflow:hidden;
-box-shadow:0 1px 3px rgba(15,31,69,.06)}
+padding:14px 16px;position:relative;overflow:hidden;box-shadow:0 1px 3px rgba(15,31,69,.06)}
 .stat::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;
 background:linear-gradient(90deg,var(--brand),var(--brand2))}
 .stat.teal::before{background:linear-gradient(90deg,var(--teal),#00d4c2)}
@@ -90,6 +89,8 @@ white-space:nowrap;transition:.15s;border:1.5px solid transparent}
 color:#fff;box-shadow:0 4px 12px rgba(255,106,0,.25)}
 .btn-ghost{background:#fff;border-color:var(--line);color:var(--ink2)}
 .btn-ghost:hover{border-color:var(--brand);color:var(--brand)}
+.btn-success{background:linear-gradient(135deg,#0a8f4a,#00c25e);color:#fff;
+box-shadow:0 4px 12px rgba(10,143,74,.25)}
 .btn-danger{background:#fff;border-color:#fbb;color:var(--danger)}
 .btn-danger:hover{background:#fee}
 .btn-sm{padding:6px 12px;font-size:12px}
@@ -100,11 +101,10 @@ color:var(--ink2);font-size:13px;line-height:1}
 /* ORDER LIST */
 .order-list{display:flex;flex-direction:column;gap:10px}
 .order-card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);
-padding:14px 16px;cursor:pointer;transition:.15s;
-box-shadow:0 1px 3px rgba(15,31,69,.06)}
+padding:14px 16px;cursor:pointer;transition:.15s;box-shadow:0 1px 3px rgba(15,31,69,.06)}
 .order-card:hover{border-color:var(--brand);box-shadow:0 4px 16px rgba(255,106,0,.1)}
 .order-head{display:flex;justify-content:space-between;align-items:center;
-margin-bottom:8px;gap:8px}
+margin-bottom:8px;gap:8px;flex-wrap:wrap}
 .order-no{font-family:ui-monospace,monospace;font-size:12px;font-weight:700;color:var(--ink2)}
 .order-body b{font-size:14px;display:block;margin-bottom:2px}
 .order-body .small{font-size:12.5px;color:var(--ink2)}
@@ -121,6 +121,8 @@ padding:3px 9px;border-radius:999px;white-space:nowrap}
 .pill.qc{background:#e6f7ff;color:#0080a8}
 .pill.selesai{background:#e8f9ee;color:var(--success)}
 .pill.diambil{background:#f0f2f7;color:var(--ink2)}
+.pill.belumbayar{background:#fee;color:var(--danger)}
+.pill.lunas{background:#e8f9ee;color:var(--success)}
 
 /* EMPTY */
 .empty{text-align:center;padding:40px 20px;color:var(--ink2);
@@ -155,13 +157,22 @@ text-transform:uppercase;letter-spacing:.4px;margin-bottom:2px}
 /* STATUS BAR */
 .status-bar{display:flex;gap:6px;padding:4px;background:#f5f7fb;
 border-radius:10px;overflow-x:auto}
-.status-step{flex:1;min-width:90px;padding:8px;text-align:center;border-radius:8px;
-font-size:11.5px;font-weight:700;background:#fff;border:1px solid var(--line);
+.status-step{flex:1;padding:10px;text-align:center;border-radius:8px;
+font-size:12.5px;font-weight:700;background:#fff;border:1px solid var(--line);
 color:var(--ink3);white-space:nowrap;transition:.15s;cursor:pointer}
 .status-step:hover{border-color:var(--brand)}
 .status-step.done{background:#e8f9ee;border-color:#b8e6c9;color:var(--success)}
 .status-step.active{background:linear-gradient(135deg,var(--brand),var(--brand2));
 border-color:transparent;color:#fff;box-shadow:0 2px 8px rgba(255,106,0,.3)}
+
+/* INVOICE CARD */
+.invoice-card{background:linear-gradient(135deg,#fff8f2,#fff);border:1.5px solid #ffd7b8}
+.invoice-empty{padding:20px;text-align:center;color:var(--ink2);font-size:13px}
+.invoice-meta{display:grid;grid-template-columns:1fr 1fr;gap:10px 16px;margin-bottom:14px}
+@media(max-width:500px){.invoice-meta{grid-template-columns:1fr}}
+.invoice-total{display:flex;justify-content:space-between;align-items:center;
+padding:12px 14px;background:#fff;border-radius:10px;border:1px solid var(--line);
+margin-top:10px}
 
 /* HPP */
 .hpp-box{background:#f9fafc;border:1px solid var(--line);border-radius:10px;padding:14px}
@@ -223,7 +234,7 @@ border-color:var(--brand);background:#fff;box-shadow:0 0 0 3px rgba(255,106,0,.1
 .form-row.three{grid-template-columns:1fr 1fr 1fr}
 @media(max-width:500px){.form-row,.form-row.three{grid-template-columns:1fr}}
 .modal-actions{display:flex;gap:8px;justify-content:flex-end;
-margin-top:18px;padding-top:14px;border-top:1px solid var(--line)}
+margin-top:18px;padding-top:14px;border-top:1px solid var(--line);flex-wrap:wrap}
 .modal-actions .btn-primary{min-width:110px}
 
 /* TOAST */
@@ -320,7 +331,8 @@ const COL = {
   orders:'jayaanugrahteknik_orders',
   materials:'jayaanugrahteknik_materials',
   moves:'jayaanugrahteknik_moves',
-  expenses:'jayaanugrahteknik_expenses'
+  expenses:'jayaanugrahteknik_expenses',
+  invoices:'jayaanugrahteknik_invoices'
 };
 const PASSWORD = 'banten01';
 const SESSION_KEY = 'jat_logged_v1';
@@ -334,18 +346,25 @@ const fmtDate=d=>{if(!d)return'-';const x=new Date(d);return isNaN(x)?d:x.toLoca
 const today=()=>new Date().toISOString().slice(0,10);
 const thisYM=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')};
 
-const STATUSES=['Order Masuk','Produksi','QC','Selesai','Diambil'];
+const STATUSES=['Order','Selesai'];
 const JENIS=['Hard Chrome','Teflon Coating','Metal Spray','Moulding Injection','Machining CNC','Bubut CNC','Fabrikasi','Bending','Lainnya'];
 const SATUAN=['pcs','unit','set','kg','meter','liter','jam'];
 
-const state={view:'dashboard',orderId:null,settingsTab:'materials',reportYM:null,
-orders:[],materials:[],moves:[],expenses:[],
-loaded:{orders:false,materials:false,moves:false,expenses:false},rendered:false};
+const state={view:'dashboard',orderId:null,invoiceId:null,settingsTab:'materials',reportYM:null,
+orders:[],materials:[],moves:[],expenses:[],invoices:[],
+loaded:{orders:false,materials:false,moves:false,expenses:false,invoices:false},rendered:false};
 
 function toast(msg,type=''){const t=$('#toast');t.textContent=msg;t.className='show '+type;
 clearTimeout(t._t);t._t=setTimeout(()=>t.className='',3000)}
 
 function isLoggedIn(){return localStorage.getItem(SESSION_KEY)==='1'}
+
+function normalizeStatus(s){
+  if(!s)return 'Order';
+  if(s==='Order'||s==='Order Masuk'||s==='Produksi'||s==='QC')return 'Order';
+  if(s==='Selesai'||s==='Diambil')return 'Selesai';
+  return s;
+}
 
 $('#loginForm').addEventListener('submit',e=>{
   e.preventDefault();
@@ -390,6 +409,12 @@ function subscribeAll(){
       .sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
     state.loaded.expenses=true;tryRender();
   },err=>{console.error('expenses',err);toast('Expenses: '+err.message,'error')});
+
+  onSnapshot(collection(db,COL.invoices),snap=>{
+    state.invoices=snap.docs.map(d=>({id:d.id,...d.data()}))
+      .sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+    state.loaded.invoices=true;tryRender();
+  },err=>{console.error('invoices',err);toast('Invoices: '+err.message,'error')});
 }
 
 function tryRender(){
@@ -402,6 +427,7 @@ function render(){
   const c=$('#content');
   if(state.view==='dashboard')c.innerHTML=renderDashboard();
   else if(state.view==='orderDetail')c.innerHTML=renderOrderDetail();
+  else if(state.view==='invoiceDetail')c.innerHTML=renderInvoiceDetail();
   else if(state.view==='settings')c.innerHTML=renderSettings();
   attachEvents();
   window.scrollTo({top:0,behavior:'smooth'});
@@ -411,6 +437,8 @@ function updateTopbar(){
   const a=$('#topbarActions');
   if(state.view==='dashboard'){
     a.innerHTML='<button class="icon-btn" id="gearBtn" title="Pengaturan">⚙️</button>';
+  }else if(state.view==='invoiceDetail'){
+    a.innerHTML='<button class="icon-btn" id="backInvoiceBtn" title="Kembali">←</button>';
   }else{
     a.innerHTML='<button class="icon-btn" id="backBtn" title="Kembali">←</button>';
   }
@@ -421,18 +449,29 @@ function attachEvents(){
   if(gear)gear.addEventListener('click',()=>{state.view='settings';state.settingsTab='materials';render()});
   const back=$('#backBtn');
   if(back)back.addEventListener('click',()=>{state.view='dashboard';state.orderId=null;render()});
+  const backInv=$('#backInvoiceBtn');
+  if(backInv)backInv.addEventListener('click',()=>{
+    const inv=state.invoices.find(i=>i.id===state.invoiceId);
+    if(inv&&inv.orderId){state.view='orderDetail';state.orderId=inv.orderId}
+    else{state.view='dashboard'}
+    render();
+  });
   if(state.view==='dashboard')attachDashboardEvents();
   else if(state.view==='orderDetail')attachOrderDetailEvents();
+  else if(state.view==='invoiceDetail')attachInvoiceDetailEvents();
   else if(state.view==='settings')attachSettingsEvents();
+}
+
+function findInvoiceByOrderId(orderId){
+  return state.invoices.find(inv=>inv.orderId===orderId);
 }
 
 /* ============ DASHBOARD ============ */
 function renderDashboard(){
   const ym=thisYM();
   const ordersThisMonth=state.orders.filter(o=>(o.tanggal||'').startsWith(ym));
-  const activeOrders=state.orders.filter(o=>!['Selesai','Diambil'].includes(o.status));
-  const revenue=state.orders.filter(o=>(o.tanggal||'').startsWith(ym)&&['Selesai','Diambil'].includes(o.status))
-    .reduce((s,o)=>s+(+o.nilaiOrder||0),0);
+  const activeOrders=state.orders.filter(o=>normalizeStatus(o.status)!=='Selesai');
+  const doneThisMonth=ordersThisMonth.filter(o=>normalizeStatus(o.status)==='Selesai');
   const lowStock=state.materials.filter(m=>(m.stok||0)<=(m.stokMin||0));
   const recentOrders=state.orders.slice(0,20);
 
@@ -440,10 +479,15 @@ function renderDashboard(){
   if(!state.orders.length){
     ordersHtml=`<div class="empty"><div class="ico">📋</div><p>Belum ada order. Klik <b>+ Tambah Order</b> untuk mulai.</p></div>`;
   }else{
-    ordersHtml='<div class="order-list">'+recentOrders.map(o=>`
-      <div class="order-card" data-id="${o.id}">
+    ordersHtml='<div class="order-list">'+recentOrders.map(o=>{
+      const inv=findInvoiceByOrderId(o.id);
+      const invBadge=inv?`<span class="pill ${inv.status==='Lunas'?'lunas':'belumbayar'}">${inv.status}</span>`:'';
+      return `<div class="order-card" data-id="${o.id}">
         <div class="order-head">
-          <span class="order-no">${esc(o.noOrder)}</span>${statusPill(o.status)}
+          <span class="order-no">${esc(o.noOrder)}</span>
+          <div style="display:flex;gap:4px;flex-wrap:wrap">
+            ${statusPill(o.status)}${invBadge}
+          </div>
         </div>
         <div class="order-body">
           <b>${esc(o.pelanggan)}</b>
@@ -453,7 +497,8 @@ function renderDashboard(){
           <span>${fmtDate(o.tanggal)}</span>
           <b>${fmtRp(o.nilaiOrder)}</b>
         </div>
-      </div>`).join('')+'</div>';
+      </div>`;
+    }).join('')+'</div>';
   }
 
   return `
@@ -461,8 +506,8 @@ function renderDashboard(){
       <div class="stat"><div class="stat-label">Order Bulan Ini</div>
         <div class="stat-value">${ordersThisMonth.length}</div>
         <div class="stat-sub">${activeOrders.length} aktif</div></div>
-      <div class="stat teal"><div class="stat-label">Pendapatan Bulan Ini</div>
-        <div class="stat-value">${fmtRp(revenue)}</div>
+      <div class="stat teal"><div class="stat-label">Selesai Bulan Ini</div>
+        <div class="stat-value">${doneThisMonth.length}</div>
         <div class="stat-sub">Order selesai</div></div>
       <div class="stat warn"><div class="stat-label">Total Material</div>
         <div class="stat-value">${state.materials.length}</div>
@@ -480,8 +525,14 @@ function renderDashboard(){
 }
 
 function statusPill(s){
-  const map={'Order Masuk':'baru','Produksi':'produksi','QC':'qc','Selesai':'selesai','Diambil':'diambil'};
+  const map={'Order':'baru','Order Masuk':'baru','Produksi':'produksi','QC':'qc',
+    'Selesai':'selesai','Diambil':'diambil'};
   return `<span class="pill ${map[s]||'baru'}">${esc(s)}</span>`;
+}
+
+function payPill(s){
+  const map={'Lunas':'lunas','Belum Lunas':'belumbayar'};
+  return `<span class="pill ${map[s]||'belumbayar'}">${esc(s)}</span>`;
 }
 
 function attachDashboardEvents(){
@@ -500,12 +551,21 @@ function genOrderNo(){
   return prefix+String(n).padStart(4,'0');
 }
 
+function genInvoiceNo(){
+  const d=new Date();
+  const ym=d.getFullYear()+String(d.getMonth()+1).padStart(2,'0');
+  const prefix='INV-'+ym+'-';
+  const n=state.invoices.filter(i=>(i.noInvoice||'').startsWith(prefix)).length+1;
+  return prefix+String(n).padStart(4,'0');
+}
+
 /* ============ ORDER FORM ============ */
 function openOrderForm(edit=null){
   const isEdit=!!edit;
   const o=edit||{noOrder:genOrderNo(),tanggal:today(),pelanggan:'',telepon:'',
     jenis:'Hard Chrome',pekerjaan:'',jumlah:1,satuan:'pcs',deadline:'',
-    nilaiOrder:0,biayaJasa:0,catatan:'',status:'Order Masuk'};
+    nilaiOrder:0,biayaJasa:0,catatan:'',status:'Order'};
+  const curStatus=normalizeStatus(o.status);
   openModal(isEdit?'Edit Order':'Tambah Order Baru',`
     <form id="orderForm">
       <div class="form-row">
@@ -540,7 +600,7 @@ function openOrderForm(edit=null){
         <div class="field"><label>Biaya Jasa Internal</label>
           <input type="number" name="biayaJasa" value="${esc(o.biayaJasa)}" min="0"></div>
         <div class="field"><label>Status</label>
-          <select name="status">${STATUSES.map(s=>`<option ${s===o.status?'selected':''}>${s}</option>`).join('')}</select></div>
+          <select name="status">${STATUSES.map(s=>`<option ${s===curStatus?'selected':''}>${s}</option>`).join('')}</select></div>
       </div>
       <div class="field"><label>Catatan</label>
         <textarea name="catatan">${esc(o.catatan)}</textarea></div>
@@ -588,7 +648,9 @@ function renderOrderDetail(){
   const materialCost=moves.reduce((s,m)=>s+(m.harga||0)*(m.jumlah||0),0);
   const hpp=(+o.biayaJasa||0)+materialCost;
   const margin=(+o.nilaiOrder||0)-hpp;
-  const cur=STATUSES.indexOf(o.status);
+  const normStatus=normalizeStatus(o.status);
+  const cur=STATUSES.indexOf(normStatus);
+  const invoice=findInvoiceByOrderId(o.id);
 
   const movesHtml=moves.length?`
     <div class="table-wrap"><table>
@@ -602,6 +664,41 @@ function renderOrderDetail(){
       </tbody></table></div>`:
     `<div class="empty" style="padding:20px;background:transparent;border:0">
       <p style="font-size:12.5px">Belum ada pemakaian material.</p></div>`;
+
+  // Invoice section
+  let invoiceSection;
+  if(invoice){
+    invoiceSection=`
+      <div class="card invoice-card" style="margin-bottom:14px">
+        <div class="card-head">
+          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+            <h3>🧾 ${esc(invoice.noInvoice)}</h3>
+            ${payPill(invoice.status)}
+          </div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <button class="btn btn-ghost btn-sm" id="viewInvoiceBtn">Lihat Invoice</button>
+            <button class="btn btn-primary btn-sm" id="shareInvoiceBtn">📤 Share PDF</button>
+          </div>
+        </div>
+        <div class="card-body" style="padding:14px 16px">
+          <div style="display:flex;justify-content:space-between;font-size:13px">
+            <span>Total Invoice</span>
+            <b style="color:var(--brand);font-size:15px">${fmtRp(invoice.total)}</b>
+          </div>
+          ${invoice.status==='Lunas'&&invoice.paidAt?`<div style="font-size:11.5px;color:var(--success);margin-top:4px">
+            ✓ Dibayar ${fmtDate(invoice.paidAt)}</div>`:''}
+        </div>
+      </div>`;
+  }else{
+    invoiceSection=`
+      <div class="card" style="margin-bottom:14px">
+        <div class="card-head"><h3>🧾 Invoice</h3></div>
+        <div class="invoice-empty">
+          <p style="margin-bottom:12px">Belum ada invoice untuk order ini.</p>
+          <button class="btn btn-primary" id="createInvoiceBtn">+ Buat Invoice</button>
+        </div>
+      </div>`;
+  }
 
   return `
     <div class="card" style="margin-bottom:14px">
@@ -625,8 +722,9 @@ function renderOrderDetail(){
         </div>
       </div>
     </div>
+    ${invoiceSection}
     <div class="card" style="margin-bottom:14px">
-      <div class="card-head"><h3>Status Produksi</h3></div>
+      <div class="card-head"><h3>Status Order</h3></div>
       <div class="card-body">
         <div class="status-bar">${STATUSES.map((s,i)=>{
           let cls='';if(i<cur)cls='done';else if(i===cur)cls='active';
@@ -659,15 +757,17 @@ function attachOrderDetailEvents(){
   if(!o)return;
   $('#editOrder').addEventListener('click',()=>openOrderForm(o));
   $('#deleteOrder').addEventListener('click',async()=>{
-    if(!confirm('Hapus order '+o.noOrder+'?'))return;
+    if(!confirm('Hapus order '+o.noOrder+'? Invoice terkait juga akan dihapus.'))return;
     try{
+      const inv=findInvoiceByOrderId(id);
+      if(inv)await deleteDoc(doc(db,COL.invoices,inv.id));
       await deleteDoc(doc(db,COL.orders,id));
       toast('Order dihapus.','success');
       state.view='dashboard';state.orderId=null;render();
     }catch(err){toast('Gagal: '+err.message,'error')}
   });
   $$('[data-status]').forEach(b=>b.addEventListener('click',async()=>{
-    if(b.dataset.status===o.status)return;
+    if(b.dataset.status===normalizeStatus(o.status))return;
     try{await updateDoc(doc(db,COL.orders,id),{status:b.dataset.status});
       toast('Status: '+b.dataset.status,'success');
     }catch(err){toast('Gagal: '+err.message,'error')}
@@ -683,6 +783,21 @@ function attachOrderDetailEvents(){
       toast('Pemakaian dihapus.','success');
     }catch(err){toast('Gagal: '+err.message,'error')}
   }));
+
+  const createBtn=$('#createInvoiceBtn');
+  if(createBtn)createBtn.addEventListener('click',()=>openInvoiceForm(o));
+
+  const viewBtn=$('#viewInvoiceBtn');
+  if(viewBtn)viewBtn.addEventListener('click',()=>{
+    const inv=findInvoiceByOrderId(o.id);
+    if(inv){state.view='invoiceDetail';state.invoiceId=inv.id;render()}
+  });
+
+  const shareBtn=$('#shareInvoiceBtn');
+  if(shareBtn)shareBtn.addEventListener('click',()=>{
+    const inv=findInvoiceByOrderId(o.id);
+    if(inv)shareInvoicePDF(inv,o);
+  });
 }
 
 /* ============ USAGE FORM ============ */
@@ -726,18 +841,419 @@ function openUsageForm(order){
   });
 }
 
+/* ============ INVOICE FORM ============ */
+function openInvoiceForm(order,edit=null){
+  const isEdit=!!edit;
+  const inv=edit||{noInvoice:genInvoiceNo(),tanggal:today(),
+    subtotal:order.nilaiOrder||0,ppn:0,note:order.catatan||''};
+  openModal(isEdit?'Edit Invoice':'Buat Invoice — '+order.noOrder,`
+    <form id="invoiceForm">
+      <div class="form-row">
+        <div class="field"><label>No. Invoice</label>
+          <input name="noInvoice" value="${esc(inv.noInvoice)}" readonly style="background:#f0f2f7"></div>
+        <div class="field"><label>Tanggal <span class="req">*</span></label>
+          <input type="date" name="tanggal" value="${esc(inv.tanggal)}" required></div>
+      </div>
+      <div class="form-row">
+        <div class="field"><label>Subtotal (Rp) <span class="req">*</span></label>
+          <input type="number" name="subtotal" value="${esc(inv.subtotal)}" min="0" required id="invSubtotal"></div>
+        <div class="field"><label>PPN (%)</label>
+          <input type="number" name="ppn" value="${esc(inv.ppn)}" min="0" max="100" step="any" id="invPpn"></div>
+      </div>
+      <div style="background:#f9fafc;padding:12px;border-radius:8px;margin-bottom:14px;
+        display:flex;justify-content:space-between;align-items:center;font-size:14px">
+        <span>Total:</span><b id="invTotalDisplay" style="color:var(--brand);font-size:16px">${fmtRp(inv.subtotal)}</b>
+      </div>
+      <div class="field"><label>Catatan Invoice</label>
+        <textarea name="note">${esc(inv.note)}</textarea></div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" id="cancelInvoice">Batal</button>
+        <button type="submit" class="btn btn-primary" id="submitInvoice">${isEdit?'Simpan':'Buat Invoice'}</button>
+      </div>
+    </form>`,{wide:true});
+
+  const updateTotal=()=>{
+    const sub=+$('#invSubtotal').value||0;
+    const ppn=+$('#invPpn').value||0;
+    const total=sub+(sub*ppn/100);
+    $('#invTotalDisplay').textContent=fmtRp(total);
+  };
+  $('#invSubtotal').addEventListener('input',updateTotal);
+  $('#invPpn').addEventListener('input',updateTotal);
+
+  $('#cancelInvoice').addEventListener('click',closeModal);
+  $('#invoiceForm').addEventListener('submit',async e=>{
+    e.preventDefault();
+    const fd=new FormData(e.target);
+    const subtotal=+fd.get('subtotal')||0;
+    const ppn=+fd.get('ppn')||0;
+    const total=subtotal+(subtotal*ppn/100);
+    const data={
+      orderId:order.id,noInvoice:fd.get('noInvoice'),
+      tanggal:fd.get('tanggal'),subtotal,ppn,total,
+      note:fd.get('note').trim(),
+      status:isEdit?inv.status:'Belum Lunas',
+      paidAt:isEdit?inv.paidAt:null
+    };
+    const btn=$('#submitInvoice');btn.disabled=true;btn.textContent='Menyimpan...';
+    try{
+      if(isEdit){
+        await updateDoc(doc(db,COL.invoices,edit.id),data);
+        toast('Invoice diperbarui.','success');
+      }else{
+        const ref=await addDoc(collection(db,COL.invoices),{...data,createdAt:Date.now()});
+        toast('Invoice dibuat.','success');
+        state.view='invoiceDetail';state.invoiceId=ref.id;closeModal();render();return;
+      }
+      closeModal();
+    }catch(err){console.error(err);toast('Gagal: '+err.message,'error');
+      btn.disabled=false;btn.textContent=isEdit?'Simpan':'Buat Invoice'}
+  });
+}
+
+/* ============ INVOICE DETAIL ============ */
+function renderInvoiceDetail(){
+  const inv=state.invoices.find(x=>x.id===state.invoiceId);
+  if(!inv)return `<div class="empty"><p>Invoice tidak ditemukan.</p></div>`;
+  const o=state.orders.find(x=>x.id===inv.orderId);
+  if(!o)return `<div class="empty"><p>Order untuk invoice ini tidak ditemukan.</p></div>`;
+
+  return `
+    <div class="card" style="margin-bottom:14px">
+      <div class="card-head">
+        <div>
+          <span class="order-no">${esc(inv.noInvoice)}</span>
+          ${payPill(inv.status)}
+        </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          ${inv.status==='Belum Lunas'
+            ? `<button class="btn btn-success btn-sm" id="markLunasBtn">✓ Tandai Lunas</button>`
+            : `<button class="btn btn-ghost btn-sm" id="markUnpaidBtn">Batalkan Lunas</button>`}
+          <button class="btn btn-primary btn-sm" id="sharePDFBtn">📤 Share PDF</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="invoice-meta">
+          <div class="info-item"><div class="k">Pelanggan</div><div class="v">${esc(o.pelanggan)}</div></div>
+          <div class="info-item"><div class="k">Telepon</div><div class="v">${esc(o.telepon)||'-'}</div></div>
+          <div class="info-item"><div class="k">Tanggal Invoice</div><div class="v">${fmtDate(inv.tanggal)}</div></div>
+          <div class="info-item"><div class="k">No. Order</div><div class="v mono">${esc(o.noOrder)}</div></div>
+          ${inv.status==='Lunas'&&inv.paidAt?`<div class="info-item" style="grid-column:1/-1">
+            <div class="k">Dibayar Pada</div><div class="v" style="color:var(--success)">✓ ${fmtDate(inv.paidAt)}</div>
+          </div>`:''}
+        </div>
+
+        <div style="margin:16px 0">
+          <div style="font-size:12px;font-weight:800;color:var(--ink2);text-transform:uppercase;
+            letter-spacing:.4px;margin-bottom:10px">Item</div>
+          <div style="background:#f9fafc;border:1px solid var(--line);border-radius:10px;padding:14px">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap">
+              <div>
+                <b style="font-size:14px">${esc(o.jenis)}</b>
+                <div style="font-size:12.5px;color:var(--ink2);margin-top:3px">${esc(o.pekerjaan)}</div>
+                <div style="font-size:12px;color:var(--ink2);margin-top:3px">
+                  ${fmtNum(o.jumlah)} ${esc(o.satuan)}
+                </div>
+              </div>
+              <div style="text-align:right">
+                <b style="font-size:15px;color:var(--brand)">${fmtRp(inv.subtotal)}</b>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hpp-box" style="margin-top:14px">
+          <div class="hpp-row"><span>Subtotal</span><b>${fmtRp(inv.subtotal)}</b></div>
+          ${inv.ppn>0?`<div class="hpp-row"><span>PPN ${inv.ppn}%</span><b>${fmtRp(inv.total-inv.subtotal)}</b></div>`:''}
+          <div class="hpp-row total"><span>Total</span>
+            <b style="color:var(--brand);font-size:16px">${fmtRp(inv.total)}</b></div>
+        </div>
+
+        ${inv.note?`<div style="margin-top:16px">
+          <div class="info-item"><div class="k">Catatan</div><div class="v">${esc(inv.note)}</div></div>
+        </div>`:''}
+
+        <div class="modal-actions" style="margin-top:20px">
+          <button class="btn btn-ghost" id="editInvoiceBtn">✏ Edit Invoice</button>
+          <button class="btn btn-danger" id="deleteInvoiceBtn">🗑 Hapus Invoice</button>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head"><h3>Info Order Terkait</h3>
+        <a href="#" class="btn btn-ghost btn-sm" id="viewOrderBtn">Lihat Order →</a>
+      </div>
+      <div class="card-body">
+        <div class="info-grid">
+          <div class="info-item"><div class="k">Status Order</div><div class="v">${statusPill(o.status)}</div></div>
+          <div class="info-item"><div class="k">Deadline</div><div class="v">${o.deadline?fmtDate(o.deadline):'-'}</div></div>
+        </div>
+      </div>
+    </div>`;
+}
+
+function attachInvoiceDetailEvents(){
+  const inv=state.invoices.find(x=>x.id===state.invoiceId);
+  if(!inv)return;
+  const o=state.orders.find(x=>x.id===inv.orderId);
+
+  const ml=$('#markLunasBtn');
+  if(ml)ml.addEventListener('click',async()=>{
+    if(!confirm('Tandai invoice ini sebagai LUNAS?'))return;
+    try{
+      await updateDoc(doc(db,COL.invoices,inv.id),{status:'Lunas',paidAt:today()});
+      toast('Invoice ditandai LUNAS.','success');
+    }catch(err){toast('Gagal: '+err.message,'error')}
+  });
+
+  const mu=$('#markUnpaidBtn');
+  if(mu)mu.addEventListener('click',async()=>{
+    if(!confirm('Batalkan status Lunas?'))return;
+    try{
+      await updateDoc(doc(db,COL.invoices,inv.id),{status:'Belum Lunas',paidAt:null});
+      toast('Status dikembalikan ke Belum Lunas.','success');
+    }catch(err){toast('Gagal: '+err.message,'error')}
+  });
+
+  const sp=$('#sharePDFBtn');
+  if(sp)sp.addEventListener('click',()=>shareInvoicePDF(inv,o));
+
+  const ei=$('#editInvoiceBtn');
+  if(ei)ei.addEventListener('click',()=>openInvoiceForm(o,inv));
+
+  const di=$('#deleteInvoiceBtn');
+  if(di)di.addEventListener('click',async()=>{
+    if(!confirm('Hapus invoice ini? Order tetap ada.'))return;
+    try{
+      await deleteDoc(doc(db,COL.invoices,inv.id));
+      toast('Invoice dihapus.','success');
+      state.view='orderDetail';state.orderId=o.id;render();
+    }catch(err){toast('Gagal: '+err.message,'error')}
+  });
+
+  const vo=$('#viewOrderBtn');
+  if(vo)vo.addEventListener('click',e=>{
+    e.preventDefault();
+    state.view='orderDetail';state.orderId=o.id;render();
+  });
+}
+
+/* ============ PDF SHARE ============ */
+async function loadHtml2Pdf(){
+  if(window.html2pdf)return window.html2pdf;
+  return new Promise((resolve,reject)=>{
+    const s=document.createElement('script');
+    s.src='https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
+    s.onload=()=>resolve(window.html2pdf);
+    s.onerror=()=>reject(new Error('Gagal memuat library PDF'));
+    document.head.appendChild(s);
+  });
+}
+
+function buildInvoicePrintHTML(inv,order){
+  const s={
+    namaPerusahaan:'CV Jaya Anugrah Tehnik',
+    alamat:'Jl. Bawang VI No.163, Tangerang, Banten',
+    telepon:'0851-3871-9054'
+  };
+  const isLunas=inv.status==='Lunas';
+  const statusColor=isLunas?'#0a8f4a':'#e53935';
+  const statusBg=isLunas?'#e8f9ee':'#fee';
+  const statusLabel=isLunas?'LUNAS':'BELUM LUNAS';
+
+  return `
+    <div style="width:210mm;min-height:297mm;padding:15mm;background:#fff;
+      font-family:Arial,Helvetica,sans-serif;color:#000;font-size:11px;line-height:1.5;
+      box-sizing:border-box;position:relative">
+      <!-- Header -->
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;
+        border-bottom:2.5px solid #0f1f45;padding-bottom:14px;margin-bottom:20px">
+        <div style="display:flex;gap:12px;align-items:center">
+          <img src="logo.png" style="height:60px;width:auto;max-width:80px" onerror="this.style.display='none'">
+          <div>
+            <div style="font-size:17px;font-weight:800;color:#0f1f45;line-height:1.2">${esc(s.namaPerusahaan)}</div>
+            <div style="font-size:10px;color:#555;margin-top:4px;line-height:1.5">
+              ${esc(s.alamat)}<br>Telp: ${esc(s.telepon)}
+            </div>
+          </div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:26px;font-weight:800;color:#ff6a00;letter-spacing:-.5px;line-height:1">INVOICE</div>
+          <div style="font-size:10.5px;color:#333;margin-top:8px;line-height:1.6">
+            No: <b>${esc(inv.noInvoice)}</b><br>
+            Tanggal: <b>${fmtDate(inv.tanggal)}</b>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bill to -->
+      <div style="display:flex;justify-content:space-between;margin-bottom:20px">
+        <div>
+          <div style="font-size:9.5px;color:#888;text-transform:uppercase;letter-spacing:.5px;font-weight:700">Kepada:</div>
+          <div style="font-size:14px;font-weight:800;margin-top:6px;color:#0f1f45">${esc(order.pelanggan)}</div>
+          <div style="font-size:10.5px;color:#555;margin-top:3px">${esc(order.telepon)||'-'}</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:9.5px;color:#888;text-transform:uppercase;letter-spacing:.5px;font-weight:700">No. Order:</div>
+          <div style="font-size:11.5px;font-weight:700;margin-top:6px;font-family:monospace">${esc(order.noOrder)}</div>
+        </div>
+      </div>
+
+      <!-- Items -->
+      <table style="width:100%;border-collapse:collapse;font-size:11px;margin-bottom:14px">
+        <thead>
+          <tr style="background:#0f1f45;color:#fff">
+            <th style="text-align:left;padding:9px 10px;width:32px;font-size:10px">No</th>
+            <th style="text-align:left;padding:9px 10px;font-size:10px">Deskripsi</th>
+            <th style="text-align:right;padding:9px 10px;width:70px;font-size:10px">Qty</th>
+            <th style="text-align:right;padding:9px 10px;width:120px;font-size:10px">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding:10px;border-bottom:1px solid #ddd;vertical-align:top">1</td>
+            <td style="padding:10px;border-bottom:1px solid #ddd;vertical-align:top">
+              <div style="font-weight:800;font-size:12px">${esc(order.jenis)}</div>
+              <div style="font-size:10.5px;color:#555;margin-top:3px">${esc(order.pekerjaan)}</div>
+            </td>
+            <td style="padding:10px;border-bottom:1px solid #ddd;text-align:right;vertical-align:top">
+              ${fmtNum(order.jumlah)} ${esc(order.satuan)}
+            </td>
+            <td style="padding:10px;border-bottom:1px solid #ddd;text-align:right;vertical-align:top;font-weight:700">
+              ${fmtRp(inv.subtotal)}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Totals -->
+      <div style="display:flex;justify-content:flex-end;margin-top:8px">
+        <div style="min-width:260px">
+          <div style="display:flex;justify-content:space-between;padding:5px 0;font-size:11px">
+            <span>Subtotal</span><b>${fmtRp(inv.subtotal)}</b>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:5px 0;font-size:11px">
+            <span>PPN ${inv.ppn}%</span><b>${fmtRp(inv.total-inv.subtotal)}</b>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:10px 0;font-size:14px;
+            border-top:2px solid #0f1f45;margin-top:6px;font-weight:800">
+            <span>TOTAL</span><span style="color:#ff6a00">${fmtRp(inv.total)}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Status -->
+      <div style="margin-top:20px;padding:12px 14px;background:${statusBg};
+        border:1.5px solid ${statusColor};border-radius:8px">
+        <div style="font-size:9.5px;color:${statusColor};text-transform:uppercase;
+          letter-spacing:.5px;font-weight:800">Status Pembayaran</div>
+        <div style="font-size:16px;font-weight:800;color:${statusColor};margin-top:4px">
+          ● ${statusLabel}
+        </div>
+        ${isLunas&&inv.paidAt?`<div style="font-size:10.5px;color:#555;margin-top:3px">
+          Dibayar: ${fmtDate(inv.paidAt)}
+        </div>`:''}
+      </div>
+
+      <!-- Note -->
+      ${inv.note?`
+      <div style="margin-top:18px">
+        <div style="font-size:9.5px;color:#888;text-transform:uppercase;
+          letter-spacing:.5px;font-weight:700;margin-bottom:5px">Catatan:</div>
+        <div style="font-size:10.5px;color:#333;line-height:1.6">${esc(inv.note)}</div>
+      </div>`:''}
+
+      <!-- Signature -->
+      <div style="margin-top:50px;display:flex;justify-content:flex-end">
+        <div style="text-align:center">
+          <div style="font-size:11px;color:#333">Hormat kami,</div>
+          <div style="height:55px"></div>
+          <div style="font-size:11.5px;font-weight:800;border-top:1px solid #0f1f45;
+            padding-top:6px;min-width:200px;color:#0f1f45">${esc(s.namaPerusahaan)}</div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div style="position:absolute;bottom:12mm;left:15mm;right:15mm;text-align:center;
+        font-size:9px;color:#999;border-top:1px solid #ddd;padding-top:8px">
+        Terima kasih atas kepercayaan Anda
+      </div>
+    </div>`;
+}
+
+async function shareInvoicePDF(inv,order){
+  toast('Membuat PDF...');
+  let wrapper=null;
+  try{
+    const html2pdf=await loadHtml2Pdf();
+    wrapper=document.createElement('div');
+    wrapper.style.cssText='position:fixed;left:-99999px;top:0;z-index:-1';
+    wrapper.innerHTML=buildInvoicePrintHTML(inv,order);
+    document.body.appendChild(wrapper);
+
+    // Wait for images
+    const imgs=wrapper.querySelectorAll('img');
+    await Promise.all([...imgs].map(img=>{
+      if(img.complete)return Promise.resolve();
+      return new Promise(r=>{img.onload=img.onerror=r});
+    }));
+    await new Promise(r=>setTimeout(r,100));
+
+    const opt={
+      margin:0,
+      filename:inv.noInvoice+'.pdf',
+      image:{type:'jpeg',quality:0.95},
+      html2canvas:{scale:2,useCORS:true,backgroundColor:'#ffffff',logging:false},
+      jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}
+    };
+    const blob=await html2pdf().set(opt).from(wrapper.firstElementChild).outputPdf('blob');
+    document.body.removeChild(wrapper);wrapper=null;
+
+    const file=new File([blob],inv.noInvoice+'.pdf',{type:'application/pdf'});
+
+    // Try share
+    if(navigator.canShare&&navigator.canShare({files:[file]})){
+      try{
+        await navigator.share({
+          files:[file],
+          title:'Invoice '+inv.noInvoice,
+          text:'Invoice dari CV Jaya Anugrah Tehnik - '+inv.noInvoice
+        });
+        toast('PDF berhasil dibagikan.','success');
+      }catch(err){
+        if(err.name==='AbortError'){toast('Dibatalkan.','')}
+        else{throw err}
+      }
+    }else{
+      // Fallback download
+      const url=URL.createObjectURL(blob);
+      const a=document.createElement('a');
+      a.href=url;a.download=inv.noInvoice+'.pdf';
+      document.body.appendChild(a);a.click();document.body.removeChild(a);
+      setTimeout(()=>URL.revokeObjectURL(url),1000);
+      toast('PDF diunduh. Silakan share manual.','success');
+    }
+  }catch(err){
+    console.error(err);
+    if(wrapper&&document.body.contains(wrapper))document.body.removeChild(wrapper);
+    toast('Gagal membuat PDF: '+(err.message||'unknown'),'error');
+  }
+}
+
 /* ============ SETTINGS ============ */
 function renderSettings(){
   const tab=state.settingsTab;
   let body='';
   if(tab==='materials')body=renderMaterialsTab();
   else if(tab==='expenses')body=renderExpensesTab();
+  else if(tab==='invoices')body=renderInvoicesTab();
   else if(tab==='reports')body=renderReportsTab();
   else if(tab==='about')body=renderAboutTab();
   return `
     <div class="tabs">
       <button class="tab ${tab==='materials'?'active':''}" data-tab="materials">📦 Material</button>
       <button class="tab ${tab==='expenses'?'active':''}" data-tab="expenses">💸 Pengeluaran</button>
+      <button class="tab ${tab==='invoices'?'active':''}" data-tab="invoices">🧾 Invoice</button>
       <button class="tab ${tab==='reports'?'active':''}" data-tab="reports">📈 Laporan</button>
       <button class="tab ${tab==='about'?'active':''}" data-tab="about">ℹ️ Tentang</button>
     </div>${body}`;
@@ -797,10 +1313,40 @@ function renderExpensesTab(){
     <div class="card">${body}</div>`;
 }
 
+function renderInvoicesTab(){
+  const list=state.invoices.slice(0,100);
+  const lunas=list.filter(i=>i.status==='Lunas').length;
+  const belumLunas=list.length-lunas;
+  let body;
+  if(!list.length){
+    body=`<div class="empty" style="padding:24px"><div class="ico">🧾</div><p>Belum ada invoice. Buat dari halaman detail order.</p></div>`;
+  }else{
+    body=`<div class="table-wrap"><table>
+      <thead><tr><th>No. Invoice</th><th>Tanggal</th><th>Pelanggan</th>
+      <th class="text-right">Total</th><th>Status</th><th></th></tr></thead>
+      <tbody>${list.map(inv=>{
+        const o=state.orders.find(x=>x.id===inv.orderId)||{};
+        return `<tr data-inv-id="${inv.id}" style="cursor:pointer">
+          <td class="mono">${esc(inv.noInvoice)}</td>
+          <td>${fmtDate(inv.tanggal)}</td>
+          <td><b>${esc(o.pelanggan||'-')}</b></td>
+          <td class="text-right mono">${fmtRp(inv.total)}</td>
+          <td>${payPill(inv.status)}</td>
+          <td class="text-right"><button class="btn-icon">→</button></td>
+        </tr>`;
+      }).join('')}</tbody></table></div>`;
+  }
+  return `<div class="section-head">
+      <h2>Invoice <span style="font-size:12px;color:var(--ink2);margin-left:8px">
+        ${lunas} lunas · ${belumLunas} belum</span></h2>
+    </div>
+    <div class="card">${body}</div>`;
+}
+
 function renderReportsTab(){
   const ym=state.reportYM||thisYM();
   const orders=state.orders.filter(o=>(o.tanggal||'').startsWith(ym));
-  const revenue=orders.filter(o=>['Selesai','Diambil'].includes(o.status))
+  const revenue=orders.filter(o=>normalizeStatus(o.status)==='Selesai')
     .reduce((s,o)=>s+(+o.nilaiOrder||0),0);
   const expenses=state.expenses.filter(x=>(x.tanggal||'').startsWith(ym))
     .reduce((s,x)=>s+(+x.jumlah||0),0);
@@ -858,7 +1404,7 @@ function renderAboutTab(){
         <div class="about-row"><span class="k">Telepon</span><span class="v">0851-3871-9054</span></div>
         <div class="about-row"><span class="k">Database</span><span class="v">Firebase Firestore</span></div>
         <div class="about-row"><span class="k">Koleksi</span><span class="v mono">jayaanugrahteknik_*</span></div>
-        <div class="about-row"><span class="k">Versi</span><span class="v">2.0</span></div>
+        <div class="about-row"><span class="k">Versi</span><span class="v">2.1</span></div>
       </div>
     </div>
     <div class="card" style="margin-top:14px">
@@ -895,6 +1441,11 @@ function attachSettingsEvents(){
       catch(err){toast('Gagal: '+err.message,'error')}
     }));
   }
+  if(state.settingsTab==='invoices'){
+    $$('[data-inv-id]').forEach(tr=>tr.addEventListener('click',()=>{
+      state.view='invoiceDetail';state.invoiceId=tr.dataset.invId;render();
+    }));
+  }
   if(state.settingsTab==='reports'){
     const mi=$('#reportMonth');
     if(mi)mi.addEventListener('change',()=>{state.reportYM=mi.value;render()});
@@ -921,8 +1472,7 @@ function openMatForm(edit=null){
         <div class="field"><label>Harga/Satuan <span class="req">*</span></label>
           <input type="number" name="harga" required min="0" value="${esc(m.harga)}"></div>
         <div class="field"><label>Stok Awal</label>
-          <input type="number" name="stok" min="0" step="any" value="${esc(m.stok)}" ${edit?'readonly style="background:#f0f2f7"':''}>
-          <div class="hint">${edit?'Ubah via tombol +/−':'Stok awal'}</div></div>
+          <input type="number" name="stok" min="0" step="any" value="${esc(m.stok)}" ${edit?'readonly style="background:#f0f2f7"':''}></div>
       </div>
       <div class="form-row">
         <div class="field"><label>Stok Minimum</label>
