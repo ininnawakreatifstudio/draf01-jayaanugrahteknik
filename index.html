@@ -1,0 +1,2098 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CV Jaya Anugrah Tehnik — Sistem Manajemen</title>
+<style>
+:root{
+  --ink:#0f1f45;--ink2:#4a5878;--ink3:#8b95ab;
+  --brand:#ff6a00;--brand2:#ffab00;--teal:#00b8a9;
+  --bg:#f5f7fb;--card:#fff;--line:#e4e8f0;
+  --danger:#e53935;--success:#0a8f4a;--warning:#e6a000;
+  --radius:12px;--shadow:0 2px 12px rgba(15,31,69,.06);
+  --shadow-lg:0 12px 40px rgba(15,31,69,.15);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  background:var(--bg);color:var(--ink);line-height:1.5;font-size:14px;
+  -webkit-font-smoothing:antialiased}
+button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
+input,select,textarea{font-family:inherit;font-size:14px;color:var(--ink)}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+
+/* ============ LOGIN ============ */
+.login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;
+  padding:24px;background:linear-gradient(135deg,#0f1f45 0%,#1e3268 60%,#2a3f78 100%);
+  position:relative;overflow:hidden}
+.login-screen::before{content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(circle at 20% 20%,rgba(255,106,0,.15),transparent 50%),
+    radial-gradient(circle at 80% 80%,rgba(0,184,169,.12),transparent 50%);
+  pointer-events:none}
+.login-card{background:#fff;border-radius:20px;padding:36px 32px;width:100%;max-width:400px;
+  box-shadow:0 24px 60px rgba(0,0,0,.3);position:relative;z-index:1}
+.login-brand{text-align:center;margin-bottom:28px}
+.login-brand img{max-height:70px;margin:0 auto 14px}
+.login-brand h1{font-size:20px;font-weight:800;color:var(--ink);line-height:1.2}
+.login-brand p{font-size:13px;color:var(--ink2);margin-top:6px}
+.login-card form{display:flex;flex-direction:column;gap:14px}
+.login-card label{font-size:12.5px;font-weight:700;color:var(--ink);
+  display:block;margin-bottom:6px}
+.login-card input{width:100%;padding:12px 14px;border-radius:10px;
+  border:1.5px solid var(--line);background:#f9fafc;outline:none;font-size:14px;transition:.2s}
+.login-card input:focus{border-color:var(--brand);background:#fff;
+  box-shadow:0 0 0 4px rgba(255,106,0,.1)}
+.login-card button{width:100%;padding:13px;border-radius:10px;font-weight:800;font-size:14px;
+  background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;
+  box-shadow:0 8px 24px rgba(255,106,0,.3);transition:.2s}
+.login-card button:hover{transform:translateY(-1px);box-shadow:0 10px 28px rgba(255,106,0,.4)}
+.login-hint{margin-top:20px;padding:14px;background:#f5f7fb;border-radius:10px;
+  font-size:11.5px;color:var(--ink2);line-height:1.7;text-align:center;
+  border:1px solid var(--line)}
+.login-err{background:#fee;border:1px solid #fbb;color:var(--danger);
+  padding:10px 12px;border-radius:8px;font-size:12.5px;display:none}
+.login-err.show{display:block}
+
+/* ============ APP LAYOUT ============ */
+.app{display:flex;min-height:100vh}
+.sidebar{width:240px;background:#fff;border-right:1px solid var(--line);
+  display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:50;
+  transition:transform .28s ease}
+.side-brand{display:flex;align-items:center;gap:10px;padding:16px 16px;
+  border-bottom:1px solid var(--line);min-height:64px}
+.side-brand img{max-height:36px;max-width:44px}
+.side-brand b{font-size:12px;font-weight:800;line-height:1.2;display:block}
+.side-brand small{font-size:10px;color:var(--ink2);font-weight:600;text-transform:uppercase;
+  letter-spacing:.5px}
+.side-nav{flex:1;overflow-y:auto;padding:12px 8px}
+.side-nav a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;
+  color:var(--ink2);font-weight:600;font-size:13.5px;margin-bottom:2px;transition:.15s}
+.side-nav a:hover{background:#f5f7fb;color:var(--ink)}
+.side-nav a.active{background:linear-gradient(135deg,rgba(255,106,0,.1),rgba(255,171,0,.08));
+  color:var(--brand);font-weight:800}
+.side-nav a .ico{width:20px;text-align:center;font-size:16px}
+.side-foot{padding:12px;border-top:1px solid var(--line)}
+.user-chip{display:flex;align-items:center;gap:10px;padding:8px}
+.user-avatar{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;
+  font-weight:800;font-size:14px;flex-shrink:0}
+.user-chip b{font-size:12.5px;display:block;line-height:1.2}
+.user-chip small{font-size:10.5px;color:var(--ink2);text-transform:capitalize}
+
+.main-wrap{flex:1;margin-left:240px;min-width:0;display:flex;flex-direction:column}
+.topbar{height:64px;background:#fff;border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:12px;padding:0 20px;position:sticky;top:0;z-index:30}
+.menu-btn{display:none;width:36px;height:36px;border-radius:8px;
+  align-items:center;justify-content:center;font-size:20px;
+  background:#f5f7fb;border:1px solid var(--line)}
+.topbar h2{font-size:17px;font-weight:800;flex:1}
+.top-actions{display:flex;gap:8px;align-items:center}
+.content{padding:24px;flex:1;max-width:1400px;width:100%;margin:0 auto}
+
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(15,31,69,.4);z-index:45}
+
+@media(max-width:900px){
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:none}
+  .sidebar-overlay.open{display:block}
+  .main-wrap{margin-left:0}
+  .menu-btn{display:flex}
+  .content{padding:16px}
+  .topbar{padding:0 14px}
+}
+
+/* ============ COMPONENTS ============ */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  padding:9px 16px;border-radius:8px;font-weight:700;font-size:13px;
+  transition:.15s;white-space:nowrap}
+.btn:active{transform:scale(.98)}
+.btn-primary{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;
+  box-shadow:0 4px 12px rgba(255,106,0,.25)}
+.btn-primary:hover{box-shadow:0 6px 16px rgba(255,106,0,.35)}
+.btn-ghost{background:#fff;border:1.5px solid var(--line);color:var(--ink2)}
+.btn-ghost:hover{border-color:var(--brand);color:var(--brand)}
+.btn-danger{background:#fff;border:1.5px solid #fbb;color:var(--danger)}
+.btn-danger:hover{background:#fee}
+.btn-sm{padding:6px 10px;font-size:12px}
+.btn-icon{padding:6px 8px;border-radius:6px;background:#f5f7fb;border:1px solid var(--line);
+  color:var(--ink2);font-size:14px;line-height:1}
+.btn-icon:hover{background:#fff;border-color:var(--brand);color:var(--brand)}
+
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow)}
+.card-pad{padding:20px}
+.card-head{display:flex;align-items:center;justify-content:space-between;
+  padding:16px 20px;border-bottom:1px solid var(--line);gap:12px;flex-wrap:wrap}
+.card-head h3{font-size:15px;font-weight:800}
+
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+  padding:16px 18px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.stat::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--brand),var(--brand2))}
+.stat.teal::before{background:linear-gradient(90deg,var(--teal),#00d4c2)}
+.stat.warn::before{background:linear-gradient(90deg,#e6a000,#ffc44d)}
+.stat.danger::before{background:linear-gradient(90deg,#e53935,#ff6b68)}
+.stat .label{font-size:11.5px;color:var(--ink2);font-weight:700;text-transform:uppercase;
+  letter-spacing:.5px;margin-bottom:6px}
+.stat .value{font-size:22px;font-weight:800;color:var(--ink);line-height:1.2}
+.stat .sub{font-size:11.5px;color:var(--ink2);margin-top:4px}
+@media(max-width:900px){.stats{grid-template-columns:repeat(2,1fr)}}
+
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;padding:11px 12px;font-size:11.5px;font-weight:800;
+  color:var(--ink2);text-transform:uppercase;letter-spacing:.4px;
+  border-bottom:1.5px solid var(--line);background:#fafbfd;white-space:nowrap}
+td{padding:11px 12px;border-bottom:1px solid #f0f2f7;vertical-align:middle}
+tr:last-child td{border-bottom:0}
+tr:hover td{background:#fafbfd}
+.text-right{text-align:right}
+.text-center{text-align:center}
+.mono{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12px}
+
+.pill{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:800;
+  padding:3px 9px;border-radius:999px;white-space:nowrap}
+.pill.baru{background:#e8f0ff;color:#2a5bd7}
+.pill.produksi{background:#fff3d6;color:#a16a00}
+.pill.qc{background:#e6f7ff;color:#0080a8}
+.pill.selesai{background:#e8f9ee;color:#0a8f4a}
+.pill.diambil{background:#f0f2f7;color:#4a5878}
+.pill.belumbayar{background:#fee;color:var(--danger)}
+.pill.dp{background:#fff3d6;color:#a16a00}
+.pill.lunas{background:#e8f9ee;color:var(--success)}
+.pill.kritis{background:#fee;color:var(--danger)}
+.pill.ok{background:#e8f9ee;color:var(--success)}
+
+.empty{text-align:center;padding:40px 20px;color:var(--ink2)}
+.empty .ico{font-size:40px;opacity:.4;margin-bottom:10px}
+.empty p{font-size:13px}
+
+.toolbar{display:flex;gap:10px;align-items:center;margin-bottom:16px;flex-wrap:wrap}
+.toolbar .search{flex:1;min-width:200px;position:relative}
+.toolbar .search input{width:100%;padding:9px 12px 9px 34px;border-radius:8px;
+  border:1.5px solid var(--line);background:#fff;outline:none;transition:.15s}
+.toolbar .search input:focus{border-color:var(--brand);
+  box-shadow:0 0 0 3px rgba(255,106,0,.1)}
+.toolbar .search::before{content:'🔍';position:absolute;left:11px;top:50%;
+  transform:translateY(-50%);font-size:13px;opacity:.5}
+.toolbar select{padding:9px 12px;border-radius:8px;border:1.5px solid var(--line);
+  background:#fff;outline:none;font-weight:600;color:var(--ink);cursor:pointer}
+.toolbar select:focus{border-color:var(--brand)}
+
+/* ============ MODAL ============ */
+.modal{position:fixed;inset:0;z-index:100;background:rgba(15,31,69,.55);
+  backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;padding:16px}
+.modal.open{display:flex}
+.modal-card{background:#fff;border-radius:14px;width:100%;max-width:560px;
+  max-height:90vh;display:flex;flex-direction:column;overflow:hidden;
+  box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.modal-card.wide{max-width:800px}
+.modal-head{display:flex;align-items:center;justify-content:space-between;
+  padding:16px 20px;border-bottom:1px solid var(--line)}
+.modal-head h3{font-size:15px;font-weight:800}
+.modal-head button{font-size:20px;line-height:1;color:var(--ink2);padding:4px 8px;
+  border-radius:6px}
+.modal-head button:hover{background:#f5f7fb}
+.modal-body{padding:20px;overflow-y:auto;flex:1}
+.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:20px;
+  padding-top:16px;border-top:1px solid var(--line)}
+
+/* ============ FORM ============ */
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-row.three{grid-template-columns:1fr 1fr 1fr}
+@media(max-width:600px){.form-row,.form-row.three{grid-template-columns:1fr}}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:12px;font-weight:800;color:var(--ink);
+  margin-bottom:6px}
+.field label .req{color:var(--danger)}
+.field input,.field select,.field textarea{width:100%;padding:10px 12px;
+  border-radius:8px;border:1.5px solid var(--line);background:#f9fafc;
+  outline:none;transition:.15s;font-size:13.5px}
+.field input:focus,.field select:focus,.field textarea:focus{
+  border-color:var(--brand);background:#fff;
+  box-shadow:0 0 0 3px rgba(255,106,0,.1)}
+.field textarea{min-height:80px;resize:vertical}
+.field .hint{font-size:11px;color:var(--ink2);margin-top:4px}
+
+/* ============ DETAIL ============ */
+.detail-grid{display:grid;grid-template-columns:2fr 1fr;gap:16px}
+@media(max-width:900px){.detail-grid{grid-template-columns:1fr}}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px 20px}
+.info-item{font-size:13px}
+.info-item .k{font-size:11.5px;color:var(--ink2);font-weight:700;text-transform:uppercase;
+  letter-spacing:.4px;margin-bottom:3px}
+.info-item .v{font-weight:600;color:var(--ink)}
+
+.stepper{display:flex;flex-direction:column;gap:8px}
+.step-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;
+  background:#f9fafc;font-size:13px}
+.step-item .dot{width:22px;height:22px;border-radius:50%;background:#e4e8f0;
+  display:grid;place-items:center;font-size:11px;font-weight:800;color:var(--ink3);
+  flex-shrink:0}
+.step-item.active{background:linear-gradient(135deg,rgba(255,106,0,.08),rgba(255,171,0,.06))}
+.step-item.active .dot{background:linear-gradient(135deg,var(--brand),var(--brand2));
+  color:#fff}
+.step-item.done .dot{background:var(--success);color:#fff}
+.step-item.done{color:var(--ink2)}
+
+.hpp-box{background:#f9fafc;border:1px solid var(--line);border-radius:10px;padding:14px}
+.hpp-row{display:flex;justify-content:space-between;padding:5px 0;font-size:13px}
+.hpp-row.total{border-top:1.5px dashed var(--line);margin-top:8px;padding-top:10px;
+  font-weight:800;font-size:14px}
+
+/* ============ CHART ============ */
+.chart{display:flex;align-items:flex-end;gap:8px;height:160px;padding:10px 0}
+.chart .bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;
+  height:100%;justify-content:flex-end}
+.chart .bar{width:100%;max-width:50px;background:linear-gradient(180deg,var(--brand),var(--brand2));
+  border-radius:6px 6px 0 0;min-height:4px;transition:.3s;position:relative}
+.chart .bar.teal{background:linear-gradient(180deg,var(--teal),#00d4c2)}
+.chart .bar-label{font-size:10.5px;color:var(--ink2);font-weight:700;text-align:center}
+.chart .bar-value{font-size:10px;color:var(--ink2);text-align:center;font-weight:600}
+
+/* ============ TOAST ============ */
+#toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,100px);
+  background:var(--ink);color:#fff;padding:12px 20px;border-radius:8px;
+  font-size:13px;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,.25);
+  opacity:0;transition:.3s;z-index:200;max-width:calc(100vw - 32px);
+  text-align:center}
+#toast.show{transform:translate(-50%,0);opacity:1}
+#toast.success{background:var(--success)}
+#toast.error{background:var(--danger)}
+
+/* ============ UTIL ============ */
+.hidden{display:none!important}
+.mt-16{margin-top:16px}
+.mb-16{margin-bottom:16px}
+.gap{display:flex;gap:8px;flex-wrap:wrap}
+
+@media print{
+  body *{visibility:hidden}
+  #printArea,#printArea *{visibility:visible}
+  #printArea{position:absolute;left:0;top:0;width:100%}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ LOGIN ============ -->
+<div id="loginScreen" class="login-screen">
+  <div class="login-card">
+    <div class="login-brand">
+      <img src="logo.png" alt="CV Jaya Anugrah Tehnik" onerror="this.style.display='none'">
+      <h1>CV Jaya Anugrah Tehnik</h1>
+      <p>Sistem Manajemen Order &amp; Stok</p>
+    </div>
+    <div id="loginErr" class="login-err"></div>
+    <form id="loginForm">
+      <div>
+        <label>Username</label>
+        <input name="username" required autocomplete="username" placeholder="Masukkan username">
+      </div>
+      <div>
+        <label>Password</label>
+        <input type="password" name="password" required autocomplete="current-password" placeholder="Masukkan password">
+      </div>
+      <button type="submit">Masuk</button>
+    </form>
+    <div class="login-hint">
+      <b>Akun demo:</b><br>
+      Admin: <b>admin</b> / admin123<br>
+      Produksi: <b>produksi</b> / produksi123<br>
+      Pimpinan: <b>pimpinan</b> / pimpinan123
+    </div>
+  </div>
+</div>
+
+<!-- ============ APP ============ -->
+<div id="app" class="app hidden">
+  <aside class="sidebar" id="sidebar">
+    <div class="side-brand">
+      <img src="logo.png" alt="" onerror="this.style.display='none'">
+      <div>
+        <b>CV Jaya Anugrah</b>
+        <small>Tehnik</small>
+      </div>
+    </div>
+    <nav class="side-nav" id="sideNav"></nav>
+    <div class="side-foot">
+      <div class="user-chip">
+        <div class="user-avatar" id="userAvatar">A</div>
+        <div>
+          <b id="userName">Admin</b>
+          <small id="userRole">Administrator</small>
+        </div>
+      </div>
+      <button class="btn btn-ghost" id="logoutBtn" style="width:100%;margin-top:8px">Keluar</button>
+    </div>
+  </aside>
+
+  <div class="main-wrap">
+    <header class="topbar">
+      <button class="menu-btn" id="menuBtn" aria-label="Menu">☰</button>
+      <h2 id="pageTitle">Dashboard</h2>
+      <div class="top-actions" id="topActions"></div>
+    </header>
+    <div class="content" id="content"></div>
+  </div>
+
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+</div>
+
+<!-- ============ MODAL ============ -->
+<div class="modal" id="modal">
+  <div class="modal-card" id="modalCard">
+    <div class="modal-head">
+      <h3 id="modalTitle">Modal</h3>
+      <button id="modalClose" type="button">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+/* ==================================================================
+   CV JAYA ANUGRAH TEHNIK — Sistem Manajemen
+   Single-file app. Data tersimpan di localStorage.
+   ================================================================== */
+
+const DB_KEY = 'jat_db_v1';
+const SESSION_KEY = 'jat_session';
+
+/* ---------- DB ---------- */
+function seedDb() {
+  return {
+    users: [
+      { id:1, username:'admin',    password:'admin123',    nama:'Administrator', role:'admin' },
+      { id:2, username:'produksi', password:'produksi123', nama:'Tim Produksi',  role:'produksi' },
+      { id:3, username:'pimpinan', password:'pimpinan123', nama:'Pimpinan',      role:'pimpinan' },
+    ],
+    orders: [],
+    materials: [],
+    moves: [],
+    invoices: [],
+    expenses: [],
+    settings: {
+      namaPerusahaan: 'CV Jaya Anugrah Tehnik',
+      alamat: 'Jl. Bawang VI No.163, Kota Tangerang, Banten',
+      telepon: '0851-3871-9054',
+      email: ''
+    }
+  };
+}
+
+function loadDb() {
+  try {
+    const raw = localStorage.getItem(DB_KEY);
+    if (!raw) { const db = seedDb(); saveDb(db); return db; }
+    return JSON.parse(raw);
+  } catch(e) {
+    console.error('DB load error', e);
+    return seedDb();
+  }
+}
+function saveDb() { localStorage.setItem(DB_KEY, JSON.stringify(db)); }
+
+let db = loadDb();
+let state = { user: null, view: 'dashboard', params: {} };
+
+/* ---------- UTIL ---------- */
+const $ = (s, r=document) => r.querySelector(s);
+const $$ = (s, r=document) => [...r.querySelectorAll(s)];
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmtRp = n => 'Rp ' + Number(n||0).toLocaleString('id-ID');
+const fmtNum = n => Number(n||0).toLocaleString('id-ID');
+const fmtDate = d => {
+  if (!d) return '-';
+  const x = new Date(d);
+  return x.toLocaleDateString('id-ID', {day:'2-digit',month:'short',year:'numeric'});
+};
+const today = () => new Date().toISOString().slice(0,10);
+const thisYM = () => { const d=new Date(); return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0'); };
+const nextId = arr => arr.reduce((m,x)=>Math.max(m, x.id||0), 0) + 1;
+
+function toast(msg, type='') {
+  const t = $('#toast');
+  t.textContent = msg;
+  t.className = 'show ' + type;
+  clearTimeout(t._t);
+  t._t = setTimeout(()=> t.className = '', 3000);
+}
+
+function exportCSV(filename, rows) {
+  const csv = rows.map(r => r.map(c => `"${String(c??'').replace(/"/g,'""')}"`).join(',')).join('\n');
+  const blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename; a.click();
+  URL.revokeObjectURL(url);
+}
+
+/* ---------- AUTH ---------- */
+$('#loginForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const fd = new FormData(e.target);
+  const u = fd.get('username').trim();
+  const p = fd.get('password');
+  const user = db.users.find(x => x.username === u && x.password === p);
+  if (!user) {
+    $('#loginErr').textContent = 'Username atau password salah.';
+    $('#loginErr').classList.add('show');
+    return;
+  }
+  state.user = { id:user.id, username:user.username, nama:user.nama, role:user.role };
+  sessionStorage.setItem(SESSION_KEY, JSON.stringify(state.user));
+  showApp();
+});
+
+function showApp() {
+  $('#loginScreen').classList.add('hidden');
+  $('#app').classList.remove('hidden');
+  $('#userName').textContent = state.user.nama;
+  $('#userRole').textContent = roleLabel(state.user.role);
+  $('#userAvatar').textContent = state.user.nama[0].toUpperCase();
+  buildNav();
+  navigate('dashboard');
+}
+
+function roleLabel(r) {
+  return { admin:'Administrator', produksi:'Produksi', pimpinan:'Pimpinan' }[r] || r;
+}
+
+$('#logoutBtn').addEventListener('click', () => {
+  if (!confirm('Keluar dari aplikasi?')) return;
+  state.user = null;
+  sessionStorage.removeItem(SESSION_KEY);
+  $('#app').classList.add('hidden');
+  $('#loginScreen').classList.remove('hidden');
+  $('#loginForm').reset();
+  $('#loginErr').classList.remove('show');
+});
+
+/* auto-login */
+(function autoLogin() {
+  const raw = sessionStorage.getItem(SESSION_KEY);
+  if (!raw) return;
+  try {
+    state.user = JSON.parse(raw);
+    showApp();
+  } catch(e) {}
+})();
+
+/* ---------- NAV ---------- */
+const NAV = [
+  { view:'dashboard',  label:'Dashboard',      icon:'📊', roles:['admin','produksi','pimpinan'] },
+  { view:'orders',     label:'Order / SPK',    icon:'📋', roles:['admin','produksi','pimpinan'] },
+  { view:'materials',  label:'Stok Material',  icon:'📦', roles:['admin','produksi','pimpinan'] },
+  { view:'invoices',   label:'Invoice',        icon:'🧾', roles:['admin','pimpinan'] },
+  { view:'expenses',   label:'Pengeluaran',    icon:'💸', roles:['admin','pimpinan'] },
+  { view:'reports',    label:'Laporan',        icon:'📈', roles:['admin','pimpinan'] },
+  { view:'users',      label:'Pengguna',       icon:'👥', roles:['admin'] },
+  { view:'settings',   label:'Pengaturan',     icon:'⚙️', roles:['admin'] },
+];
+
+function buildNav() {
+  const nav = $('#sideNav');
+  nav.innerHTML = NAV.filter(n => n.roles.includes(state.user.role)).map(n => `
+    <a href="#" data-view="${n.view}"><span class="ico">${n.icon}</span>${n.label}</a>
+  `).join('');
+  $$('#sideNav a').forEach(a => a.addEventListener('click', e => {
+    e.preventDefault();
+    navigate(a.dataset.view);
+    $('#sidebar').classList.remove('open');
+    $('#sidebarOverlay').classList.remove('open');
+  }));
+}
+
+function updateNav() {
+  $$('#sideNav a').forEach(a => a.classList.toggle('active', a.dataset.view === state.view));
+}
+
+/* ---------- MENU (mobile) ---------- */
+$('#menuBtn').addEventListener('click', () => {
+  $('#sidebar').classList.toggle('open');
+  $('#sidebarOverlay').classList.toggle('open');
+});
+$('#sidebarOverlay').addEventListener('click', () => {
+  $('#sidebar').classList.remove('open');
+  $('#sidebarOverlay').classList.remove('open');
+});
+
+/* ---------- MODAL ---------- */
+function openModal(title, bodyHTML, opts={}) {
+  $('#modalTitle').textContent = title;
+  $('#modalBody').innerHTML = bodyHTML;
+  $('#modalCard').classList.toggle('wide', !!opts.wide);
+  $('#modal').classList.add('open');
+}
+function closeModal() {
+  $('#modal').classList.remove('open');
+  $('#modalBody').innerHTML = '';
+}
+$('#modalClose').addEventListener('click', closeModal);
+$('#modal').addEventListener('click', e => { if (e.target === $('#modal')) closeModal(); });
+
+/* ---------- ROUTER ---------- */
+const views = {};
+
+function navigate(view, params={}) {
+  state.view = view;
+  state.params = params;
+  $('#pageTitle').textContent = (NAV.find(n=>n.view===view)||{}).label || '';
+  $('#topActions').innerHTML = '';
+  const fn = views[view];
+  if (!fn) return;
+  $('#content').innerHTML = fn(params);
+  updateNav();
+  window.scrollTo({top:0,behavior:'smooth'});
+  // attach events
+  const ev = viewEvents[view];
+  if (ev) ev(params);
+}
+const viewEvents = {};
+
+/* ==================================================================
+   DASHBOARD
+   ================================================================== */
+views.dashboard = () => {
+  const todayYM = thisYM();
+  const ordersThisMonth = db.orders.filter(o => (o.tanggal||'').startsWith(todayYM));
+  const activeOrders = db.orders.filter(o => !['Selesai','Diambil'].includes(o.status));
+  const lowStock = db.materials.filter(m => m.stok <= (m.stokMin||0));
+  const revenueThisMonth = db.orders
+    .filter(o => (o.tanggal||'').startsWith(todayYM) && ['Selesai','Diambil'].includes(o.status))
+    .reduce((s,o)=>s + (+o.nilaiOrder||0), 0);
+
+  const recent = [...db.orders].sort((a,b)=> (b.createdAt||0)-(a.createdAt||0)).slice(0,5);
+
+  // chart: last 6 months revenue
+  const months = [];
+  for (let i=5; i>=0; i--) {
+    const d = new Date(); d.setDate(1); d.setMonth(d.getMonth()-i);
+    const ym = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0');
+    const total = db.orders
+      .filter(o => (o.tanggal||'').startsWith(ym) && ['Selesai','Diambil'].includes(o.status))
+      .reduce((s,o)=>s+(+o.nilaiOrder||0),0);
+    months.push({ ym, label: d.toLocaleDateString('id-ID',{month:'short'}), total });
+  }
+  const maxTotal = Math.max(...months.map(m=>m.total), 1);
+
+  return `
+    <div class="stats">
+      <div class="stat">
+        <div class="label">Order Bulan Ini</div>
+        <div class="value">${ordersThisMonth.length}</div>
+        <div class="sub">${activeOrders.length} order aktif</div>
+      </div>
+      <div class="stat teal">
+        <div class="label">Pendapatan Bulan Ini</div>
+        <div class="value">${fmtRp(revenueThisMonth)}</div>
+        <div class="sub">Order selesai/diambil</div>
+      </div>
+      <div class="stat warn">
+        <div class="label">Total Material</div>
+        <div class="value">${db.materials.length}</div>
+        <div class="sub">${lowStock.length} stok kritis</div>
+      </div>
+      <div class="stat ${lowStock.length?'danger':''}">
+        <div class="label">Perlu Perhatian</div>
+        <div class="value">${lowStock.length}</div>
+        <div class="sub">Material di bawah minimum</div>
+      </div>
+    </div>
+
+    <div class="detail-grid" style="grid-template-columns:2fr 1fr">
+      <div class="card">
+        <div class="card-head">
+          <h3>Order Terbaru</h3>
+          <a href="#" class="btn btn-ghost btn-sm" data-nav="orders">Lihat Semua</a>
+        </div>
+        ${recent.length ? `
+        <div class="table-wrap"><table>
+          <thead><tr>
+            <th>No. Order</th><th>Pelanggan</th><th>Pekerjaan</th><th>Status</th><th class="text-right">Nilai</th>
+          </tr></thead>
+          <tbody>
+            ${recent.map(o=>`
+              <tr style="cursor:pointer" data-order="${o.id}">
+                <td class="mono">${esc(o.noOrder)}</td>
+                <td>${esc(o.pelanggan)}</td>
+                <td>${esc(o.jenis)}</td>
+                <td>${statusPill(o.status)}</td>
+                <td class="text-right mono">${fmtRp(o.nilaiOrder)}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table></div>` : `<div class="empty"><div class="ico">📋</div><p>Belum ada order. Klik <b>Order / SPK</b> untuk menambah.</p></div>`}
+      </div>
+
+      <div>
+        <div class="card mb-16">
+          <div class="card-head"><h3>Stok Kritis</h3>
+            <a href="#" class="btn btn-ghost btn-sm" data-nav="materials">Kelola</a></div>
+          ${lowStock.length ? `
+            <div style="padding:8px 20px 16px">
+              ${lowStock.slice(0,5).map(m=>`
+                <div style="display:flex;justify-content:space-between;align-items:center;
+                  padding:8px 0;border-bottom:1px solid var(--line);font-size:13px">
+                  <div>
+                    <b>${esc(m.nama)}</b><br>
+                    <small style="color:var(--ink2)">Min: ${fmtNum(m.stokMin)} ${esc(m.satuan)}</small>
+                  </div>
+                  <span class="pill kritis">${fmtNum(m.stok)} ${esc(m.satuan)}</span>
+                </div>
+              `).join('')}
+            </div>` : `<div class="empty" style="padding:20px"><p style="font-size:12.5px">Semua stok aman ✓</p></div>`}
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h3>Tren 6 Bulan</h3></div>
+          <div style="padding:16px 20px">
+            <div class="chart">
+              ${months.map(m=>`
+                <div class="bar-wrap">
+                  <div class="bar-value">${m.total? (m.total/1000000).toFixed(1)+'jt':'-'}</div>
+                  <div class="bar" style="height:${m.total?(m.total/maxTotal*100):4}%"></div>
+                  <div class="bar-label">${m.label}</div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+};
+
+viewEvents.dashboard = () => {
+  $$('[data-order]').forEach(el => el.addEventListener('click', () => {
+    navigate('orderDetail', { id: +el.dataset.order });
+  }));
+  $$('[data-nav]').forEach(el => el.addEventListener('click', e => {
+    e.preventDefault();
+    navigate(el.dataset.nav);
+  }));
+};
+
+function statusPill(s) {
+  const m = {
+    'Order Masuk':'baru', 'Produksi':'produksi', 'QC':'qc',
+    'Selesai':'selesai', 'Diambil':'diambil'
+  };
+  return `<span class="pill ${m[s]||'baru'}">${esc(s)}</span>`;
+}
+function payPill(s) {
+  const m = { 'Belum Bayar':'belumbayar', 'DP':'dp', 'Lunas':'lunas' };
+  return `<span class="pill ${m[s]||'belumbayar'}">${esc(s)}</span>`;
+}
+
+/* ==================================================================
+   ORDERS
+   ================================================================== */
+views.orders = () => {
+  const canEdit = state.user.role === 'admin';
+  return `
+    <div class="toolbar">
+      <div class="search">
+        <input id="orderSearch" placeholder="Cari no order, pelanggan, pekerjaan..." value="">
+      </div>
+      <select id="orderFilter">
+        <option value="">Semua Status</option>
+        <option>Order Masuk</option>
+        <option>Produksi</option>
+        <option>QC</option>
+        <option>Selesai</option>
+        <option>Diambil</option>
+      </select>
+      ${canEdit ? `<button class="btn btn-primary" id="addOrderBtn">+ Tambah Order</button>` : ''}
+    </div>
+    <div class="card">
+      <div class="table-wrap" id="ordersTableWrap">${renderOrdersTable()}</div>
+    </div>
+  `;
+};
+
+function renderOrdersTable() {
+  const list = [...db.orders].sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+  if (!list.length) return `<div class="empty"><div class="ico">📋</div><p>Belum ada order.</p></div>`;
+  return `<table>
+    <thead><tr>
+      <th>No. Order</th><th>Tanggal</th><th>Pelanggan</th><th>Jenis</th>
+      <th>Status</th><th class="text-right">Nilai</th><th></th>
+    </tr></thead>
+    <tbody>
+      ${list.map(o=>`
+        <tr data-order="${o.id}" style="cursor:pointer">
+          <td class="mono">${esc(o.noOrder)}</td>
+          <td>${fmtDate(o.tanggal)}</td>
+          <td><b>${esc(o.pelanggan)}</b></td>
+          <td>${esc(o.jenis)}</td>
+          <td>${statusPill(o.status)}</td>
+          <td class="text-right mono">${fmtRp(o.nilaiOrder)}</td>
+          <td class="text-right"><button class="btn-icon" data-open="${o.id}">→</button></td>
+        </tr>
+      `).join('')}
+    </tbody>
+  </table>`;
+}
+
+viewEvents.orders = () => {
+  $$('[data-order]').forEach(el => el.addEventListener('click', e => {
+    if (e.target.closest('button')) return;
+    navigate('orderDetail', { id: +el.dataset.order });
+  }));
+  $$('[data-open]').forEach(el => el.addEventListener('click', () => {
+    navigate('orderDetail', { id: +el.dataset.open });
+  }));
+
+  const search = $('#orderSearch');
+  const filter = $('#orderFilter');
+  function apply() {
+    const q = (search.value||'').toLowerCase().trim();
+    const st = filter.value;
+    const rows = $$('#ordersTableWrap tbody tr');
+    rows.forEach(tr => {
+      const text = tr.textContent.toLowerCase();
+      const status = tr.querySelector('.pill').textContent;
+      const matchQ = !q || text.includes(q);
+      const matchS = !st || status === st;
+      tr.style.display = matchQ && matchS ? '' : 'none';
+    });
+  }
+  search.addEventListener('input', apply);
+  filter.addEventListener('change', apply);
+
+  const addBtn = $('#addOrderBtn');
+  if (addBtn) addBtn.addEventListener('click', () => openOrderForm());
+};
+
+function genOrderNo() {
+  const d = new Date();
+  const ym = d.getFullYear() + String(d.getMonth()+1).padStart(2,'0');
+  const prefix = 'SPK-' + ym + '-';
+  const n = db.orders.filter(o => (o.noOrder||'').startsWith(prefix)).length + 1;
+  return prefix + String(n).padStart(4,'0');
+}
+
+const JENIS = ['Hard Chrome','Teflon Coating','Metal Spray','Moulding Injection',
+  'Machining CNC','Bubut CNC','Fabrikasi','Bending','Lainnya'];
+const SATUAN = ['pcs','unit','set','kg','meter','liter','jam'];
+
+function openOrderForm(edit=null) {
+  const isEdit = !!edit;
+  const o = edit || {
+    noOrder: genOrderNo(),
+    tanggal: today(),
+    pelanggan:'', telepon:'', jenis:'Hard Chrome', pekerjaan:'',
+    jumlah:1, satuan:'pcs', deadline:'',
+    nilaiOrder:0, biayaJasa:0, catatan:'', status:'Order Masuk'
+  };
+  openModal(isEdit?'Edit Order':'Tambah Order Baru', `
+    <form id="orderForm">
+      <div class="form-row">
+        <div class="field">
+          <label>No. Order</label>
+          <input name="noOrder" value="${esc(o.noOrder)}" readonly style="background:#f0f2f7">
+        </div>
+        <div class="field">
+          <label>Tanggal <span class="req">*</span></label>
+          <input type="date" name="tanggal" value="${esc(o.tanggal)}" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="field">
+          <label>Nama Pelanggan <span class="req">*</span></label>
+          <input name="pelanggan" value="${esc(o.pelanggan)}" required placeholder="PT / CV / Perorangan">
+        </div>
+        <div class="field">
+          <label>Telepon</label>
+          <input name="telepon" value="${esc(o.telepon)}" placeholder="08xx">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="field">
+          <label>Jenis Pekerjaan <span class="req">*</span></label>
+          <select name="jenis" required>
+            ${JENIS.map(j=>`<option ${j===o.jenis?'selected':''}>${j}</option>`).join('')}
+          </select>
+        </div>
+        <div class="field">
+          <label>Deadline</label>
+          <input type="date" name="deadline" value="${esc(o.deadline)}">
+        </div>
+      </div>
+      <div class="field">
+        <label>Deskripsi Pekerjaan <span class="req">*</span></label>
+        <textarea name="pekerjaan" required placeholder="Contoh: Hard chrome diameter 50mm, panjang 500mm, 5 pcs">${esc(o.pekerjaan)}</textarea>
+      </div>
+      <div class="form-row three">
+        <div class="field">
+          <label>Jumlah</label>
+          <input type="number" name="jumlah" value="${esc(o.jumlah)}" min="0" step="any">
+        </div>
+        <div class="field">
+          <label>Satuan</label>
+          <select name="satuan">
+            ${SATUAN.map(s=>`<option ${s===o.satuan?'selected':''}>${s}</option>`).join('')}
+          </select>
+        </div>
+        <div class="field">
+          <label>Nilai Order (Rp) <span class="req">*</span></label>
+          <input type="number" name="nilaiOrder" value="${esc(o.nilaiOrder)}" min="0" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="field">
+          <label>Biaya Jasa Internal (Rp)</label>
+          <input type="number" name="biayaJasa" value="${esc(o.biayaJasa)}" min="0">
+          <div class="hint">Untuk hitung HPP (biaya tenaga kerja)</div>
+        </div>
+        <div class="field">
+          <label>Status</label>
+          <select name="status">
+            ${['Order Masuk','Produksi','QC','Selesai','Diambil'].map(s=>`<option ${s===o.status?'selected':''}>${s}</option>`).join('')}
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label>Catatan</label>
+        <textarea name="catatan" placeholder="Opsional">${esc(o.catatan)}</textarea>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" onclick="closeModal()">Batal</button>
+        <button type="submit" class="btn btn-primary">${isEdit?'Simpan Perubahan':'Simpan Order'}</button>
+      </div>
+    </form>
+  `, {wide:true});
+
+  $('#orderForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const fd = new FormData(e.target);
+    const data = {
+      noOrder: fd.get('noOrder'),
+      tanggal: fd.get('tanggal'),
+      pelanggan: fd.get('pelanggan').trim(),
+      telepon: fd.get('telepon').trim(),
+      jenis: fd.get('jenis'),
+      pekerjaan: fd.get('pekerjaan').trim(),
+      jumlah: +fd.get('jumlah')||0,
+      satuan: fd.get('satuan'),
+      deadline: fd.get('deadline'),
+      nilaiOrder: +fd.get('nilaiOrder')||0,
+      biayaJasa: +fd.get('biayaJasa')||0,
+      status: fd.get('status'),
+      catatan: fd.get('catatan').trim(),
+    };
+    if (isEdit) {
+      const idx = db.orders.findIndex(x => x.id === edit.id);
+      db.orders[idx] = { ...db.orders[idx], ...data };
+      toast('Order diperbarui.', 'success');
+    } else {
+      db.orders.push({ id: nextId(db.orders), ...data, createdAt: Date.now() });
+      toast('Order baru ditambahkan.', 'success');
+    }
+    saveDb();
+    closeModal();
+    navigate(state.view, state.params);
+  });
+}
+
+/* ---------- ORDER DETAIL ---------- */
+views.orderDetail = ({ id }) => {
+  const o = db.orders.find(x => x.id === id);
+  if (!o) return `<div class="empty">Order tidak ditemukan.</div>`;
+  const moves = db.moves.filter(m => m.orderId === o.id);
+  const materialCost = moves.reduce((s,m) => s + (m.harga||0) * (m.jumlah||0), 0);
+  const hpp = (+o.biayaJasa||0) + materialCost;
+  const margin = (+o.nilaiOrder||0) - hpp;
+  const canEdit = state.user.role === 'admin';
+  const canUpdate = ['admin','produksi'].includes(state.user.role);
+
+  const steps = ['Order Masuk','Produksi','QC','Selesai','Diambil'];
+  const cur = steps.indexOf(o.status);
+
+  const invoice = db.invoices.find(inv => inv.orderId === o.id);
+
+  return `
+    <div style="display:flex;gap:10px;align-items:center;margin-bottom:16px;flex-wrap:wrap">
+      <a href="#" class="btn btn-ghost btn-sm" id="backOrders">← Kembali</a>
+      <h2 style="font-size:18px;font-weight:800">${esc(o.noOrder)}</h2>
+      ${statusPill(o.status)}
+    </div>
+
+    <div class="detail-grid">
+      <div>
+        <div class="card card-pad mb-16">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;flex-wrap:wrap;gap:10px">
+            <h3 style="font-size:15px;font-weight:800">Informasi Order</h3>
+            <div class="gap">
+              <button class="btn btn-ghost btn-sm" id="printSpk">🖨 Print SPK</button>
+              ${canEdit ? `<button class="btn btn-ghost btn-sm" id="editOrder">✏ Edit</button>
+              <button class="btn btn-danger btn-sm" id="delOrder">🗑 Hapus</button>` : ''}
+            </div>
+          </div>
+          <div class="info-grid">
+            <div class="info-item"><div class="k">Pelanggan</div><div class="v">${esc(o.pelanggan)}</div></div>
+            <div class="info-item"><div class="k">Telepon</div><div class="v">${esc(o.telepon)||'-'}</div></div>
+            <div class="info-item"><div class="k">Jenis Pekerjaan</div><div class="v">${esc(o.jenis)}</div></div>
+            <div class="info-item"><div class="k">Jumlah</div><div class="v">${fmtNum(o.jumlah)} ${esc(o.satuan)}</div></div>
+            <div class="info-item"><div class="k">Tanggal Order</div><div class="v">${fmtDate(o.tanggal)}</div></div>
+            <div class="info-item"><div class="k">Deadline</div><div class="v">${o.deadline?fmtDate(o.deadline):'-'}</div></div>
+            <div class="info-item" style="grid-column:1/-1">
+              <div class="k">Deskripsi</div><div class="v">${esc(o.pekerjaan)}</div>
+            </div>
+            ${o.catatan?`<div class="info-item" style="grid-column:1/-1">
+              <div class="k">Catatan</div><div class="v">${esc(o.catatan)}</div>
+            </div>`:''}
+          </div>
+        </div>
+
+        <div class="card mb-16">
+          <div class="card-head">
+            <h3>Pemakaian Material</h3>
+            ${canUpdate?`<button class="btn btn-primary btn-sm" id="addUsage">+ Pemakaian</button>`:''}
+          </div>
+          ${moves.length ? `
+            <div class="table-wrap"><table>
+              <thead><tr><th>Material</th><th class="text-right">Qty</th>
+              <th class="text-right">Harga</th><th class="text-right">Subtotal</th><th></th></tr></thead>
+              <tbody>
+                ${moves.map(m=>`
+                  <tr>
+                    <td>${esc(m.materialNama)}</td>
+                    <td class="text-right">${fmtNum(m.jumlah)} ${esc(m.satuan)}</td>
+                    <td class="text-right mono">${fmtRp(m.harga)}</td>
+                    <td class="text-right mono">${fmtRp(m.harga*m.jumlah)}</td>
+                    <td class="text-right">${canUpdate?`<button class="btn-icon" data-del-move="${m.id}">×</button>`:''}</td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table></div>
+          ` : `<div class="empty" style="padding:24px"><p style="font-size:12.5px">Belum ada pemakaian material.</p></div>`}
+        </div>
+
+        ${canEdit?`
+        <div class="card">
+          <div class="card-head"><h3>Perhitungan HPP &amp; Margin</h3></div>
+          <div class="card-pad">
+            <div class="hpp-box">
+              <div class="hpp-row"><span>Nilai Order (harga ke pelanggan)</span><b>${fmtRp(o.nilaiOrder)}</b></div>
+              <div class="hpp-row"><span>Biaya Jasa Internal</span><span>- ${fmtRp(o.biayaJasa)}</span></div>
+              <div class="hpp-row"><span>Biaya Material Terpakai</span><span>- ${fmtRp(materialCost)}</span></div>
+              <div class="hpp-row total"><span>Laba Kotor</span>
+                <span style="color:${margin>=0?'var(--success)':'var(--danger)'}">${fmtRp(margin)}</span></div>
+              ${o.nilaiOrder>0?`<div class="hpp-row"><span style="color:var(--ink2);font-size:12px">Margin</span>
+                <b style="color:${margin>=0?'var(--success)':'var(--danger)'}">
+                  ${((margin/o.nilaiOrder)*100).toFixed(1)}%
+                </b></div>`:''}
+            </div>
+          </div>
+        </div>
+        `:''}
+      </div>
+
+      <div>
+        <div class="card mb-16">
+          <div class="card-head"><h3>Status Produksi</h3></div>
+          <div style="padding:14px 16px">
+            <div class="stepper">
+              ${steps.map((s,i)=>`
+                <div class="step-item ${i<cur?'done':''} ${i===cur?'active':''}">
+                  <div class="dot">${i<cur?'✓':i+1}</div>
+                  <div style="flex:1">${s}</div>
+                  ${i===cur+1 && canUpdate?`<button class="btn btn-primary btn-sm" data-advance="${s}">→</button>`:''}
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h3>Invoice</h3></div>
+          <div class="card-pad">
+            ${invoice ? `
+              <div style="font-size:13px;margin-bottom:10px">
+                <div class="info-item"><div class="k">No. Invoice</div><div class="v mono">${esc(invoice.noInvoice)}</div></div>
+                <div class="info-item" style="margin-top:8px"><div class="k">Status</div>
+                  <div class="v">${payPill(invoice.status)}</div></div>
+                <div class="info-item" style="margin-top:8px"><div class="k">Total</div>
+                  <div class="v">${fmtRp(invoice.total)}</div></div>
+              </div>
+              <a href="#" class="btn btn-ghost btn-sm" data-nav-invoice="${invoice.id}" style="width:100%">Lihat Invoice →</a>
+            ` : ['Selesai','Diambil'].includes(o.status) && canEdit ? `
+              <p style="font-size:12.5px;color:var(--ink2);margin-bottom:12px">
+                Order selesai. Anda bisa membuat invoice untuk pelanggan.
+              </p>
+              <button class="btn btn-primary btn-sm" id="createInvoice" style="width:100%">+ Buat Invoice</button>
+            ` : `<p style="font-size:12.5px;color:var(--ink2)">Invoice bisa dibuat setelah order <b>Selesai</b>.</p>`}
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+};
+
+viewEvents.orderDetail = (params) => {
+  const o = db.orders.find(x => x.id === params.id);
+  if (!o) return;
+
+  $('#backOrders').addEventListener('click', e => { e.preventDefault(); navigate('orders'); });
+
+  const printBtn = $('#printSpk');
+  if (printBtn) printBtn.addEventListener('click', () => printSpk(o));
+
+  const editBtn = $('#editOrder');
+  if (editBtn) editBtn.addEventListener('click', () => openOrderForm(o));
+
+  const delBtn = $('#delOrder');
+  if (delBtn) delBtn.addEventListener('click', () => {
+    if (!confirm('Hapus order ' + o.noOrder + '?')) return;
+    db.orders = db.orders.filter(x => x.id !== o.id);
+    db.moves = db.moves.filter(m => m.orderId !== o.id);
+    saveDb(); toast('Order dihapus.', 'success'); navigate('orders');
+  });
+
+  $$('[data-advance]').forEach(b => b.addEventListener('click', () => {
+    o.status = b.dataset.advance;
+    saveDb();
+    toast('Status diubah ke ' + o.status, 'success');
+    navigate('orderDetail', params);
+  }));
+
+  const addUsage = $('#addUsage');
+  if (addUsage) addUsage.addEventListener('click', () => openUsageForm(o));
+
+  $$('[data-del-move]').forEach(b => b.addEventListener('click', () => {
+    if (!confirm('Hapus pemakaian material ini? Stok akan dikembalikan.')) return;
+    const mv = db.moves.find(x => x.id === +b.dataset.delMove);
+    if (!mv) return;
+    const mat = db.materials.find(m => m.id === mv.materialId);
+    if (mat) mat.stok = (+mat.stok||0) + mv.jumlah;
+    db.moves = db.moves.filter(x => x.id !== mv.id);
+    saveDb(); toast('Pemakaian dihapus.', 'success');
+    navigate('orderDetail', params);
+  }));
+
+  const ci = $('#createInvoice');
+  if (ci) ci.addEventListener('click', () => openInvoiceForm(o));
+
+  $$('[data-nav-invoice]').forEach(a => a.addEventListener('click', e => {
+    e.preventDefault();
+    navigate('invoiceDetail', { id: +a.dataset.navInvoice });
+  }));
+};
+
+function openUsageForm(order) {
+  const matOpts = db.materials.map(m =>
+    `<option value="${m.id}">${esc(m.nama)} (stok: ${fmtNum(m.stok)} ${esc(m.satuan)})</option>`
+  ).join('');
+  if (!db.materials.length) {
+    toast('Belum ada material. Tambahkan material dulu di menu Stok Material.', 'error');
+    return;
+  }
+  openModal('Tambah Pemakaian Material', `
+    <form id="usageForm">
+      <div class="field">
+        <label>Material <span class="req">*</span></label>
+        <select name="materialId" required>${matOpts}</select>
+      </div>
+      <div class="form-row">
+        <div class="field">
+          <label>Jumlah <span class="req">*</span></label>
+          <input type="number" name="jumlah" required min="0.01" step="any" value="1">
+        </div>
+        <div class="field">
+          <label>Keterangan</label>
+          <input name="ket" placeholder="Opsional">
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" onclick="closeModal()">Batal</button>
+        <button type="submit" class="btn btn-primary">Simpan</button>
+      </div>
+    </form>
+  `);
+  $('#usageForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const fd = new FormData(e.target);
+    const mat = db.materials.find(m => m.id === +fd.get('materialId'));
+    const qty = +fd.get('jumlah');
+    if (!mat || !qty) return;
+    if (qty > mat.stok) { toast('Stok tidak mencukupi ('+fmtNum(mat.stok)+').', 'error'); return; }
+    mat.stok = (+mat.stok||0) - qty;
+    db.moves.push({
+      id: nextId(db.moves),
+      materialId: mat.id, materialNama: mat.nama, satuan: mat.satuan,
+      tipe: 'keluar', jumlah: qty, harga: mat.harga,
+      keterangan: fd.get('ket') || 'Pemakaian order ' + order.noOrder,
+      orderId: order.id, tanggal: today(), createdAt: Date.now()
+    });
+    saveDb(); closeModal(); toast('Pemakaian dicatat.', 'success');
+    navigate('orderDetail', { id: order.id });
+  });
+}
+
+/* ==================================================================
+   MATERIALS
+   ================================================================== */
+views.materials = () => {
+  const canEdit = ['admin'].includes(state.user.role);
+  return `
+    <div class="toolbar">
+      <div class="search"><input id="matSearch" placeholder="Cari material..."></div>
+      ${canEdit?`<button class="btn btn-primary" id="addMatBtn">+ Tambah Material</button>`:''}
+    </div>
+    <div class="card">
+      <div class="table-wrap" id="matsTableWrap">${renderMatsTable()}</div>
+    </div>
+  `;
+};
+
+function renderMatsTable() {
+  if (!db.materials.length) return `<div class="empty"><div class="ico">📦</div><p>Belum ada material. Klik <b>Tambah Material</b> untuk mulai.</p></div>`;
+  return `<table>
+    <thead><tr>
+      <th>Nama Material</th><th>Satuan</th>
+      <th class="text-right">Stok</th><th class="text-right">Min</th>
+      <th class="text-right">Harga Satuan</th><th>Status</th><th></th>
+    </tr></thead>
+    <tbody>
+      ${db.materials.map(m=>{
+        const low = m.stok <= (m.stokMin||0);
+        return `<tr>
+          <td><b>${esc(m.nama)}</b>${m.supplier?`<br><small style="color:var(--ink2)">${esc(m.supplier)}</small>`:''}</td>
+          <td>${esc(m.satuan)}</td>
+          <td class="text-right"><b>${fmtNum(m.stok)}</b></td>
+          <td class="text-right">${fmtNum(m.stokMin)}</td>
+          <td class="text-right mono">${fmtRp(m.harga)}</td>
+          <td>${low?'<span class="pill kritis">Kritis</span>':'<span class="pill ok">Aman</span>'}</td>
+          <td class="text-right">
+            <div class="gap" style="justify-content:flex-end">
+              <button class="btn-icon" data-in="${m.id}" title="Stok Masuk">+</button>
+              <button class="btn-icon" data-out="${m.id}" title="Stok Keluar">−</button>
+              <button class="btn-icon" data-hist="${m.id}" title="Riwayat">📋</button>
+              <button class="btn-icon" data-edit="${m.id}" title="Edit">✏</button>
+              <button class="btn-icon" data-del="${m.id}" title="Hapus">🗑</button>
+            </div>
+          </td>
+        </tr>`;
+      }).join('')}
+    </tbody>
+  </table>`;
+}
+
+viewEvents.materials = () => {
+  const search = $('#matSearch');
+  if (search) search.addEventListener('input', () => {
+    const q = search.value.toLowerCase();
+    $$('#matsTableWrap tbody tr').forEach(tr => {
+      tr.style.display = tr.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
+  });
+
+  const addBtn = $('#addMatBtn');
+  if (addBtn) addBtn.addEventListener('click', () => openMatForm());
+
+  $$('[data-edit]').forEach(b => b.addEventListener('click', () => {
+    openMatForm(db.materials.find(m=>m.id===+b.dataset.edit));
+  }));
+  $$('[data-del]').forEach(b => b.addEventListener('click', () => {
+    const m = db.materials.find(x=>x.id===+b.dataset.del);
+    if (!confirm('Hapus material "'+m.nama+'"?')) return;
+    db.materials = db.materials.filter(x=>x.id!==m.id);
+    saveDb(); toast('Material dihapus.', 'success'); navigate('materials');
+  }));
+  $$('[data-in]').forEach(b => b.addEventListener('click', () => openMoveForm(+b.dataset.in, 'masuk')));
+  $$('[data-out]').forEach(b => b.addEventListener('click', () => openMoveForm(+b.dataset.out, 'keluar')));
+  $$('[data-hist]').forEach(b => b.addEventListener('click', () => showHistory(+b.dataset.hist)));
+};
+
+function openMatForm(edit=null) {
+  const m = edit || { nama:'', satuan:'kg', harga:0, stok:0, stokMin:0, supplier:'' };
+  openModal(edit?'Edit Material':'Tambah Material', `
+    <form id="matForm">
+      <div class="field">
+        <label>Nama Material <span class="req">*</span></label>
+        <input name="nama" required value="${esc(m.nama)}" placeholder="Contoh: Besi Plat 5mm">
+      </div>
+      <div class="form-row three">
+        <div class="field">
+          <label>Satuan <span class="req">*</span></label>
+          <select name="satuan">
+            ${SATUAN.map(s=>`<option ${s===m.satuan?'selected':''}>${s}</option>`).join('')}
+          </select>
+        </div>
+        <div class="field">
+          <label>Harga Satuan (Rp) <span class="req">*</span></label>
+          <input type="number" name="harga" required min="0" value="${esc(m.harga)}">
+        </div>
+        <div class="field">
+          <label>Stok Awal</label>
+          <input type="number" name="stok" min="0" step="any" value="${esc(m.stok)}">
+          <div class="hint">${edit?'Ubah via tombol +/−':'Hanya untuk tambah baru'}</div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="field">
+          <label>Stok Minimum</label>
+          <input type="number" name="stokMin" min="0" step="any" value="${esc(m.stokMin)}">
+          <div class="hint">Notifikasi jika stok ≤ nilai ini</div>
+        </div>
+        <div class="field">
+          <label>Supplier</label>
+          <input name="supplier" value="${esc(m.supplier)}" placeholder="Nama supplier">
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" onclick="closeModal()">Batal</button>
+        <button type="submit" class="btn btn-primary">${edit?'Simpan':'Tambah'}</button>
+      </div>
+    </form>
+  `);
+  $('#matForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const fd = new FormData(e.target);
+    const data = {
+      nama: fd.get('nama').trim(),
+      satuan: fd.get('satuan'),
+      harga: +fd.get('harga')||0,
+      stokMin: +fd.get('stokMin')||0,
+      supplier: fd.get('supplier').trim(),
+    };
+    if (edit) {
+      const idx = db.materials.findIndex(x=>x.id===edit.id);
+      db.materials[idx] = { ...db.materials[idx], ...data };
+      toast('Material diperbarui.', 'success');
+    } else {
+      data.stok = +fd.get('stok')||0;
+      db.materials.push({ id: nextId(db.materials), ...data });
+      toast('Material ditambahkan.', 'success');
+    }
+    saveDb(); closeModal(); navigate('materials');
+  });
+}
+
+function openMoveForm(materialId, tipe) {
+  const m = db.materials.find(x=>x.id===materialId);
+  if (!m) return;
+  openModal((tipe==='masuk'?'Stok Masuk':'Stok Keluar')+' — '+m.nama, `
+    <form id="moveForm">
+      <div style="background:#f9fafc;padding:12px;border-radius:8px;margin-bottom:14px;font-size:13px">
+        <b>${esc(m.nama)}</b> — stok saat ini: <b>${fmtNum(m.stok)} ${esc(m.satuan)}</b>
+      </div>
+      <div class="form-row">
+        <div class="field">
+          <label>Jumlah <span class="req">*</span></label>
+          <input type="number" name="jumlah" required min="0.01" step="any" value="1">
+        </div>
+        <div class="field">
+          <label>Tanggal</label>
+          <input type="date" name="tanggal" value="${today()}">
+        </div>
+      </div>
+      <div class="field">
+        <label>Keterangan</label>
+        <input name="ket" placeholder="${tipe==='masuk'?'Pembelian / supplier':'Pemakaian / rusak'}">
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" onclick="closeModal()">Batal</button>
+        <button type="submit" class="btn btn-primary">Simpan</button>
+      </div>
+    </form>
+  `);
+  $('#moveForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const fd = new FormData(e.target);
+    const qty = +fd.get('jumlah');
+    if (!qty) return;
+    if (tipe === 'keluar' && qty > m.stok) {
+      toast('Stok tidak cukup.', 'error'); return;
+    }
+    m.stok = tipe === 'masuk' ? (+m.stok||0) + qty : (+m.stok||0) - qty;
+    db.moves.push({
+      id: nextId(db.moves),
+      materialId: m.id, materialNama: m.nama, satuan: m.satuan,
+      tipe, jumlah: qty, harga: m.harga,
+      keterangan: fd.get('ket').trim(),
+      orderId: null, tanggal: fd.get('tanggal'), createdAt: Date.now()
+    });
+    saveDb(); closeModal(); toast('Stok diperbarui.', 'success');
+    navigate('materials');
+  });
+}
+
+function showHistory(materialId) {
+  const m = db.materials.find(x=>x.id===materialId);
+  const list = db.moves.filter(x=>x.materialId===materialId)
+    .sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+  openModal('Riwayat Stok — '+m.nama, `
+    ${list.length? `
+      <div class="table-wrap"><table>
+        <thead><tr><th>Tanggal</th><th>Tipe</th><th class="text-right">Jumlah</th>
+        <th>Keterangan</th></tr></thead>
+        <tbody>
+          ${list.map(x=>`
+            <tr>
+              <td>${fmtDate(x.tanggal)}</td>
+              <td><span class="pill ${x.tipe==='masuk'?'selesai':'produksi'}">${x.tipe}</span></td>
+              <td class="text-right"><b>${x.tipe==='masuk'?'+':'−'}${fmtNum(x.jumlah)}</b> ${esc(x.satuan)}</td>
+              <td>${esc(x.keterangan)||'-'}</td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table></div>
+    ` : `<div class="empty"><p>Belum ada riwayat.</p></div>`}
+    <div class="modal-actions"><button class="btn btn-ghost" onclick="closeModal()">Tutup</button></div>
+  `, {wide:true});
+}
+
+/* ==================================================================
+   INVOICES
+   ================================================================== */
+views.invoices = () => {
+  const canEdit = state.user.role === 'admin';
+  const list = [...db.invoices].sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+  return `
+    <div class="toolbar">
+      <div class="search"><input id="invSearch" placeholder="Cari invoice, pelanggan..."></div>
+    </div>
+    <div class="card">
+      <div class="table-wrap">
+        ${list.length ? `<table>
+          <thead><tr>
+            <th>No. Invoice</th><th>Tanggal</th><th>Pelanggan</th>
+            <th class="text-right">Total</th><th>Status</th><th></th>
+          </tr></thead>
+          <tbody>
+            ${list.map(inv=>{
+              const o = db.orders.find(x=>x.id===inv.orderId) || {};
+              return `<tr data-inv="${inv.id}" style="cursor:pointer">
+                <td class="mono">${esc(inv.noInvoice)}</td>
+                <td>${fmtDate(inv.tanggal)}</td>
+                <td>${esc(o.pelanggan||'-')}</td>
+                <td class="text-right mono">${fmtRp(inv.total)}</td>
+                <td>${payPill(inv.status)}</td>
+                <td class="text-right"><button class="btn-icon">→</button></td>
+              </tr>`;
+            }).join('')}
+          </tbody>
+        </table>` : `<div class="empty"><div class="ico">🧾</div><p>Belum ada invoice. Buat dari halaman detail order yang sudah <b>Selesai</b>.</p></div>`}
+      </div>
+    </div>
+  `;
+};
+
+viewEvents.invoices = () => {
+  $$('[data-inv]').forEach(tr => tr.addEventListener('click', () => {
+    navigate('invoiceDetail', { id: +tr.dataset.inv });
+  }));
+  const s = $('#invSearch');
+  if (s) s.addEventListener('input', () => {
+    const q = s.value.toLowerCase();
+    $$('[data-inv]').forEach(tr => tr.style.display = tr.textContent.toLowerCase().includes(q) ? '' : 'none');
+  });
+};
+
+function genInvoiceNo() {
+  const d = new Date();
+  const ym = d.getFullYear() + String(d.getMonth()+1).padStart(2,'0');
+  const prefix = 'INV-' + ym + '-';
+  const n = db.invoices.filter(i => (i.noInvoice||'').startsWith(prefix)).length + 1;
+  return prefix + String(n).padStart(4,'0');
+}
+
+function openInvoiceForm(order) {
+  openModal('Buat Invoice — '+order.noOrder, `
+    <form id="invForm">
+      <div style="background:#f9fafc;padding:12px;border-radius:8px;margin-bottom:14px;font-size:13px">
+        Pelanggan: <b>${esc(order.pelanggan)}</b><br>
+        Nilai order: <b>${fmtRp(order.nilaiOrder)}</b>
+      </div>
+      <div class="form-row">
+        <div class="field">
+          <label>No. Invoice</label>
+          <input name="noInvoice" value="${genInvoiceNo()}" readonly style="background:#f0f2f7">
+        </div>
+        <div class="field">
+          <label>Tanggal Invoice</label>
+          <input type="date" name="tanggal" value="${today()}" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="field">
+          <label>Total (Rp)</label>
+          <input type="number" name="total" value="${order.nilaiOrder||0}" min="0" required>
+        </div>
+        <div class="field">
+          <label>PPN (%)</label>
+          <input type="number" name="ppn" value="0" min="0" max="100" step="any">
+        </div>
+      </div>
+      <div class="field">
+        <label>Catatan Invoice</label>
+        <textarea name="catatan" placeholder="Opsional"></textarea>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" onclick="closeModal()">Batal</button>
+        <button type="submit" class="btn btn-primary">Buat Invoice</button>
+      </div>
+    </form>
+  `);
+  $('#invForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const fd = new FormData(e.target);
+    const ppn = +fd.get('ppn')||0;
+    const total = +fd.get('total')||0;
+    const finalTotal = total + (total * ppn / 100);
+    db.invoices.push({
+      id: nextId(db.invoices),
+      noInvoice: fd.get('noInvoice'),
+      orderId: order.id,
+      tanggal: fd.get('tanggal'),
+      total: finalTotal,
+      ppn, catatan: fd.get('catatan').trim(),
+      status: 'Belum Bayar',
+      pembayaran: [],
+      createdAt: Date.now()
+    });
+    saveDb(); closeModal(); toast('Invoice dibuat.', 'success');
+    navigate('orderDetail', { id: order.id });
+  });
+}
+
+views.invoiceDetail = ({id}) => {
+  const inv = db.invoices.find(x=>x.id===id);
+  if (!inv) return `<div class="empty">Invoice tidak ditemukan.</div>`;
+  const o = db.orders.find(x=>x.id===inv.orderId) || {};
+  const canEdit = state.user.role === 'admin';
+  const paid = inv.pembayaran.reduce((s,p)=>s+(+p.jumlah||0),0);
+  const remaining = inv.total - paid;
+  return `
+    <div style="display:flex;gap:10px;align-items:center;margin-bottom:16px;flex-wrap:wrap">
+      <a href="#" class="btn btn-ghost btn-sm" id="backInv">← Kembali</a>
+      <h2 style="font-size:18px;font-weight:800">${esc(inv.noInvoice)}</h2>
+      ${payPill(inv.status)}
+    </div>
+    <div class="detail-grid">
+      <div>
+        <div class="card card-pad mb-16">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px">
+            <h3 style="font-size:15px;font-weight:800">Detail Invoice</h3>
+            <button class="btn btn-ghost btn-sm" id="printInv">🖨 Print</button>
+          </div>
+          <div class="info-grid" style="margin-top:14px">
+            <div class="info-item"><div class="k">Pelanggan</div><div class="v">${esc(o.pelanggan||'-')}</div></div>
+            <div class="info-item"><div class="k">No. Order</div><div class="v mono">${esc(o.noOrder||'-')}</div></div>
+            <div class="info-item"><div class="k">Tanggal</div><div class="v">${fmtDate(inv.tanggal)}</div></div>
+            <div class="info-item"><div class="k">Jenis Pekerjaan</div><div class="v">${esc(o.jenis||'-')}</div></div>
+            <div class="info-item"><div class="k">Total</div><div class="v">${fmtRp(inv.total)}</div></div>
+            <div class="info-item"><div class="k">Sudah Dibayar</div><div class="v" style="color:var(--success)">${fmtRp(paid)}</div></div>
+            <div class="info-item"><div class="k">Sisa</div>
+              <div class="v" style="color:${remaining>0?'var(--danger)':'var(--success)'}">${fmtRp(remaining)}</div></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <h3>Riwayat Pembayaran</h3>
+            ${canEdit && remaining>0 ? `<button class="btn btn-primary btn-sm" id="addPay">+ Pembayaran</button>`:''}
+          </div>
+          ${inv.pembayaran.length ? `
+            <div class="table-wrap"><table>
+              <thead><tr><th>Tanggal</th><th>Metode</th><th class="text-right">Jumlah</th></tr></thead>
+              <tbody>
+                ${inv.pembayaran.map(p=>`
+                  <tr><td>${fmtDate(p.tanggal)}</td><td>${esc(p.metode)||'-'}</td>
+                  <td class="text-right mono">${fmtRp(p.jumlah)}</td></tr>
+                `).join('')}
+              </tbody>
+            </table></div>
+          ` : `<div class="empty" style="padding:20px"><p style="font-size:12.5px">Belum ada pembayaran.</p></div>`}
+        </div>
+      </div>
+
+      <div class="card card-pad">
+        <h3 style="font-size:14px;font-weight:800;margin-bottom:10px">Status</h3>
+        ${canEdit ? `
+          <div class="field">
+            <label>Ubah Status</label>
+            <select id="invStatus">
+              ${['Belum Bayar','DP','Lunas'].map(s=>`<option ${s===inv.status?'selected':''}>${s}</option>`).join('')}
+            </select>
+          </div>
+        `:''}
+      </div>
+    </div>
+  `;
+};
+
+viewEvents.invoiceDetail = (params) => {
+  const inv = db.invoices.find(x=>x.id===params.id);
+  if (!inv) return;
+  $('#backInv').addEventListener('click', e => { e.preventDefault(); navigate('invoices'); });
+  const pr = $('#printInv');
+  if (pr) pr.addEventListener('click', () => printInvoice(inv));
+
+  const addPay = $('#addPay');
+  if (addPay) addPay.addEventListener('click', () => {
+    const paid = inv.pembayaran.reduce((s,p)=>s+(+p.jumlah||0),0);
+    const remaining = inv.total - paid;
+    openModal('Tambah Pembayaran', `
+      <form id="payForm">
+        <div style="background:#f9fafc;padding:12px;border-radius:8px;margin-bottom:14px;font-size:13px">
+          Total: <b>${fmtRp(inv.total)}</b><br>
+          Sisa: <b style="color:var(--danger)">${fmtRp(remaining)}</b>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label>Tanggal</label>
+            <input type="date" name="tanggal" value="${today()}" required>
+          </div>
+          <div class="field">
+            <label>Metode</label>
+            <select name="metode">
+              <option>Transfer</option><option>Tunai</option><option>Cek</option><option>Lainnya</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label>Jumlah (Rp) <span class="req">*</span></label>
+          <input type="number" name="jumlah" min="0.01" step="any" value="${remaining}" required>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-ghost" onclick="closeModal()">Batal</button>
+          <button type="submit" class="btn btn-primary">Simpan</button>
+        </div>
+      </form>
+    `);
+    $('#payForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const fd = new FormData(e.target);
+      const j = +fd.get('jumlah');
+      if (!j) return;
+      inv.pembayaran.push({ tanggal: fd.get('tanggal'), metode: fd.get('metode'), jumlah: j });
+      const totalPaid = inv.pembayaran.reduce((s,p)=>s+(+p.jumlah||0),0);
+      inv.status = totalPaid >= inv.total ? 'Lunas' : (totalPaid > 0 ? 'DP' : 'Belum Bayar');
+      saveDb(); closeModal(); toast('Pembayaran dicatat.', 'success');
+      navigate('invoiceDetail', params);
+    });
+  });
+
+  const st = $('#invStatus');
+  if (st) st.addEventListener('change', () => {
+    inv.status = st.value;
+    saveDb(); toast('Status invoice diperbarui.', 'success');
+    navigate('invoiceDetail', params);
+  });
+};
+
+/* ==================================================================
+   EXPENSES
+   ================================================================== */
+views.expenses = () => {
+  const canEdit = state.user.role === 'admin';
+  const list = [...db.expenses].sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+  return `
+    <div class="toolbar">
+      <div class="search"><input id="expSearch" placeholder="Cari pengeluaran..."></div>
+      ${canEdit?`<button class="btn btn-primary" id="addExpBtn">+ Tambah Pengeluaran</button>`:''}
+    </div>
+    <div class="card">
+      ${list.length ? `<div class="table-wrap"><table>
+        <thead><tr><th>Tanggal</th><th>Kategori</th><th>Keterangan</th>
+        <th class="text-right">Jumlah</th><th></th></tr></thead>
+        <tbody id="expBody">
+          ${list.map(x=>`
+            <tr>
+              <td>${fmtDate(x.tanggal)}</td>
+              <td><b>${esc(x.kategori)}</b></td>
+              <td>${esc(x.keterangan)}</td>
+              <td class="text-right mono">${fmtRp(x.jumlah)}</td>
+              <td class="text-right">${canEdit?`<button class="btn-icon" data-exp-del="${x.id}">🗑</button>`:''}</td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table></div>` : `<div class="empty"><div class="ico">💸</div><p>Belum ada pengeluaran.</p></div>`}
+    </div>
+  `;
+};
+
+viewEvents.expenses = () => {
+  const s = $('#expSearch');
+  if (s) s.addEventListener('input', () => {
+    const q = s.value.toLowerCase();
+    $$('#expBody tr').forEach(tr => tr.style.display = tr.textContent.toLowerCase().includes(q) ? '' : 'none');
+  });
+  const addBtn = $('#addExpBtn');
+  if (addBtn) addBtn.addEventListener('click', openExpenseForm);
+  $$('[data-exp-del]').forEach(b => b.addEventListener('click', () => {
+    if (!confirm('Hapus pengeluaran ini?')) return;
+    db.expenses = db.expenses.filter(x=>x.id!==+b.dataset.expDel);
+    saveDb(); toast('Dihapus.', 'success'); navigate('expenses');
+  }));
+};
+
+function openExpenseForm() {
+  openModal('Tambah Pengeluaran', `
+    <form id="expForm">
+      <div class="form-row">
+        <div class="field">
+          <label>Tanggal <span class="req">*</span></label>
+          <input type="date" name="tanggal" value="${today()}" required>
+        </div>
+        <div class="field">
+          <label>Kategori <span class="req">*</span></label>
+          <select name="kategori">
+            <option>Beli Material</option><option>Operasional</option>
+            <option>Listrik &amp; Air</option><option>Gaji</option>
+            <option>Transport</option><option>Maintenance</option><option>Lainnya</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label>Keterangan <span class="req">*</span></label>
+        <input name="keterangan" required placeholder="Contoh: Beli oli mesin bubut">
+      </div>
+      <div class="field">
+        <label>Jumlah (Rp) <span class="req">*</span></label>
+        <input type="number" name="jumlah" min="0" required>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" onclick="closeModal()">Batal</button>
+        <button type="submit" class="btn btn-primary">Simpan</button>
+      </div>
+    </form>
+  `);
+  $('#expForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const fd = new FormData(e.target);
+    db.expenses.push({
+      id: nextId(db.expenses),
+      tanggal: fd.get('tanggal'),
+      kategori: fd.get('kategori'),
+      keterangan: fd.get('keterangan').trim(),
+      jumlah: +fd.get('jumlah')||0,
+      createdAt: Date.now()
+    });
+    saveDb(); closeModal(); toast('Pengeluaran ditambahkan.', 'success');
+    navigate('expenses');
+  });
+}
+
+/* ==================================================================
+   REPORTS
+   ================================================================== */
+views.reports = () => {
+  const ym = state.params.ym || thisYM();
+  return `
+    <div class="toolbar">
+      <label style="font-weight:700;font-size:13px">Periode:</label>
+      <input type="month" id="reportMonth" value="${ym}"
+        style="padding:9px 12px;border-radius:8px;border:1.5px solid var(--line);outline:none">
+      <button class="btn btn-ghost btn-sm" id="exportCSV">⬇ Export CSV</button>
+    </div>
+    <div id="reportContent">${renderReport(ym)}</div>
+  `;
+};
+
+viewEvents.reports = () => {
+  $('#reportMonth').addEventListener('change', e => {
+    state.params.ym = e.target.value;
+    $('#reportContent').innerHTML = renderReport(e.target.value);
+  });
+  $('#exportCSV').addEventListener('click', () => {
+    const ym = $('#reportMonth').value;
+    exportReport(ym);
+  });
+};
+
+function renderReport(ym) {
+  const orders = db.orders.filter(o => (o.tanggal||'').startsWith(ym));
+  const revenue = orders.filter(o=>['Selesai','Diambil'].includes(o.status))
+    .reduce((s,o)=>s+(+o.nilaiOrder||0),0);
+  const expenses = db.expenses.filter(x => (x.tanggal||'').startsWith(ym))
+    .reduce((s,x)=>s+(+x.jumlah||0),0);
+  const profit = revenue - expenses;
+
+  // per customer
+  const byCust = {};
+  orders.forEach(o => {
+    if (!byCust[o.pelanggan]) byCust[o.pelanggan] = { count:0, total:0 };
+    byCust[o.pelanggan].count++;
+    byCust[o.pelanggan].total += (+o.nilaiOrder||0);
+  });
+  const topCust = Object.entries(byCust).sort((a,b)=>b[1].total-a[1].total).slice(0,10);
+
+  // per jenis
+  const byJenis = {};
+  orders.forEach(o => {
+    if (!byJenis[o.jenis]) byJenis[o.jenis] = { count:0, total:0 };
+    byJenis[o.jenis].count++;
+    byJenis[o.jenis].total += (+o.nilaiOrder||0);
+  });
+  const topJenis = Object.entries(byJenis).sort((a,b)=>b[1].total-a[1].total);
+
+  return `
+    <div class="stats">
+      <div class="stat"><div class="label">Pendapatan</div>
+        <div class="value">${fmtRp(revenue)}</div></div>
+      <div class="stat danger"><div class="label">Pengeluaran</div>
+        <div class="value">${fmtRp(expenses)}</div></div>
+      <div class="stat ${profit>=0?'teal':''}"><div class="label">Laba Bersih</div>
+        <div class="value" style="color:${profit>=0?'var(--success)':'var(--danger)'}">${fmtRp(profit)}</div></div>
+      <div class="stat warn"><div class="label">Total Order</div>
+        <div class="value">${orders.length}</div></div>
+    </div>
+
+    <div class="detail-grid" style="grid-template-columns:1fr 1fr">
+      <div class="card">
+        <div class="card-head"><h3>Top Pelanggan</h3></div>
+        ${topCust.length ? `<div class="table-wrap"><table>
+          <thead><tr><th>Pelanggan</th><th class="text-right">Order</th><th class="text-right">Total</th></tr></thead>
+          <tbody>${topCust.map(([k,v])=>`
+            <tr><td>${esc(k)}</td><td class="text-right">${v.count}</td>
+            <td class="text-right mono">${fmtRp(v.total)}</td></tr>
+          `).join('')}</tbody>
+        </table></div>` : `<div class="empty" style="padding:30px"><p>Belum ada data.</p></div>`}
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h3>Per Jenis Pekerjaan</h3></div>
+        ${topJenis.length ? `<div class="table-wrap"><table>
+          <thead><tr><th>Jenis</th><th class="text-right">Order</th><th class="text-right">Total</th></tr></thead>
+          <tbody>${topJenis.map(([k,v])=>`
+            <tr><td>${esc(k)}</td><td class="text-right">${v.count}</td>
+            <td class="text-right mono">${fmtRp(v.total)}</td></tr>
+          `).join('')}</tbody>
+        </table></div>` : `<div class="empty" style="padding:30px"><p>Belum ada data.</p></div>`}
+      </div>
+    </div>
+  `;
+}
+
+function exportReport(ym) {
+  const orders = db.orders.filter(o => (o.tanggal||'').startsWith(ym));
+  const rows = [['No Order','Tanggal','Pelanggan','Jenis','Status','Nilai']];
+  orders.forEach(o => rows.push([o.noOrder, o.tanggal, o.pelanggan, o.jenis, o.status, o.nilaiOrder]));
+  exportCSV('laporan-'+ym+'.csv', rows);
+  toast('Laporan diexport.', 'success');
+}
+
+/* ==================================================================
+   USERS
+   ================================================================== */
+views.users = () => {
+  return `
+    <div class="toolbar">
+      <div class="search"><input id="usrSearch" placeholder="Cari pengguna..."></div>
+      <button class="btn btn-primary" id="addUsrBtn">+ Tambah Pengguna</button>
+    </div>
+    <div class="card">
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Nama</th><th>Username</th><th>Role</th><th></th></tr></thead>
+          <tbody>
+            ${db.users.map(u=>`
+              <tr>
+                <td><b>${esc(u.nama)}</b></td>
+                <td class="mono">${esc(u.username)}</td>
+                <td><span class="pill baru">${roleLabel(u.role)}</span></td>
+                <td class="text-right">
+                  <div class="gap" style="justify-content:flex-end">
+                    <button class="btn-icon" data-usr-edit="${u.id}">✏</button>
+                    ${u.id!==state.user.id?`<button class="btn-icon" data-usr-del="${u.id}">🗑</button>`:''}
+                  </div>
+                </td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  `;
+};
+
+viewEvents.users = () => {
+  $('#addUsrBtn').addEventListener('click', () => openUserForm());
+  $$('[data-usr-edit]').forEach(b => b.addEventListener('click', () => {
+    openUserForm(db.users.find(u=>u.id===+b.dataset.usrEdit));
+  }));
+  $$('[data-usr-del]').forEach(b => b.addEventListener('click', () => {
+    if (!confirm('Hapus pengguna ini?')) return;
+    db.users = db.users.filter(u=>u.id!==+b.dataset.usrDel);
+    saveDb(); toast('Dihapus.', 'success'); navigate('users');
+  }));
+};
+
+function openUserForm(edit=null) {
+  const u = edit || { nama:'', username:'', password:'', role:'produksi' };
+  openModal(edit?'Edit Pengguna':'Tambah Pengguna', `
+    <form id="usrForm">
+      <div class="field">
+        <label>Nama Lengkap <span class="req">*</span></label>
+        <input name="nama" required value="${esc(u.nama)}">
+      </div>
+      <div class="form-row">
+        <div class="field">
+          <label>Username <span class="req">*</span></label>
+          <input name="username" required value="${esc(u.username)}" autocomplete="off">
+        </div>
+        <div class="field">
+          <label>Role <span class="req">*</span></label>
+          <select name="role">
+            <option value="admin" ${u.role==='admin'?'selected':''}>Administrator</option>
+            <option value="produksi" ${u.role==='produksi'?'selected':''}>Produksi</option>
+            <option value="pimpinan" ${u.role==='pimpinan'?'selected':''}>Pimpinan</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label>Password ${edit?'':`<span class="req">*</span>`}</label>
+        <input type="password" name="password" ${edit?'':'required'} placeholder="${edit?'Kosongkan jika tidak diubah':'Min. 6 karakter'}" autocomplete="new-password">
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" onclick="closeModal()">Batal</button>
+        <button type="submit" class="btn btn-primary">${edit?'Simpan':'Tambah'}</button>
+      </div>
+    </form>
+  `);
+  $('#usrForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const fd = new FormData(e.target);
+    const data = {
+      nama: fd.get('nama').trim(),
+      username: fd.get('username').trim().toLowerCase(),
+      role: fd.get('role')
+    };
+    const pw = fd.get('password');
+    if (edit) {
+      const idx = db.users.findIndex(x=>x.id===edit.id);
+      db.users[idx] = { ...db.users[idx], ...data };
+      if (pw) db.users[idx].password = pw;
+      toast('Pengguna diperbarui.', 'success');
+    } else {
+      if (db.users.find(x=>x.username===data.username)) {
+        toast('Username sudah dipakai.', 'error'); return;
+      }
+      data.password = pw;
+      db.users.push({ id: nextId(db.users), ...data });
+      toast('Pengguna ditambahkan.', 'success');
+    }
+    saveDb(); closeModal(); navigate('users');
+  });
+}
+
+/* ==================================================================
+   SETTINGS
+   ================================================================== */
+views.settings = () => {
+  const s = db.settings;
+  return `
+    <div class="card card-pad" style="max-width:640px">
+      <h3 style="font-size:15px;font-weight:800;margin-bottom:16px">Informasi Perusahaan</h3>
+      <form id="settingsForm">
+        <div class="field">
+          <label>Nama Perusahaan</label>
+          <input name="namaPerusahaan" value="${esc(s.namaPerusahaan)}">
+        </div>
+        <div class="field">
+          <label>Alamat</label>
+          <textarea name="alamat">${esc(s.alamat)}</textarea>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label>Telepon</label>
+            <input name="telepon" value="${esc(s.telepon)}">
+          </div>
+          <div class="field">
+            <label>Email</label>
+            <input type="email" name="email" value="${esc(s.email||'')}">
+          </div>
+        </div>
+        <button class="btn btn-primary" type="submit">Simpan Pengaturan</button>
+      </form>
+    </div>
+
+    <div class="card card-pad mt-16" style="max-width:640px">
+      <h3 style="font-size:15px;font-weight:800;margin-bottom:8px">Manajemen Data</h3>
+      <p style="font-size:13px;color:var(--ink2);margin-bottom:14px">
+        Semua data tersimpan di browser ini (localStorage). Backup rutin untuk keamanan.
+      </p>
+      <div class="gap">
+        <button class="btn btn-ghost" id="exportDb">⬇ Export Data (JSON)</button>
+        <label class="btn btn-ghost" style="cursor:pointer">
+          ⬆ Import Data
+          <input type="file" id="importDb" accept=".json" hidden>
+        </label>
+      </div>
+    </div>
+  `;
+};
+
+viewEvents.settings = () => {
+  $('#settingsForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const fd = new FormData(e.target);
+    db.settings = {
+      namaPerusahaan: fd.get('namaPerusahaan').trim(),
+      alamat: fd.get('alamat').trim(),
+      telepon: fd.get('telepon').trim(),
+      email: fd.get('email').trim()
+    };
+    saveDb(); toast('Pengaturan disimpan.', 'success');
+  });
+
+  $('#exportDb').addEventListener('click', () => {
+    const blob = new Blob([JSON.stringify(db, null, 2)], {type:'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'backup-jat-'+today()+'.json'; a.click();
+    URL.revokeObjectURL(url);
+  });
+
+  $('#importDb').addEventListener('change', e => {
+    const f = e.target.files[0];
+    if (!f) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const data = JSON.parse(reader.result);
+        if (!confirm('Ganti semua data dengan file ini? Data saat ini akan hilang.')) return;
+        db = data; saveDb();
+        toast('Data diimport. Silakan login ulang.', 'success');
+        setTimeout(() => location.reload(), 1500);
+      } catch(err) { toast('File tidak valid.', 'error'); }
+    };
+    reader.readAsText(f);
+  });
+};
+
+/* ==================================================================
+   PRINT
+   ================================================================== */
+function printSpk(o) {
+  const s = db.settings;
+  const html = `<!DOCTYPE html><html><head><meta charset="UTF-8">
+  <title>SPK ${o.noOrder}</title>
+  <style>
+  body{font-family:Arial,sans-serif;padding:30px;max-width:800px;margin:0 auto;color:#000}
+  h1{font-size:18px;margin:0}
+  .head{display:flex;justify-content:space-between;align-items:flex-start;
+    border-bottom:2px solid #000;padding-bottom:12px;margin-bottom:20px}
+  .head img{max-height:60px;max-width:80px;margin-right:12px}
+  .brand{display:flex;align-items:center}
+  .brand small{font-size:11px;color:#555;display:block;margin-top:2px;max-width:400px}
+  .brand b{font-size:15px;display:block}
+  .doc-title{text-align:right;font-size:14px;font-weight:bold}
+  .doc-title small{font-weight:normal;display:block;font-size:11px;margin-top:4px}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin:14px 0}
+  th,td{padding:8px 10px;border:1px solid #ccc;text-align:left}
+  th{background:#f0f0f0;font-size:11px;text-transform:uppercase}
+  .sign{display:flex;justify-content:space-between;margin-top:60px}
+  .sign div{text-align:center;font-size:12px}
+  .sign .line{width:180px;border-top:1px solid #000;margin-top:60px;padding-top:6px}
+  </style></head><body>
+  <div class="head">
+    <div class="brand">
+      <img src="logo.png" onerror="this.style.display='none'">
+      <div><b>${esc(s.namaPerusahaan)}</b>
+      <small>${esc(s.alamat)}<br>Telp: ${esc(s.telepon)}</small></div>
+    </div>
+    <div class="doc-title">SURAT PERINTAH KERJA<small>No: ${esc(o.noOrder)}<br>Tanggal: ${fmtDate(o.tanggal)}</small></div>
+  </div>
+  <table>
+    <tr><th style="width:140px">Pelanggan</th><td>${esc(o.pelanggan)}</td></tr>
+    <tr><th>Telepon</th><td>${esc(o.telepon)||'-'}</td></tr>
+    <tr><th>Jenis Pekerjaan</th><td>${esc(o.jenis)}</td></tr>
+    <tr><th>Deskripsi</th><td>${esc(o.pekerjaan)}</td></tr>
+    <tr><th>Jumlah</th><td>${fmtNum(o.jumlah)} ${esc(o.satuan)}</td></tr>
+    <tr><th>Deadline</th><td>${o.deadline?fmtDate(o.deadline):'-'}</td></tr>
+    <tr><th>Nilai Order</th><td><b>${fmtRp(o.nilaiOrder)}</b></td></tr>
+    ${o.catatan?`<tr><th>Catatan</th><td>${esc(o.catatan)}</td></tr>`:''}
+  </table>
+  <div class="sign">
+    <div>Pelanggan<div class="line"></div></div>
+    <div>Admin / Penerima Order<div class="line"></div></div>
+  </div>
+  </body></html>`;
+  const w = window.open('', '', 'width=900,height=800');
+  w.document.write(html); w.document.close();
+  setTimeout(()=>w.print(), 300);
+}
+
+function printInvoice(inv) {
+  const s = db.settings;
+  const o = db.orders.find(x=>x.id===inv.orderId) || {};
+  const paid = inv.pembayaran.reduce((s,p)=>s+(+p.jumlah||0),0);
+  const html = `<!DOCTYPE html><html><head><meta charset="UTF-8">
+  <title>Invoice ${inv.noInvoice}</title>
+  <style>
+  body{font-family:Arial,sans-serif;padding:30px;max-width:800px;margin:0 auto;color:#000}
+  .head{display:flex;justify-content:space-between;align-items:flex-start;
+    border-bottom:2px solid #000;padding-bottom:12px;margin-bottom:20px}
+  .head img{max-height:60px;max-width:80px;margin-right:12px}
+  .brand{display:flex;align-items:center}
+  .brand small{font-size:11px;color:#555;display:block;margin-top:2px;max-width:400px}
+  .brand b{font-size:15px;display:block}
+  .doc-title{text-align:right}
+  .doc-title h2{font-size:22px;margin:0;color:#000}
+  .doc-title small{font-size:11px;display:block;margin-top:4px}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin:14px 0}
+  th,td{padding:8px 10px;border-bottom:1px solid #ddd;text-align:left}
+  th{background:#f0f0f0;font-size:11px;text-transform:uppercase}
+  .total-row{background:#f9f9f9;font-weight:bold}
+  .summary{margin-top:14px;text-align:right;font-size:14px}
+  .summary .line{display:flex;justify-content:flex-end;gap:30px;margin:4px 0}
+  .status{display:inline-block;padding:4px 12px;border-radius:4px;
+    background:#e8f9ee;color:#0a8f4a;font-size:12px;font-weight:bold;margin-top:8px}
+  </style></head><body>
+  <div class="head">
+    <div class="brand">
+      <img src="logo.png" onerror="this.style.display='none'">
+      <div><b>${esc(s.namaPerusahaan)}</b>
+      <small>${esc(s.alamat)}<br>Telp: ${esc(s.telepon)}</small></div>
+    </div>
+    <div class="doc-title"><h2>INVOICE</h2>
+      <small>No: ${esc(inv.noInvoice)}<br>Tanggal: ${fmtDate(inv.tanggal)}</small></div>
+  </div>
+  <table>
+    <tr><th style="width:150px">Pelanggan</th><td>${esc(o.pelanggan)||'-'}</td></tr>
+    <tr><th>No. Order</th><td>${esc(o.noOrder)||'-'}</td></tr>
+    <tr><th>Jenis Pekerjaan</th><td>${esc(o.jenis)||'-'}</td></tr>
+    ${o.pekerjaan?`<tr><th>Deskripsi</th><td>${esc(o.pekerjaan)}</td></tr>`:''}
+  </table>
+  <table>
+    <thead><tr><th>Deskripsi</th><th style="text-align:right;width:140px">Jumlah</th></tr></thead>
+    <tbody>
+      <tr><td>${esc(o.jenis)||'Jasa'} — ${esc(o.pekerjaan)||''}</td>
+        <td style="text-align:right">${fmtRp(inv.total/(1+inv.ppn/100))}</td></tr>
+      ${inv.ppn>0?`<tr><td>PPN ${inv.ppn}%</td>
+        <td style="text-align:right">${fmtRp(inv.total - inv.total/(1+inv.ppn/100))}</td></tr>`:''}
+      <tr class="total-row"><td>Total</td><td style="text-align:right">${fmtRp(inv.total)}</td></tr>
+    </tbody>
+  </table>
+  <div class="summary">
+    <div class="line"><span>Sudah Dibayar:</span><b>${fmtRp(paid)}</b></div>
+    <div class="line"><span>Sisa Tagihan:</span><b>${fmtRp(inv.total-paid)}</b></div>
+    <div class="status">${inv.status}</div>
+  </div>
+  <div style="margin-top:60px;text-align:right;font-size:12px">
+    Hormat kami,<br><br><br><b>${esc(s.namaPerusahaan)}</b>
+  </div>
+  </body></html>`;
+  const w = window.open('', '', 'width=900,height=800');
+  w.document.write(html); w.document.close();
+  setTimeout(()=>w.print(), 300);
+}
+
+/* expose globally for inline onclick */
+window.closeModal = closeModal;
+</script>
+</body>
+</html>
