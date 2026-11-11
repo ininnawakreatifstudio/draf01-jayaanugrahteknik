@@ -2,359 +2,298 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ff6a00">
 <title>CV Jaya Anugrah Tehnik — Sistem Manajemen</title>
 <style>
-:root{
-  --ink:#0f1f45;--ink2:#4a5878;--ink3:#8b95ab;
-  --brand:#ff6a00;--brand2:#ffab00;--teal:#00b8a9;
-  --bg:#f5f7fb;--card:#fff;--line:#e4e8f0;
-  --danger:#e53935;--success:#0a8f4a;--warning:#e6a000;
-  --radius:12px;--shadow:0 2px 12px rgba(15,31,69,.06);
-}
+:root{--ink:#0f1f45;--ink2:#4a5878;--ink3:#8b95ab;--brand:#ff6a00;--brand2:#ffab00;
+--teal:#00b8a9;--success:#0a8f4a;--danger:#e53935;--bg:#f5f7fb;--line:#e4e8f0;--radius:12px}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;
-  background:var(--bg);color:var(--ink);line-height:1.5;font-size:14px;
-  -webkit-font-smoothing:antialiased;min-height:100vh}
+html,body{height:100%}
+body{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;background:var(--bg);
+color:var(--ink);line-height:1.5;font-size:14px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
 button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
 input,select,textarea{font-family:inherit;font-size:14px;color:var(--ink)}
-img{max-width:100%;display:block}
 .hidden{display:none!important}
 
-/* Loading */
-.loading{position:fixed;inset:0;background:#fff;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;gap:16px;z-index:9999}
-.spinner{width:40px;height:40px;border:4px solid var(--line);
-  border-top-color:var(--brand);border-radius:50%;animation:spin 1s linear infinite}
+/* LOGIN */
+.login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;
+padding:24px;background:linear-gradient(135deg,#0f1f45,#1e3268)}
+.login-card{background:#fff;border-radius:20px;padding:36px 28px;width:100%;max-width:380px;
+box-shadow:0 24px 60px rgba(0,0,0,.3);text-align:center}
+.login-logo{max-height:80px;max-width:120px;margin:0 auto 16px}
+.login-card h1{font-size:20px;font-weight:800;margin-bottom:4px}
+.login-sub{color:var(--ink2);font-size:13px;margin-bottom:24px}
+.login-card form{text-align:left}
+.login-card label{display:block;font-size:12.5px;font-weight:700;margin-bottom:6px}
+.login-card input{width:100%;padding:12px 14px;border:1.5px solid var(--line);
+border-radius:10px;background:#f9fafc;outline:none;font-size:14px;margin-bottom:14px;transition:.15s}
+.login-card input:focus{border-color:var(--brand);background:#fff;box-shadow:0 0 0 4px rgba(255,106,0,.1)}
+.login-card button{width:100%;padding:13px;border-radius:10px;font-weight:800;font-size:14px;
+background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;
+box-shadow:0 8px 24px rgba(255,106,0,.3)}
+.login-err{color:var(--danger);font-size:12.5px;margin-top:10px;text-align:center;min-height:18px}
+
+/* APP */
+.app{min-height:100vh;display:flex;flex-direction:column}
+.topbar{background:#fff;border-bottom:1px solid var(--line);padding:12px 20px;
+display:flex;align-items:center;justify-content:space-between;gap:12px;
+position:sticky;top:0;z-index:40}
+.brand{display:flex;align-items:center;gap:10px;min-width:0;flex:1}
+.brand-logo{max-height:40px;max-width:48px;flex-shrink:0}
+.brand-text{min-width:0;line-height:1.2}
+.brand-text b{font-size:13px;font-weight:800;display:block;overflow:hidden;
+text-overflow:ellipsis;white-space:nowrap}
+.brand-text small{font-size:10.5px;color:var(--ink2);text-transform:uppercase;
+letter-spacing:.4px;font-weight:600}
+.topbar-actions{display:flex;gap:8px;align-items:center}
+.icon-btn{width:40px;height:40px;border-radius:10px;border:1px solid var(--line);
+background:#f9fafc;display:grid;place-items:center;font-size:18px;transition:.15s}
+.icon-btn:hover{background:#fff;border-color:var(--brand)}
+.content{flex:1;padding:20px;max-width:1100px;width:100%;margin:0 auto}
+
+/* LOADING */
+.loading{display:flex;flex-direction:column;align-items:center;justify-content:center;
+padding:60px 20px;gap:16px;color:var(--ink2)}
+.spinner{width:36px;height:36px;border:3px solid #e4e8f0;border-top-color:var(--brand);
+border-radius:50%;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* Login */
-.login{min-height:100vh;display:flex;align-items:center;justify-content:center;
-  padding:24px;background:linear-gradient(135deg,#0f1f45,#1e3268);position:relative;overflow:hidden}
-.login::before{content:'';position:absolute;inset:0;
-  background:radial-gradient(circle at 20% 20%,rgba(255,106,0,.15),transparent 50%),
-    radial-gradient(circle at 80% 80%,rgba(0,184,169,.12),transparent 50%)}
-.login-card{background:#fff;border-radius:20px;padding:36px 28px;width:100%;max-width:380px;
-  box-shadow:0 24px 60px rgba(0,0,0,.3);position:relative;z-index:1;text-align:center}
-.login-card img{max-height:80px;margin:0 auto 16px}
-.login-card h1{font-size:18px;font-weight:800;margin-bottom:4px}
-.login-card p{font-size:13px;color:var(--ink2);margin-bottom:24px}
-.login-card input{width:100%;padding:12px 14px;border-radius:10px;
-  border:1.5px solid var(--line);background:#f9fafc;outline:none;font-size:15px;
-  transition:.2s;margin-bottom:12px;text-align:center}
-.login-card input:focus{border-color:var(--brand);background:#fff;
-  box-shadow:0 0 0 4px rgba(255,106,0,.1)}
-.login-card button{width:100%;padding:13px;border-radius:10px;font-weight:800;font-size:14px;
-  background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;
-  box-shadow:0 8px 24px rgba(255,106,0,.3);transition:.2s}
-.login-card button:hover{transform:translateY(-1px)}
-.login-err{color:var(--danger);font-size:12.5px;margin-top:10px;min-height:16px}
-
-/* Header */
-.app-header{background:#fff;border-bottom:1px solid var(--line);
-  padding:10px 20px;display:flex;align-items:center;justify-content:space-between;
-  gap:12px;position:sticky;top:0;z-index:50;box-shadow:0 1px 3px rgba(0,0,0,.03)}
-.brand{display:flex;align-items:center;gap:12px;min-width:0}
-.brand img{max-height:40px;max-width:56px;flex-shrink:0}
-.brand div{min-width:0}
-.brand b{font-size:14px;font-weight:800;line-height:1.2;display:block}
-.brand small{font-size:11px;color:var(--ink2);font-weight:600}
-.gear-btn{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;
-  justify-content:center;font-size:20px;background:#f5f7fb;border:1px solid var(--line);
-  transition:.2s;flex-shrink:0}
-.gear-btn:hover{background:#fff;border-color:var(--brand);
-  box-shadow:0 4px 12px rgba(255,106,0,.15);transform:rotate(30deg)}
-
-/* Main */
-.app-main{padding:20px;max-width:1200px;margin:0 auto}
-.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
-@media(max-width:700px){.stats-grid{grid-template-columns:repeat(2,1fr)}}
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+@media(max-width:700px){.stats{grid-template-columns:repeat(2,1fr)}}
 .stat{background:#fff;border:1px solid var(--line);border-radius:var(--radius);
-  padding:14px 16px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+padding:14px 16px;position:relative;overflow:hidden;
+box-shadow:0 1px 3px rgba(15,31,69,.06)}
 .stat::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;
-  background:linear-gradient(90deg,var(--brand),var(--brand2))}
+background:linear-gradient(90deg,var(--brand),var(--brand2))}
 .stat.teal::before{background:linear-gradient(90deg,var(--teal),#00d4c2)}
-.stat.danger::before{background:linear-gradient(90deg,var(--danger),#ff6b68)}
-.stat.warning::before{background:linear-gradient(90deg,var(--warning),#ffc44d)}
-.stat .label{font-size:11px;color:var(--ink2);font-weight:700;text-transform:uppercase;
-  letter-spacing:.5px;margin-bottom:6px}
-.stat .value{font-size:20px;font-weight:800;line-height:1.2}
-.stat .sub{font-size:11px;color:var(--ink2);margin-top:3px}
+.stat.warn::before{background:linear-gradient(90deg,#e6a000,#ffc44d)}
+.stat.danger::before{background:linear-gradient(90deg,#e53935,#ff6b68)}
+.stat-label{font-size:11px;color:var(--ink2);font-weight:700;text-transform:uppercase;
+letter-spacing:.5px;margin-bottom:6px}
+.stat-value{font-size:20px;font-weight:800;line-height:1.2;margin-bottom:2px}
+.stat-sub{font-size:11.5px;color:var(--ink2)}
 
-.section{background:#fff;border:1px solid var(--line);border-radius:var(--radius);
-  box-shadow:var(--shadow);overflow:hidden}
+/* SECTION */
 .section-head{display:flex;align-items:center;justify-content:space-between;
-  padding:16px 20px;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+gap:12px;margin-bottom:14px;flex-wrap:wrap}
 .section-head h2{font-size:16px;font-weight:800}
 
-.toolbar{padding:12px 20px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;
-  border-bottom:1px solid var(--line);background:#fafbfd}
-.toolbar input,.toolbar select{padding:8px 12px;border-radius:8px;
-  border:1.5px solid var(--line);background:#fff;outline:none;font-size:13px;transition:.15s}
-.toolbar input{flex:1;min-width:180px}
-.toolbar input:focus,.toolbar select:focus{border-color:var(--brand);
-  box-shadow:0 0 0 3px rgba(255,106,0,.08)}
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;
+padding:9px 16px;border-radius:8px;font-weight:700;font-size:13px;
+white-space:nowrap;transition:.15s;border:1.5px solid transparent}
+.btn:active{transform:scale(.97)}
+.btn-primary{background:linear-gradient(135deg,var(--brand),var(--brand2));
+color:#fff;box-shadow:0 4px 12px rgba(255,106,0,.25)}
+.btn-ghost{background:#fff;border-color:var(--line);color:var(--ink2)}
+.btn-ghost:hover{border-color:var(--brand);color:var(--brand)}
+.btn-danger{background:#fff;border-color:#fbb;color:var(--danger)}
+.btn-danger:hover{background:#fee}
+.btn-sm{padding:6px 12px;font-size:12px}
+.btn-icon{padding:6px 8px;border-radius:6px;background:#f5f7fb;border:1px solid var(--line);
+color:var(--ink2);font-size:13px;line-height:1}
+.btn-icon:hover{background:#fff;border-color:var(--brand);color:var(--brand)}
 
-/* Orders */
-.orders-list{padding:8px}
-.order-card{padding:14px 16px;border-radius:10px;border:1px solid transparent;
-  transition:.15s;cursor:pointer;display:grid;
-  grid-template-columns:auto 1fr auto auto;gap:14px;align-items:center;margin-bottom:4px}
-.order-card:hover{background:#fafbfd;border-color:var(--line)}
-@media(max-width:700px){
-  .order-card{grid-template-columns:1fr auto;gap:8px;padding:12px}
-  .order-card .order-no{grid-column:1/-1}
-  .order-card .order-jenis{grid-column:1/-1;font-size:12px}
-}
-.order-no{font-family:ui-monospace,monospace;font-size:12px;font-weight:700;
-  color:var(--brand);white-space:nowrap}
-.order-pelanggan{min-width:0}
-.order-pelanggan b{font-size:13.5px;display:block;line-height:1.2;
-  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.order-pelanggan small{font-size:11.5px;color:var(--ink2)}
-.order-jenis{font-size:12.5px;color:var(--ink2)}
-.order-nilai{font-weight:700;font-size:13.5px;white-space:nowrap}
-.order-status{white-space:nowrap}
+/* ORDER LIST */
+.order-list{display:flex;flex-direction:column;gap:10px}
+.order-card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+padding:14px 16px;cursor:pointer;transition:.15s;
+box-shadow:0 1px 3px rgba(15,31,69,.06)}
+.order-card:hover{border-color:var(--brand);box-shadow:0 4px 16px rgba(255,106,0,.1)}
+.order-head{display:flex;justify-content:space-between;align-items:center;
+margin-bottom:8px;gap:8px}
+.order-no{font-family:ui-monospace,monospace;font-size:12px;font-weight:700;color:var(--ink2)}
+.order-body b{font-size:14px;display:block;margin-bottom:2px}
+.order-body .small{font-size:12.5px;color:var(--ink2)}
+.order-foot{display:flex;justify-content:space-between;align-items:center;
+margin-top:10px;padding-top:10px;border-top:1px dashed var(--line);font-size:12.5px}
+.order-foot span{color:var(--ink2)}
+.order-foot b{font-size:14px;color:var(--brand)}
 
+/* PILL */
 .pill{display:inline-flex;align-items:center;font-size:11px;font-weight:800;
-  padding:3px 9px;border-radius:999px;white-space:nowrap}
+padding:3px 9px;border-radius:999px;white-space:nowrap}
 .pill.baru{background:#e8f0ff;color:#2a5bd7}
 .pill.produksi{background:#fff3d6;color:#a16a00}
 .pill.qc{background:#e6f7ff;color:#0080a8}
 .pill.selesai{background:#e8f9ee;color:var(--success)}
-.pill.diambil{background:#f0f2f7;color:#4a5878}
-.pill.kritis{background:#fee;color:var(--danger)}
-.pill.ok{background:#e8f9ee;color:var(--success)}
-.pill.lunas{background:#e8f9ee;color:var(--success)}
-.pill.dp{background:#fff3d6;color:#a16a00}
-.pill.belumbayar{background:#fee;color:var(--danger)}
+.pill.diambil{background:#f0f2f7;color:var(--ink2)}
 
-.empty{text-align:center;padding:50px 20px;color:var(--ink2)}
-.empty .ico{font-size:44px;opacity:.4;margin-bottom:10px}
+/* EMPTY */
+.empty{text-align:center;padding:40px 20px;color:var(--ink2);
+background:#fff;border:1px dashed var(--line);border-radius:var(--radius)}
+.empty .ico{font-size:40px;opacity:.4;margin-bottom:8px}
+.empty p{font-size:13px}
 
-/* Buttons */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;
-  padding:9px 16px;border-radius:8px;font-weight:700;font-size:13px;
-  transition:.15s;white-space:nowrap}
-.btn:active{transform:scale(.97)}
-.btn-primary{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;
-  box-shadow:0 4px 12px rgba(255,106,0,.25)}
-.btn-primary:hover{box-shadow:0 6px 16px rgba(255,106,0,.35)}
-.btn-ghost{background:#fff;border:1.5px solid var(--line);color:var(--ink2)}
-.btn-ghost:hover{border-color:var(--brand);color:var(--brand)}
-.btn-danger{background:#fff;border:1.5px solid #fbb;color:var(--danger)}
-.btn-danger:hover{background:#fee}
-.btn-sm{padding:6px 10px;font-size:12px}
-.btn-icon{width:30px;height:30px;padding:0;border-radius:6px;background:#f5f7fb;
-  border:1px solid var(--line);color:var(--ink2);font-size:14px;line-height:1;
-  display:inline-flex;align-items:center;justify-content:center;transition:.15s}
-.btn-icon:hover{background:#fff;border-color:var(--brand);color:var(--brand)}
+/* TABS */
+.tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;
+margin-bottom:16px;-webkit-overflow-scrolling:touch}
+.tab{padding:8px 16px;border-radius:999px;font-weight:700;font-size:13px;
+background:#fff;border:1.5px solid var(--line);color:var(--ink2);
+white-space:nowrap;transition:.15s}
+.tab.active{background:linear-gradient(135deg,var(--brand),var(--brand2));
+color:#fff;border-color:transparent;box-shadow:0 4px 12px rgba(255,106,0,.25)}
 
-/* Modal */
-.modal{position:fixed;inset:0;z-index:100;background:rgba(15,31,69,.55);
-  backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;padding:16px}
-.modal.open{display:flex}
-.modal-card{background:#fff;border-radius:14px;width:100%;max-width:560px;
-  max-height:92vh;display:flex;flex-direction:column;overflow:hidden;
-  box-shadow:0 20px 60px rgba(0,0,0,.3)}
-.modal-card.wide{max-width:900px}
-.modal-card.full{max-width:1000px;height:90vh;max-height:90vh}
-.modal-head{display:flex;align-items:center;justify-content:space-between;
-  padding:16px 20px;border-bottom:1px solid var(--line);flex-shrink:0}
-.modal-head h3{font-size:15px;font-weight:800}
-.modal-head button{font-size:20px;line-height:1;color:var(--ink2);padding:4px 8px;
-  border-radius:6px}
-.modal-head button:hover{background:#f5f7fb}
-.modal-body{padding:20px;overflow-y:auto;flex:1}
-.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:20px;
-  padding-top:16px;border-top:1px solid var(--line)}
+/* CARD */
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+overflow:hidden;box-shadow:0 1px 3px rgba(15,31,69,.06)}
+.card-head{display:flex;justify-content:space-between;align-items:center;
+padding:14px 16px;border-bottom:1px solid var(--line);gap:10px;flex-wrap:wrap}
+.card-head h3{font-size:14px;font-weight:800}
+.card-body{padding:16px}
 
-/* Tabs */
-.tabs-row{display:flex;gap:4px;padding:8px 16px 0;border-bottom:1px solid var(--line);
-  overflow-x:auto;flex-shrink:0}
-.tabs-row button{padding:10px 16px;font-weight:700;font-size:13px;color:var(--ink2);
-  border-radius:8px 8px 0 0;border-bottom:2.5px solid transparent;white-space:nowrap}
-.tabs-row button.active{color:var(--brand);border-bottom-color:var(--brand);
-  background:#fff8f2}
-.tabs-row button:hover:not(.active){background:#fafbfd;color:var(--ink)}
-
-/* Form */
-.field{margin-bottom:14px}
-.field label{display:block;font-size:12px;font-weight:800;color:var(--ink);
-  margin-bottom:6px}
-.field label .req{color:var(--danger)}
-.field input,.field select,.field textarea{width:100%;padding:10px 12px;
-  border-radius:8px;border:1.5px solid var(--line);background:#f9fafc;
-  outline:none;transition:.15s;font-size:13.5px}
-.field input:focus,.field select:focus,.field textarea:focus{
-  border-color:var(--brand);background:#fff;
-  box-shadow:0 0 0 3px rgba(255,106,0,.1)}
-.field textarea{min-height:70px;resize:vertical}
-.field .hint{font-size:11px;color:var(--ink2);margin-top:4px}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.form-row.three{grid-template-columns:1fr 1fr 1fr}
-@media(max-width:600px){.form-row,.form-row.three{grid-template-columns:1fr}}
-
-/* Table */
-.table-wrap{overflow-x:auto}
-table{width:100%;border-collapse:collapse;font-size:13px}
-th{text-align:left;padding:10px 12px;font-size:11px;font-weight:800;
-  color:var(--ink2);text-transform:uppercase;letter-spacing:.4px;
-  border-bottom:1.5px solid var(--line);background:#fafbfd;white-space:nowrap}
-td{padding:10px 12px;border-bottom:1px solid #f0f2f7;vertical-align:middle}
-tr:last-child td{border-bottom:0}
-tr:hover td{background:#fafbfd}
-.text-right{text-align:right}
-.text-center{text-align:center}
-.mono{font-family:ui-monospace,monospace;font-size:12px}
-
-/* Order detail */
-.detail-grid{display:grid;grid-template-columns:2fr 1fr;gap:16px}
-@media(max-width:800px){.detail-grid{grid-template-columns:1fr}}
+/* INFO GRID */
 .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px 20px}
 @media(max-width:500px){.info-grid{grid-template-columns:1fr}}
 .info-item .k{font-size:11px;color:var(--ink2);font-weight:700;
-  text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px}
-.info-item .v{font-weight:600;font-size:13.5px}
+text-transform:uppercase;letter-spacing:.4px;margin-bottom:2px}
+.info-item .v{font-weight:600;color:var(--ink);font-size:13.5px}
 
-.card-box{background:#fafbfd;border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:12px}
-.card-box h4{font-size:13px;font-weight:800;margin-bottom:10px;display:flex;
-  align-items:center;justify-content:space-between}
+/* STATUS BAR */
+.status-bar{display:flex;gap:6px;padding:4px;background:#f5f7fb;
+border-radius:10px;overflow-x:auto}
+.status-step{flex:1;min-width:90px;padding:8px;text-align:center;border-radius:8px;
+font-size:11.5px;font-weight:700;background:#fff;border:1px solid var(--line);
+color:var(--ink3);white-space:nowrap;transition:.15s;cursor:pointer}
+.status-step:hover{border-color:var(--brand)}
+.status-step.done{background:#e8f9ee;border-color:#b8e6c9;color:var(--success)}
+.status-step.active{background:linear-gradient(135deg,var(--brand),var(--brand2));
+border-color:transparent;color:#fff;box-shadow:0 2px 8px rgba(255,106,0,.3)}
 
-.stepper{display:flex;flex-direction:column;gap:6px}
-.step-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;
-  background:#fafbfd;font-size:13px}
-.step-item .dot{width:22px;height:22px;border-radius:50%;background:#e4e8f0;
-  display:grid;place-items:center;font-size:11px;font-weight:800;color:var(--ink3);
-  flex-shrink:0}
-.step-item.active{background:linear-gradient(135deg,rgba(255,106,0,.08),rgba(255,171,0,.06))}
-.step-item.active .dot{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff}
-.step-item.done .dot{background:var(--success);color:#fff}
-.step-item.done{color:var(--ink2)}
-
-.hpp-box{background:#fafbfd;border:1px solid var(--line);border-radius:10px;padding:14px}
+/* HPP */
+.hpp-box{background:#f9fafc;border:1px solid var(--line);border-radius:10px;padding:14px}
 .hpp-row{display:flex;justify-content:space-between;padding:5px 0;font-size:13px}
-.hpp-row.total{border-top:1.5px dashed var(--line);margin-top:8px;padding-top:10px;
-  font-weight:800;font-size:14px}
+.hpp-row.total{border-top:1.5px dashed var(--line);margin-top:8px;
+padding-top:10px;font-weight:800;font-size:14px}
 
-/* Toast */
+/* TABLE */
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;padding:10px 12px;font-size:11px;font-weight:800;
+color:var(--ink2);text-transform:uppercase;letter-spacing:.4px;
+border-bottom:1.5px solid var(--line);background:#fafbfd;white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid #f0f2f7;vertical-align:middle}
+tr:last-child td{border-bottom:0}
+.mono{font-family:ui-monospace,monospace;font-size:12px}
+
+/* MATERIAL LIST */
+.mat-item{display:flex;align-items:center;gap:10px;padding:12px 0;
+border-bottom:1px solid #f0f2f7}
+.mat-item:last-child{border-bottom:0}
+.mat-info{flex:1;min-width:0}
+.mat-info b{font-size:13.5px;display:block}
+.mat-info small{font-size:11.5px;color:var(--ink2)}
+.mat-stock{text-align:right;font-size:13px}
+.mat-stock b{display:block;font-size:14px}
+.mat-actions{display:flex;gap:4px}
+@media(max-width:500px){.mat-item{flex-wrap:wrap}.mat-stock{text-align:left}}
+
+/* MODAL */
+.modal{position:fixed;inset:0;z-index:100;background:rgba(15,31,69,.55);
+backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;
+padding:16px;overflow-y:auto}
+.modal.open{display:flex}
+.modal-card{background:#fff;border-radius:14px;width:100%;max-width:560px;
+max-height:92vh;display:flex;flex-direction:column;
+box-shadow:0 20px 60px rgba(0,0,0,.3);margin:auto}
+.modal-card.wide{max-width:720px}
+.modal-head{display:flex;justify-content:space-between;align-items:center;
+padding:14px 18px;border-bottom:1px solid var(--line)}
+.modal-head h3{font-size:15px;font-weight:800}
+.modal-close{font-size:18px;width:32px;height:32px;border-radius:8px;
+color:var(--ink2);display:grid;place-items:center}
+.modal-close:hover{background:#f5f7fb}
+.modal-body{padding:18px;overflow-y:auto;flex:1}
+
+/* FORM */
+.field{margin-bottom:14px}
+.field label{display:block;font-size:12px;font-weight:700;margin-bottom:5px}
+.field label .req{color:var(--danger)}
+.field input,.field select,.field textarea{width:100%;padding:10px 12px;
+border:1.5px solid var(--line);border-radius:8px;background:#f9fafc;
+outline:none;transition:.15s;font-size:13.5px}
+.field input:focus,.field select:focus,.field textarea:focus{
+border-color:var(--brand);background:#fff;box-shadow:0 0 0 3px rgba(255,106,0,.1)}
+.field textarea{min-height:70px;resize:vertical}
+.field .hint{font-size:11px;color:var(--ink2);margin-top:3px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.form-row.three{grid-template-columns:1fr 1fr 1fr}
+@media(max-width:500px){.form-row,.form-row.three{grid-template-columns:1fr}}
+.modal-actions{display:flex;gap:8px;justify-content:flex-end;
+margin-top:18px;padding-top:14px;border-top:1px solid var(--line)}
+.modal-actions .btn-primary{min-width:110px}
+
+/* TOAST */
 #toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,100px);
-  background:var(--ink);color:#fff;padding:12px 20px;border-radius:8px;
-  font-size:13px;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,.25);
-  opacity:0;transition:.3s;z-index:9999;max-width:calc(100vw - 32px);text-align:center}
+background:var(--ink);color:#fff;padding:12px 20px;border-radius:10px;
+font-size:13px;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,.25);
+opacity:0;transition:.3s;z-index:200;max-width:calc(100vw - 32px);text-align:center}
 #toast.show{transform:translate(-50%,0);opacity:1}
 #toast.success{background:var(--success)}
 #toast.error{background:var(--danger)}
 
-/* print */
-@media print{body *{visibility:hidden}#printArea,#printArea *{visibility:visible}#printArea{position:absolute;left:0;top:0;width:100%}}
+/* FAB */
+.fab{position:fixed;right:20px;bottom:20px;width:56px;height:56px;
+border-radius:50%;background:linear-gradient(135deg,var(--brand),var(--brand2));
+color:#fff;font-size:26px;font-weight:300;display:grid;place-items:center;
+box-shadow:0 8px 24px rgba(255,106,0,.4);z-index:30;transition:.2s}
+.fab:active{transform:scale(.95)}
+
+/* REPORT */
+.report-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+@media(max-width:700px){.report-grid{grid-template-columns:1fr}}
+
+/* ABOUT */
+.about-row{display:flex;justify-content:space-between;padding:10px 0;
+border-bottom:1px solid #f0f2f7;font-size:13px}
+.about-row:last-child{border-bottom:0}
+.about-row .k{color:var(--ink2);font-weight:600}
+.about-row .v{font-weight:700}
 </style>
 </head>
 <body>
 
-<!-- Loading -->
-<div id="loading" class="loading">
-  <div class="spinner"></div>
-  <p style="color:var(--ink2);font-size:13px">Memuat data...</p>
-</div>
-
-<!-- Login -->
-<div id="login" class="login hidden">
+<!-- LOGIN -->
+<div id="loginScreen" class="login-screen">
   <div class="login-card">
-    <img src="logo.png" alt="CV Jaya Anugrah Tehnik" onerror="this.style.display='none'">
+    <img src="logo.png" alt="Logo" class="login-logo" onerror="this.style.display='none'">
     <h1>CV Jaya Anugrah Tehnik</h1>
-    <p>Sistem Manajemen Order &amp; Stok</p>
-    <form id="loginForm">
-      <input type="password" id="password" placeholder="Masukkan password" required autocomplete="current-password">
-      <button type="submit">Masuk</button>
+    <p class="login-sub">Sistem Manajemen Order &amp; Stok</p>
+    <form id="loginForm" autocomplete="off">
+      <label for="loginPass">Password</label>
+      <input id="loginPass" type="password" placeholder="Masukkan password" required autocomplete="current-password">
+      <button type="submit" id="loginBtn">Masuk</button>
+      <div id="loginErr" class="login-err"></div>
     </form>
-    <div id="loginErr" class="login-err"></div>
   </div>
 </div>
 
-<!-- App -->
-<div id="app" class="hidden">
-  <header class="app-header">
+<!-- APP -->
+<div id="app" class="app hidden">
+  <header class="topbar">
     <div class="brand">
-      <img src="logo.png" alt="" onerror="this.style.display='none'">
-      <div>
+      <img src="logo.png" alt="" class="brand-logo" onerror="this.style.display='none'">
+      <div class="brand-text">
         <b>CV Jaya Anugrah Tehnik</b>
-        <small>Sistem Manajemen Order</small>
+        <small>Sistem Manajemen</small>
       </div>
     </div>
-    <button class="gear-btn" id="gearBtn" title="Pengaturan">⚙️</button>
+    <div class="topbar-actions" id="topbarActions"></div>
   </header>
-  <main class="app-main">
-    <div class="stats-grid" id="statsGrid"></div>
-    <div class="section">
-      <div class="section-head">
-        <h2>Daftar Order</h2>
-        <button class="btn btn-primary" id="addOrderBtn">+ Tambah Order</button>
-      </div>
-      <div class="toolbar">
-        <input id="searchOrder" placeholder="🔍 Cari no order, pelanggan, jenis...">
-        <select id="filterStatus">
-          <option value="">Semua Status</option>
-          <option>Order Masuk</option>
-          <option>Produksi</option>
-          <option>QC</option>
-          <option>Selesai</option>
-          <option>Diambil</option>
-        </select>
-      </div>
-      <div class="orders-list" id="ordersList"></div>
-    </div>
-  </main>
+  <main id="content" class="content"></main>
 </div>
 
-<!-- Settings Modal -->
-<div class="modal" id="settingsModal">
-  <div class="modal-card full">
+<!-- MODAL -->
+<div id="modal" class="modal">
+  <div class="modal-card" id="modalCard">
     <div class="modal-head">
-      <h3>⚙️ Pengaturan &amp; Admin</h3>
-      <button data-close="settingsModal">✕</button>
+      <h3 id="modalTitle">-</h3>
+      <button class="modal-close" id="modalClose" type="button">✕</button>
     </div>
-    <div class="tabs-row" id="settingsTabs">
-      <button data-tab="materials" class="active">📦 Material</button>
-      <button data-tab="expenses">💸 Pengeluaran</button>
-      <button data-tab="invoices">🧾 Invoice</button>
-      <button data-tab="company">🏢 Perusahaan</button>
-      <button data-tab="backup">💾 Backup</button>
-    </div>
-    <div class="modal-body" id="settingsBody"></div>
-  </div>
-</div>
-
-<!-- Order Form Modal -->
-<div class="modal" id="orderFormModal">
-  <div class="modal-card wide">
-    <div class="modal-head">
-      <h3 id="orderFormTitle">Tambah Order</h3>
-      <button data-close="orderFormModal">✕</button>
-    </div>
-    <div class="modal-body" id="orderFormBody"></div>
-  </div>
-</div>
-
-<!-- Order Detail Modal -->
-<div class="modal" id="orderDetailModal">
-  <div class="modal-card wide">
-    <div class="modal-head">
-      <h3 id="orderDetailTitle">Detail Order</h3>
-      <button data-close="orderDetailModal">✕</button>
-    </div>
-    <div class="modal-body" id="orderDetailBody"></div>
-  </div>
-</div>
-
-<!-- Sub Modal (generic for forms) -->
-<div class="modal" id="subModal">
-  <div class="modal-card">
-    <div class="modal-head">
-      <h3 id="subModalTitle">Form</h3>
-      <button data-close="subModal">✕</button>
-    </div>
-    <div class="modal-body" id="subModalBody"></div>
+    <div class="modal-body" id="modalBody"></div>
   </div>
 </div>
 
@@ -363,10 +302,8 @@ tr:hover td{background:#fafbfd}
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
 import {
-  getFirestore, collection, onSnapshot, addDoc, updateDoc, deleteDoc, doc,
-  serverTimestamp, getDoc, setDoc
+  getFirestore, collection, doc, addDoc, updateDoc, deleteDoc, onSnapshot
 } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
-import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAehuT1RmzdPa4EuCrKIF9EQmnAYLfMR4M",
@@ -376,1297 +313,766 @@ const firebaseConfig = {
   messagingSenderId: "804908618382",
   appId: "1:804908618382:web:37e8fde2b09fb480ea2fdf"
 };
+const firebaseApp = initializeApp(firebaseConfig);
+const db = getFirestore(firebaseApp);
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const auth = getAuth(app);
-
-const C = {
-  orders: 'jayaanugrahteknik_orders',
-  materials: 'jayaanugrahteknik_materials',
-  moves: 'jayaanugrahteknik_moves',
-  invoices: 'jayaanugrahteknik_invoices',
-  expenses: 'jayaanugrahteknik_expenses',
-  settings: 'jayaanugrahteknik_settings'
+const COL = {
+  orders:'jayaanugrahteknik_orders',
+  materials:'jayaanugrahteknik_materials',
+  moves:'jayaanugrahteknik_moves',
+  expenses:'jayaanugrahteknik_expenses'
 };
-
 const PASSWORD = 'banten01';
+const SESSION_KEY = 'jat_logged_v1';
 
-const state = {
-  loggedIn: sessionStorage.getItem('jat_logged_in') === '1',
-  orders: [], materials: [], moves: [], invoices: [], expenses: [],
-  settings: {
-    namaPerusahaan: 'CV Jaya Anugrah Tehnik',
-    alamat: 'Jl. Bawang VI No.163, Kota Tangerang, Banten',
-    telepon: '0851-3871-9054',
-    email: ''
-  },
-  dataLoaded: { orders:false, materials:false, moves:false, invoices:false, expenses:false }
-};
+const $=(s,r=document)=>r.querySelector(s);
+const $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmtRp=n=>'Rp '+Number(n||0).toLocaleString('id-ID');
+const fmtNum=n=>Number(n||0).toLocaleString('id-ID');
+const fmtDate=d=>{if(!d)return'-';const x=new Date(d);return isNaN(x)?d:x.toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'})};
+const today=()=>new Date().toISOString().slice(0,10);
+const thisYM=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')};
 
-const $ = (s, r=document) => r.querySelector(s);
-const $$ = (s, r=document) => [...r.querySelectorAll(s)];
-const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const fmtRp = n => 'Rp ' + Number(n||0).toLocaleString('id-ID');
-const fmtNum = n => Number(n||0).toLocaleString('id-ID');
-const fmtDate = d => {
-  if (!d) return '-';
-  const x = new Date(d);
-  if (isNaN(x)) return '-';
-  return x.toLocaleDateString('id-ID', {day:'2-digit',month:'short',year:'numeric'});
-};
-const today = () => new Date().toISOString().slice(0,10);
-const thisYM = () => { const d=new Date(); return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0'); };
-const tsMs = t => t?.seconds ? t.seconds*1000 : (t?.toMillis ? t.toMillis() : (typeof t === 'number' ? t : 0));
+const STATUSES=['Order Masuk','Produksi','QC','Selesai','Diambil'];
+const JENIS=['Hard Chrome','Teflon Coating','Metal Spray','Moulding Injection','Machining CNC','Bubut CNC','Fabrikasi','Bending','Lainnya'];
+const SATUAN=['pcs','unit','set','kg','meter','liter','jam'];
 
-function toast(msg, type='') {
-  const t = $('#toast');
-  t.textContent = msg;
-  t.className = 'show ' + type;
-  clearTimeout(t._t);
-  t._t = setTimeout(()=> t.className = '', 3000);
-}
+const state={view:'dashboard',orderId:null,settingsTab:'materials',reportYM:null,
+orders:[],materials:[],moves:[],expenses:[],
+loaded:{orders:false,materials:false,moves:false,expenses:false},rendered:false};
 
-function openModal(id) { $('#'+id).classList.add('open'); }
-function closeModal(id) { $('#'+id).classList.remove('open'); }
-window.closeModal = closeModal;
+function toast(msg,type=''){const t=$('#toast');t.textContent=msg;t.className='show '+type;
+clearTimeout(t._t);t._t=setTimeout(()=>t.className='',3000)}
 
-// close modal on background click or [data-close]
-document.addEventListener('click', e => {
-  if (e.target.matches('.modal') && e.target.classList.contains('open')) {
-    e.target.classList.remove('open');
-  }
-  const closeBtn = e.target.closest('[data-close]');
-  if (closeBtn) closeModal(closeBtn.dataset.close);
-});
+function isLoggedIn(){return localStorage.getItem(SESSION_KEY)==='1'}
 
-// ============= INIT =============
-async function init() {
-  try {
-    await signInAnonymously(auth);
-  } catch(e) {
-    console.warn('Auth anonim gagal:', e.message);
-  }
-
-  // Load settings first
-  try {
-    const snap = await getDoc(doc(db, C.settings, 'main'));
-    if (snap.exists()) {
-      state.settings = { ...state.settings, ...snap.data() };
-    }
-  } catch(e) {
-    console.warn('Settings load:', e.message);
-  }
-
-  // Subscribe collections
-  onSnapshot(collection(db, C.orders), snap => {
-    state.orders = snap.docs.map(d => ({id:d.id, ...d.data()}))
-      .sort((a,b) => tsMs(b.createdAt) - tsMs(a.createdAt));
-    state.dataLoaded.orders = true;
-    renderIfReady();
-  }, err => console.warn('orders:', err.message));
-
-  onSnapshot(collection(db, C.materials), snap => {
-    state.materials = snap.docs.map(d => ({id:d.id, ...d.data()}))
-      .sort((a,b) => (a.nama||'').localeCompare(b.nama||''));
-    state.dataLoaded.materials = true;
-    renderIfReady();
-  }, err => console.warn('materials:', err.message));
-
-  onSnapshot(collection(db, C.moves), snap => {
-    state.moves = snap.docs.map(d => ({id:d.id, ...d.data()}));
-    state.dataLoaded.moves = true;
-    renderIfReady();
-  }, err => console.warn('moves:', err.message));
-
-  onSnapshot(collection(db, C.invoices), snap => {
-    state.invoices = snap.docs.map(d => ({id:d.id, ...d.data()}))
-      .sort((a,b) => tsMs(b.createdAt) - tsMs(a.createdAt));
-    state.dataLoaded.invoices = true;
-    renderIfReady();
-  }, err => console.warn('invoices:', err.message));
-
-  onSnapshot(collection(db, C.expenses), snap => {
-    state.expenses = snap.docs.map(d => ({id:d.id, ...d.data()}))
-      .sort((a,b) => tsMs(b.createdAt) - tsMs(a.createdAt));
-    state.dataLoaded.expenses = true;
-    renderIfReady();
-  }, err => console.warn('expenses:', err.message));
-
-  // show UI after a brief delay
-  setTimeout(() => {
-    $('#loading').classList.add('hidden');
-    if (state.loggedIn) {
-      showApp();
-    } else {
-      $('#login').classList.remove('hidden');
-    }
-  }, 600);
-}
-
-function renderIfReady() {
-  if (state.loggedIn) renderDashboard();
-}
-
-// ============= LOGIN =============
-$('#loginForm').addEventListener('submit', e => {
+$('#loginForm').addEventListener('submit',e=>{
   e.preventDefault();
-  const pw = $('#password').value.trim();
-  if (pw === PASSWORD) {
-    state.loggedIn = true;
-    sessionStorage.setItem('jat_logged_in', '1');
-    $('#loginErr').textContent = '';
-    $('#login').classList.add('hidden');
+  if($('#loginPass').value===PASSWORD){
+    localStorage.setItem(SESSION_KEY,'1');
+    $('#loginErr').textContent='';
     showApp();
-  } else {
-    $('#loginErr').textContent = 'Password salah. Coba lagi.';
+  }else{
+    $('#loginErr').textContent='Password salah.';
   }
 });
 
-function showApp() {
-  $('#login').classList.add('hidden');
+function showApp(){
+  $('#loginScreen').classList.add('hidden');
   $('#app').classList.remove('hidden');
-  renderDashboard();
+  $('#content').innerHTML='<div class="loading"><div class="spinner"></div><p>Memuat data dari server...</p></div>';
+  $('#topbarActions').innerHTML='';
+  subscribeAll();
 }
 
-// ============= DASHBOARD =============
-function renderDashboard() {
-  if (!state.loggedIn) return;
+function subscribeAll(){
+  onSnapshot(collection(db,COL.orders),snap=>{
+    state.orders=snap.docs.map(d=>({id:d.id,...d.data()}))
+      .sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+    state.loaded.orders=true;tryRender();
+  },err=>{console.error('orders',err);toast('Orders: '+err.message,'error')});
 
-  // stats
-  const ym = thisYM();
-  const ordersThisMonth = state.orders.filter(o => (o.tanggal||'').startsWith(ym));
-  const activeOrders = state.orders.filter(o => !['Selesai','Diambil'].includes(o.status));
-  const revenueThisMonth = state.orders
-    .filter(o => (o.tanggal||'').startsWith(ym) && ['Selesai','Diambil'].includes(o.status))
-    .reduce((s,o) => s + (+o.nilaiOrder||0), 0);
-  const lowStock = state.materials.filter(m => (+m.stok||0) <= (+m.stokMin||0));
+  onSnapshot(collection(db,COL.materials),snap=>{
+    state.materials=snap.docs.map(d=>({id:d.id,...d.data()}))
+      .sort((a,b)=>(a.nama||'').localeCompare(b.nama||''));
+    state.loaded.materials=true;tryRender();
+  },err=>{console.error('materials',err);toast('Materials: '+err.message,'error')});
 
-  $('#statsGrid').innerHTML = `
-    <div class="stat">
-      <div class="label">Order Aktif</div>
-      <div class="value">${activeOrders.length}</div>
-      <div class="sub">${ordersThisMonth.length} masuk bulan ini</div>
-    </div>
-    <div class="stat teal">
-      <div class="label">Pendapatan Bulan Ini</div>
-      <div class="value">${fmtRp(revenueThisMonth)}</div>
-      <div class="sub">Order selesai</div>
-    </div>
-    <div class="stat ${lowStock.length?'danger':'warning'}">
-      <div class="label">Stok Kritis</div>
-      <div class="value">${lowStock.length}</div>
-      <div class="sub">dari ${state.materials.length} material</div>
-    </div>
-    <div class="stat">
-      <div class="label">Total Order</div>
-      <div class="value">${state.orders.length}</div>
-      <div class="sub">Semua waktu</div>
-    </div>
-  `;
+  onSnapshot(collection(db,COL.moves),snap=>{
+    state.moves=snap.docs.map(d=>({id:d.id,...d.data()}))
+      .sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+    state.loaded.moves=true;tryRender();
+  },err=>{console.error('moves',err);toast('Moves: '+err.message,'error')});
 
-  // orders list
-  const search = $('#searchOrder')?.value?.toLowerCase() || '';
-  const filter = $('#filterStatus')?.value || '';
-  let list = state.orders;
-  if (filter) list = list.filter(o => o.status === filter);
-  if (search) {
-    list = list.filter(o => 
-      (o.noOrder||'').toLowerCase().includes(search) ||
-      (o.pelanggan||'').toLowerCase().includes(search) ||
-      (o.jenis||'').toLowerCase().includes(search) ||
-      (o.pekerjaan||'').toLowerCase().includes(search)
-    );
+  onSnapshot(collection(db,COL.expenses),snap=>{
+    state.expenses=snap.docs.map(d=>({id:d.id,...d.data()}))
+      .sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+    state.loaded.expenses=true;tryRender();
+  },err=>{console.error('expenses',err);toast('Expenses: '+err.message,'error')});
+}
+
+function tryRender(){
+  if(Object.values(state.loaded).every(v=>v))render();
+}
+
+function render(){
+  state.rendered=true;
+  updateTopbar();
+  const c=$('#content');
+  if(state.view==='dashboard')c.innerHTML=renderDashboard();
+  else if(state.view==='orderDetail')c.innerHTML=renderOrderDetail();
+  else if(state.view==='settings')c.innerHTML=renderSettings();
+  attachEvents();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function updateTopbar(){
+  const a=$('#topbarActions');
+  if(state.view==='dashboard'){
+    a.innerHTML='<button class="icon-btn" id="gearBtn" title="Pengaturan">⚙️</button>';
+  }else{
+    a.innerHTML='<button class="icon-btn" id="backBtn" title="Kembali">←</button>';
+  }
+}
+
+function attachEvents(){
+  const gear=$('#gearBtn');
+  if(gear)gear.addEventListener('click',()=>{state.view='settings';state.settingsTab='materials';render()});
+  const back=$('#backBtn');
+  if(back)back.addEventListener('click',()=>{state.view='dashboard';state.orderId=null;render()});
+  if(state.view==='dashboard')attachDashboardEvents();
+  else if(state.view==='orderDetail')attachOrderDetailEvents();
+  else if(state.view==='settings')attachSettingsEvents();
+}
+
+/* ============ DASHBOARD ============ */
+function renderDashboard(){
+  const ym=thisYM();
+  const ordersThisMonth=state.orders.filter(o=>(o.tanggal||'').startsWith(ym));
+  const activeOrders=state.orders.filter(o=>!['Selesai','Diambil'].includes(o.status));
+  const revenue=state.orders.filter(o=>(o.tanggal||'').startsWith(ym)&&['Selesai','Diambil'].includes(o.status))
+    .reduce((s,o)=>s+(+o.nilaiOrder||0),0);
+  const lowStock=state.materials.filter(m=>(m.stok||0)<=(m.stokMin||0));
+  const recentOrders=state.orders.slice(0,20);
+
+  let ordersHtml;
+  if(!state.orders.length){
+    ordersHtml=`<div class="empty"><div class="ico">📋</div><p>Belum ada order. Klik <b>+ Tambah Order</b> untuk mulai.</p></div>`;
+  }else{
+    ordersHtml='<div class="order-list">'+recentOrders.map(o=>`
+      <div class="order-card" data-id="${o.id}">
+        <div class="order-head">
+          <span class="order-no">${esc(o.noOrder)}</span>${statusPill(o.status)}
+        </div>
+        <div class="order-body">
+          <b>${esc(o.pelanggan)}</b>
+          <div class="small">${esc(o.jenis)} · ${fmtNum(o.jumlah)} ${esc(o.satuan)}</div>
+        </div>
+        <div class="order-foot">
+          <span>${fmtDate(o.tanggal)}</span>
+          <b>${fmtRp(o.nilaiOrder)}</b>
+        </div>
+      </div>`).join('')+'</div>';
   }
 
-  const box = $('#ordersList');
-  if (!list.length) {
-    box.innerHTML = `<div class="empty"><div class="ico">📋</div>
-      <p>${state.orders.length? 'Tidak ada order yang cocok.' : 'Belum ada order. Klik <b>+ Tambah Order</b> untuk mulai.'}</p></div>`;
-    return;
-  }
-
-  box.innerHTML = list.map(o => `
-    <div class="order-card" data-order="${o.id}">
-      <div class="order-no">${esc(o.noOrder||'-')}</div>
-      <div class="order-pelanggan">
-        <b>${esc(o.pelanggan||'-')}</b>
-        <small>${fmtDate(o.tanggal)}</small>
-      </div>
-      <div class="order-jenis">${esc(o.jenis||'-')}</div>
-      <div class="order-status">${statusPill(o.status)}</div>
-      <div class="order-nilai">${fmtRp(o.nilaiOrder)}</div>
+  return `
+    <div class="stats">
+      <div class="stat"><div class="stat-label">Order Bulan Ini</div>
+        <div class="stat-value">${ordersThisMonth.length}</div>
+        <div class="stat-sub">${activeOrders.length} aktif</div></div>
+      <div class="stat teal"><div class="stat-label">Pendapatan Bulan Ini</div>
+        <div class="stat-value">${fmtRp(revenue)}</div>
+        <div class="stat-sub">Order selesai</div></div>
+      <div class="stat warn"><div class="stat-label">Total Material</div>
+        <div class="stat-value">${state.materials.length}</div>
+        <div class="stat-sub">${lowStock.length} kritis</div></div>
+      <div class="stat ${lowStock.length?'danger':''}"><div class="stat-label">Stok Kritis</div>
+        <div class="stat-value">${lowStock.length}</div>
+        <div class="stat-sub">Perlu restock</div></div>
     </div>
-  `).join('');
-
-  $$('#ordersList .order-card').forEach(el => {
-    el.addEventListener('click', () => openOrderDetail(el.dataset.order));
-  });
+    <div class="section-head">
+      <h2>Daftar Order</h2>
+      <button class="btn btn-primary" id="addOrderBtn">+ Tambah Order</button>
+    </div>
+    ${ordersHtml}
+    <button class="fab" id="fabAddOrder" title="Tambah Order">+</button>`;
 }
 
-function statusPill(s) {
-  const m = { 'Order Masuk':'baru', 'Produksi':'produksi', 'QC':'qc',
-    'Selesai':'selesai', 'Diambil':'diambil' };
-  return `<span class="pill ${m[s]||'baru'}">${esc(s||'Order Masuk')}</span>`;
+function statusPill(s){
+  const map={'Order Masuk':'baru','Produksi':'produksi','QC':'qc','Selesai':'selesai','Diambil':'diambil'};
+  return `<span class="pill ${map[s]||'baru'}">${esc(s)}</span>`;
 }
 
-$('#searchOrder').addEventListener('input', renderDashboard);
-$('#filterStatus').addEventListener('change', renderDashboard);
-
-// ============= ADD/EDIT ORDER =============
-$('#addOrderBtn').addEventListener('click', () => openOrderForm());
-
-function genOrderNo() {
-  const d = new Date();
-  const ym = d.getFullYear() + String(d.getMonth()+1).padStart(2,'0');
-  const prefix = 'SPK-' + ym + '-';
-  const existing = state.orders.filter(o => (o.noOrder||'').startsWith(prefix));
-  const maxN = existing.reduce((m,o) => {
-    const n = parseInt((o.noOrder||'').split('-')[2], 10);
-    return isNaN(n) ? m : Math.max(m, n);
-  }, 0);
-  return prefix + String(maxN + 1).padStart(4, '0');
+function attachDashboardEvents(){
+  $$('.order-card').forEach(c=>c.addEventListener('click',()=>{
+    state.view='orderDetail';state.orderId=c.dataset.id;render();
+  }));
+  const a=$('#addOrderBtn');if(a)a.addEventListener('click',()=>openOrderForm());
+  const f=$('#fabAddOrder');if(f)f.addEventListener('click',()=>openOrderForm());
 }
 
-const JENIS = ['Hard Chrome','Teflon Coating','Metal Spray','Moulding Injection',
-  'Machining CNC','Bubut CNC','Fabrikasi','Bending','Lainnya'];
-const SATUAN = ['pcs','unit','set','kg','meter','liter','jam'];
+function genOrderNo(){
+  const d=new Date();
+  const ym=d.getFullYear()+String(d.getMonth()+1).padStart(2,'0');
+  const prefix='SPK-'+ym+'-';
+  const n=state.orders.filter(o=>(o.noOrder||'').startsWith(prefix)).length+1;
+  return prefix+String(n).padStart(4,'0');
+}
 
-function openOrderForm(edit=null) {
-  const isEdit = !!edit;
-  const o = edit || {
-    noOrder: genOrderNo(), tanggal: today(),
-    pelanggan:'', telepon:'', jenis:'Hard Chrome', pekerjaan:'',
-    jumlah:1, satuan:'pcs', deadline:'', nilaiOrder:0, biayaJasa:0, catatan:'',
-    status:'Order Masuk'
-  };
-  $('#orderFormTitle').textContent = isEdit ? 'Edit Order — ' + o.noOrder : 'Tambah Order Baru';
-  $('#orderFormBody').innerHTML = `
+/* ============ ORDER FORM ============ */
+function openOrderForm(edit=null){
+  const isEdit=!!edit;
+  const o=edit||{noOrder:genOrderNo(),tanggal:today(),pelanggan:'',telepon:'',
+    jenis:'Hard Chrome',pekerjaan:'',jumlah:1,satuan:'pcs',deadline:'',
+    nilaiOrder:0,biayaJasa:0,catatan:'',status:'Order Masuk'};
+  openModal(isEdit?'Edit Order':'Tambah Order Baru',`
     <form id="orderForm">
       <div class="form-row">
-        <div class="field">
-          <label>No. Order</label>
-          <input name="noOrder" value="${esc(o.noOrder)}" readonly style="background:#f0f2f7">
-        </div>
-        <div class="field">
-          <label>Tanggal <span class="req">*</span></label>
-          <input type="date" name="tanggal" value="${esc(o.tanggal)}" required>
-        </div>
+        <div class="field"><label>No. Order</label>
+          <input name="noOrder" value="${esc(o.noOrder)}" readonly style="background:#f0f2f7"></div>
+        <div class="field"><label>Tanggal <span class="req">*</span></label>
+          <input type="date" name="tanggal" value="${esc(o.tanggal)}" required></div>
       </div>
       <div class="form-row">
-        <div class="field">
-          <label>Nama Pelanggan <span class="req">*</span></label>
-          <input name="pelanggan" value="${esc(o.pelanggan)}" required placeholder="PT / CV / Perorangan">
-        </div>
-        <div class="field">
-          <label>Telepon</label>
-          <input name="telepon" value="${esc(o.telepon)}" placeholder="08xx">
-        </div>
+        <div class="field"><label>Pelanggan <span class="req">*</span></label>
+          <input name="pelanggan" value="${esc(o.pelanggan)}" required></div>
+        <div class="field"><label>Telepon</label>
+          <input name="telepon" value="${esc(o.telepon)}" placeholder="08xx"></div>
       </div>
       <div class="form-row">
-        <div class="field">
-          <label>Jenis Pekerjaan <span class="req">*</span></label>
-          <select name="jenis" required>
-            ${JENIS.map(j=>`<option ${j===o.jenis?'selected':''}>${j}</option>`).join('')}
-          </select>
-        </div>
-        <div class="field">
-          <label>Deadline</label>
-          <input type="date" name="deadline" value="${esc(o.deadline)}">
-        </div>
+        <div class="field"><label>Jenis <span class="req">*</span></label>
+          <select name="jenis" required>${JENIS.map(j=>`<option ${j===o.jenis?'selected':''}>${j}</option>`).join('')}</select></div>
+        <div class="field"><label>Deadline</label>
+          <input type="date" name="deadline" value="${esc(o.deadline)}"></div>
       </div>
-      <div class="field">
-        <label>Deskripsi Pekerjaan <span class="req">*</span></label>
-        <textarea name="pekerjaan" required placeholder="Contoh: Hard chrome diameter 50mm, panjang 500mm, 5 pcs">${esc(o.pekerjaan)}</textarea>
-      </div>
+      <div class="field"><label>Deskripsi Pekerjaan <span class="req">*</span></label>
+        <textarea name="pekerjaan" required>${esc(o.pekerjaan)}</textarea></div>
       <div class="form-row three">
-        <div class="field">
-          <label>Jumlah</label>
-          <input type="number" name="jumlah" value="${esc(o.jumlah)}" min="0" step="any">
-        </div>
-        <div class="field">
-          <label>Satuan</label>
-          <select name="satuan">${SATUAN.map(s=>`<option ${s===o.satuan?'selected':''}>${s}</option>`).join('')}</select>
-        </div>
-        <div class="field">
-          <label>Nilai Order (Rp) <span class="req">*</span></label>
-          <input type="number" name="nilaiOrder" value="${esc(o.nilaiOrder)}" min="0" required>
-        </div>
+        <div class="field"><label>Jumlah</label>
+          <input type="number" name="jumlah" value="${esc(o.jumlah)}" min="0" step="any"></div>
+        <div class="field"><label>Satuan</label>
+          <select name="satuan">${SATUAN.map(s=>`<option ${s===o.satuan?'selected':''}>${s}</option>`).join('')}</select></div>
+        <div class="field"><label>Nilai Order <span class="req">*</span></label>
+          <input type="number" name="nilaiOrder" value="${esc(o.nilaiOrder)}" min="0" required></div>
       </div>
       <div class="form-row">
-        <div class="field">
-          <label>Biaya Jasa Internal (Rp)</label>
-          <input type="number" name="biayaJasa" value="${esc(o.biayaJasa)}" min="0">
-          <div class="hint">Untuk hitung HPP (biaya tenaga kerja)</div>
-        </div>
-        <div class="field">
-          <label>Status</label>
-          <select name="status">
-            ${['Order Masuk','Produksi','QC','Selesai','Diambil'].map(s=>`<option ${s===o.status?'selected':''}>${s}</option>`).join('')}
-          </select>
-        </div>
+        <div class="field"><label>Biaya Jasa Internal</label>
+          <input type="number" name="biayaJasa" value="${esc(o.biayaJasa)}" min="0"></div>
+        <div class="field"><label>Status</label>
+          <select name="status">${STATUSES.map(s=>`<option ${s===o.status?'selected':''}>${s}</option>`).join('')}</select></div>
       </div>
-      <div class="field">
-        <label>Catatan</label>
-        <textarea name="catatan" placeholder="Opsional">${esc(o.catatan)}</textarea>
-      </div>
+      <div class="field"><label>Catatan</label>
+        <textarea name="catatan">${esc(o.catatan)}</textarea></div>
       <div class="modal-actions">
-        <button type="button" class="btn btn-ghost" data-close="orderFormModal">Batal</button>
-        <button type="submit" class="btn btn-primary">${isEdit?'Simpan Perubahan':'Simpan Order'}</button>
+        <button type="button" class="btn btn-ghost" id="cancelForm">Batal</button>
+        <button type="submit" class="btn btn-primary" id="submitForm">${isEdit?'Simpan':'Simpan Order'}</button>
       </div>
-    </form>
-  `;
-  openModal('orderFormModal');
+    </form>`,{wide:true});
 
-  $('#orderForm').addEventListener('submit', async e => {
+  $('#cancelForm').addEventListener('click',closeModal);
+  $('#orderForm').addEventListener('submit',async e=>{
     e.preventDefault();
-    const fd = new FormData(e.target);
-    const data = {
-      noOrder: fd.get('noOrder'),
-      tanggal: fd.get('tanggal'),
-      pelanggan: fd.get('pelanggan').trim(),
-      telepon: fd.get('telepon').trim(),
-      jenis: fd.get('jenis'),
-      pekerjaan: fd.get('pekerjaan').trim(),
-      jumlah: +fd.get('jumlah')||0,
-      satuan: fd.get('satuan'),
-      deadline: fd.get('deadline') || '',
-      nilaiOrder: +fd.get('nilaiOrder')||0,
-      biayaJasa: +fd.get('biayaJasa')||0,
-      status: fd.get('status'),
-      catatan: fd.get('catatan').trim()
+    const fd=new FormData(e.target);
+    const btn=$('#submitForm');btn.disabled=true;btn.textContent='Menyimpan...';
+    const data={
+      noOrder:fd.get('noOrder'),tanggal:fd.get('tanggal'),
+      pelanggan:fd.get('pelanggan').trim(),telepon:fd.get('telepon').trim(),
+      jenis:fd.get('jenis'),pekerjaan:fd.get('pekerjaan').trim(),
+      jumlah:+fd.get('jumlah')||0,satuan:fd.get('satuan'),deadline:fd.get('deadline'),
+      nilaiOrder:+fd.get('nilaiOrder')||0,biayaJasa:+fd.get('biayaJasa')||0,
+      status:fd.get('status'),catatan:fd.get('catatan').trim()
     };
-    try {
-      if (isEdit) {
-        await updateDoc(doc(db, C.orders, edit.id), data);
-        toast('Order diperbarui.', 'success');
-      } else {
-        await addDoc(collection(db, C.orders), { ...data, createdAt: serverTimestamp() });
-        toast('Order baru ditambahkan.', 'success');
+    try{
+      if(isEdit){
+        await updateDoc(doc(db,COL.orders,edit.id),data);
+        toast('Order diperbarui.','success');
+      }else{
+        await addDoc(collection(db,COL.orders),{...data,createdAt:Date.now()});
+        toast('Order ditambahkan.','success');
       }
-      closeModal('orderFormModal');
-    } catch(err) {
+      closeModal();
+    }catch(err){
       console.error(err);
-      toast('Gagal menyimpan: ' + err.message, 'error');
+      toast('Gagal: '+err.message,'error');
+      btn.disabled=false;btn.textContent=isEdit?'Simpan':'Simpan Order';
     }
   });
 }
 
-// ============= ORDER DETAIL =============
-function openOrderDetail(id) {
-  const o = state.orders.find(x => x.id === id);
-  if (!o) return;
-  const moves = state.moves.filter(m => m.orderId === id);
-  const matCost = moves.reduce((s,m) => s + (+m.harga||0) * (+m.jumlah||0), 0);
-  const hpp = (+o.biayaJasa||0) + matCost;
-  const margin = (+o.nilaiOrder||0) - hpp;
-  const invoice = state.invoices.find(inv => inv.orderId === id);
-  const steps = ['Order Masuk','Produksi','QC','Selesai','Diambil'];
-  const cur = steps.indexOf(o.status);
+/* ============ ORDER DETAIL ============ */
+function renderOrderDetail(){
+  const o=state.orders.find(x=>x.id===state.orderId);
+  if(!o)return `<div class="empty"><p>Order tidak ditemukan.</p></div>`;
+  const moves=state.moves.filter(m=>m.orderId===o.id&&m.tipe==='keluar');
+  const materialCost=moves.reduce((s,m)=>s+(m.harga||0)*(m.jumlah||0),0);
+  const hpp=(+o.biayaJasa||0)+materialCost;
+  const margin=(+o.nilaiOrder||0)-hpp;
+  const cur=STATUSES.indexOf(o.status);
 
-  $('#orderDetailTitle').textContent = 'Detail Order — ' + o.noOrder;
-  $('#orderDetailBody').innerHTML = `
-    <div class="detail-grid">
-      <div>
-        <div style="display:flex;gap:8px;justify-content:flex-end;margin-bottom:12px;flex-wrap:wrap">
-          <button class="btn btn-ghost btn-sm" id="printSpk">🖨 Print SPK</button>
-          <button class="btn btn-ghost btn-sm" id="editOrderBtn">✏ Edit</button>
-          <button class="btn btn-danger btn-sm" id="delOrderBtn">🗑 Hapus</button>
-        </div>
+  const movesHtml=moves.length?`
+    <div class="table-wrap"><table>
+      <thead><tr><th>Material</th><th class="text-right">Qty</th>
+      <th class="text-right">Subtotal</th><th></th></tr></thead>
+      <tbody>${moves.map(m=>`
+        <tr><td>${esc(m.materialNama)}</td>
+        <td class="text-right">${fmtNum(m.jumlah)} ${esc(m.satuan)}</td>
+        <td class="text-right mono">${fmtRp((m.harga||0)*(m.jumlah||0))}</td>
+        <td class="text-right"><button class="btn-icon" data-del-move="${m.id}">🗑</button></td></tr>`).join('')}
+      </tbody></table></div>`:
+    `<div class="empty" style="padding:20px;background:transparent;border:0">
+      <p style="font-size:12.5px">Belum ada pemakaian material.</p></div>`;
 
-        <div class="card-box">
-          <h4>Informasi Order</h4>
-          <div class="info-grid">
-            <div class="info-item"><div class="k">Pelanggan</div><div class="v">${esc(o.pelanggan)}</div></div>
-            <div class="info-item"><div class="k">Telepon</div><div class="v">${esc(o.telepon)||'-'}</div></div>
-            <div class="info-item"><div class="k">Jenis Pekerjaan</div><div class="v">${esc(o.jenis)}</div></div>
-            <div class="info-item"><div class="k">Jumlah</div><div class="v">${fmtNum(o.jumlah)} ${esc(o.satuan)}</div></div>
-            <div class="info-item"><div class="k">Tanggal Order</div><div class="v">${fmtDate(o.tanggal)}</div></div>
-            <div class="info-item"><div class="k">Deadline</div><div class="v">${o.deadline?fmtDate(o.deadline):'-'}</div></div>
-            <div class="info-item" style="grid-column:1/-1">
-              <div class="k">Deskripsi</div><div class="v">${esc(o.pekerjaan)}</div>
-            </div>
-            ${o.catatan?`<div class="info-item" style="grid-column:1/-1">
-              <div class="k">Catatan</div><div class="v">${esc(o.catatan)}</div></div>`:''}
-          </div>
-        </div>
-
-        <div class="card-box">
-          <h4>Pemakaian Material
-            <button class="btn btn-primary btn-sm" id="addUsageBtn">+ Pemakaian</button></h4>
-          ${moves.length ? `<div class="table-wrap"><table>
-            <thead><tr><th>Material</th><th class="text-right">Qty</th>
-            <th class="text-right">Harga</th><th class="text-right">Subtotal</th><th></th></tr></thead>
-            <tbody>${moves.map(m=>`
-              <tr>
-                <td>${esc(m.materialNama)}</td>
-                <td class="text-right">${fmtNum(m.jumlah)} ${esc(m.satuan||'')}</td>
-                <td class="text-right mono">${fmtRp(m.harga)}</td>
-                <td class="text-right mono">${fmtRp((+m.harga||0)*(+m.jumlah||0))}</td>
-                <td class="text-right"><button class="btn-icon" data-del-move="${m.id}">×</button></td>
-              </tr>
-            `).join('')}</tbody>
-          </table></div>` : `<p style="font-size:12.5px;color:var(--ink2);text-align:center;padding:16px 0">Belum ada pemakaian material.</p>`}
-        </div>
-
-        <div class="card-box">
-          <h4>HPP &amp; Margin</h4>
-          <div class="hpp-box">
-            <div class="hpp-row"><span>Nilai Order</span><b>${fmtRp(o.nilaiOrder)}</b></div>
-            <div class="hpp-row"><span>Biaya Jasa Internal</span><span>− ${fmtRp(o.biayaJasa)}</span></div>
-            <div class="hpp-row"><span>Biaya Material</span><span>− ${fmtRp(matCost)}</span></div>
-            <div class="hpp-row total"><span>Laba Kotor</span>
-              <span style="color:${margin>=0?'var(--success)':'var(--danger)'}">${fmtRp(margin)}</span></div>
-            ${o.nilaiOrder>0?`<div class="hpp-row"><span style="color:var(--ink2);font-size:12px">Margin</span>
-              <b style="color:${margin>=0?'var(--success)':'var(--danger)'}">
-                ${((margin/o.nilaiOrder)*100).toFixed(1)}%
-              </b></div>`:''}
-          </div>
+  return `
+    <div class="card" style="margin-bottom:14px">
+      <div class="card-head">
+        <div><span class="order-no">${esc(o.noOrder)}</span> ${statusPill(o.status)}</div>
+        <div style="display:flex;gap:6px">
+          <button class="btn btn-ghost btn-sm" id="editOrder">✏ Edit</button>
+          <button class="btn btn-danger btn-sm" id="deleteOrder">🗑 Hapus</button>
         </div>
       </div>
-
-      <div>
-        <div class="card-box">
-          <h4>Status Produksi</h4>
-          <div class="stepper">
-            ${steps.map((s,i)=>`
-              <div class="step-item ${i<cur?'done':''} ${i===cur?'active':''}">
-                <div class="dot">${i<cur?'✓':i+1}</div>
-                <div style="flex:1">${s}</div>
-                ${i===cur+1?`<button class="btn btn-primary btn-sm" data-advance="${s}">→</button>`:''}
-              </div>
-            `).join('')}
-          </div>
-        </div>
-
-        <div class="card-box">
-          <h4>Invoice</h4>
-          ${invoice ? `
-            <div style="font-size:13px;margin-bottom:10px">
-              <div class="info-item"><div class="k">No. Invoice</div>
-                <div class="v mono">${esc(invoice.noInvoice)}</div></div>
-              <div class="info-item" style="margin-top:8px"><div class="k">Status</div>
-                <div class="v">${payPill(invoice.status)}</div></div>
-              <div class="info-item" style="margin-top:8px"><div class="k">Total</div>
-                <div class="v">${fmtRp(invoice.total)}</div></div>
-            </div>
-            <button class="btn btn-ghost btn-sm" id="openInvoiceBtn" style="width:100%">Lihat Invoice →</button>
-          ` : ['Selesai','Diambil'].includes(o.status) ? `
-            <p style="font-size:12.5px;color:var(--ink2);margin-bottom:12px">
-              Order selesai. Buat invoice untuk pelanggan.
-            </p>
-            <button class="btn btn-primary btn-sm" id="createInvoiceBtn" style="width:100%">+ Buat Invoice</button>
-          ` : `<p style="font-size:12.5px;color:var(--ink2)">Invoice bisa dibuat setelah order <b>Selesai</b>.</p>`}
+      <div class="card-body">
+        <div class="info-grid">
+          <div class="info-item"><div class="k">Pelanggan</div><div class="v">${esc(o.pelanggan)}</div></div>
+          <div class="info-item"><div class="k">Telepon</div><div class="v">${esc(o.telepon)||'-'}</div></div>
+          <div class="info-item"><div class="k">Jenis</div><div class="v">${esc(o.jenis)}</div></div>
+          <div class="info-item"><div class="k">Jumlah</div><div class="v">${fmtNum(o.jumlah)} ${esc(o.satuan)}</div></div>
+          <div class="info-item"><div class="k">Tanggal</div><div class="v">${fmtDate(o.tanggal)}</div></div>
+          <div class="info-item"><div class="k">Deadline</div><div class="v">${o.deadline?fmtDate(o.deadline):'-'}</div></div>
+          <div class="info-item" style="grid-column:1/-1"><div class="k">Deskripsi</div><div class="v">${esc(o.pekerjaan)}</div></div>
+          ${o.catatan?`<div class="info-item" style="grid-column:1/-1"><div class="k">Catatan</div><div class="v">${esc(o.catatan)}</div></div>`:''}
         </div>
       </div>
     </div>
-  `;
-  openModal('orderDetailModal');
-
-  // events
-  $('#printSpk').onclick = () => printSpk(o);
-  $('#editOrderBtn').onclick = () => { closeModal('orderDetailModal'); openOrderForm(o); };
-  $('#delOrderBtn').onclick = async () => {
-    if (!confirm('Hapus order ' + o.noOrder + '?')) return;
-    try {
-      await deleteDoc(doc(db, C.orders, o.id));
-      // also delete related moves
-      for (const m of moves) await deleteDoc(doc(db, C.moves, m.id));
-      toast('Order dihapus.', 'success');
-      closeModal('orderDetailModal');
-    } catch(err) { toast('Gagal: ' + err.message, 'error'); }
-  };
-  $$('[data-advance]').forEach(b => b.onclick = async () => {
-    try {
-      await updateDoc(doc(db, C.orders, o.id), { status: b.dataset.advance });
-      toast('Status diubah ke ' + b.dataset.advance, 'success');
-      openOrderDetail(o.id);
-    } catch(err) { toast('Gagal: ' + err.message, 'error'); }
-  });
-  const usageBtn = $('#addUsageBtn');
-  if (usageBtn) usageBtn.onclick = () => openUsageForm(o);
-  $$('[data-del-move]').forEach(b => b.onclick = async () => {
-    if (!confirm('Hapus pemakaian ini? Stok akan dikembalikan.')) return;
-    const mv = state.moves.find(x => x.id === b.dataset.delMove);
-    if (!mv) return;
-    try {
-      await deleteDoc(doc(db, C.moves, mv.id));
-      // restore stock
-      const mat = state.materials.find(m => m.id === mv.materialId);
-      if (mat) {
-        await updateDoc(doc(db, C.materials, mat.id), { stok: (+mat.stok||0) + (+mv.jumlah||0) });
-      }
-      toast('Pemakaian dihapus.', 'success');
-      openOrderDetail(o.id);
-    } catch(err) { toast('Gagal: ' + err.message, 'error'); }
-  });
-  const invBtn = $('#createInvoiceBtn');
-  if (invBtn) invBtn.onclick = () => openInvoiceForm(o);
-  const openInvBtn = $('#openInvoiceBtn');
-  if (openInvBtn) openInvBtn.onclick = () => openInvoiceDetail(invoice.id);
+    <div class="card" style="margin-bottom:14px">
+      <div class="card-head"><h3>Status Produksi</h3></div>
+      <div class="card-body">
+        <div class="status-bar">${STATUSES.map((s,i)=>{
+          let cls='';if(i<cur)cls='done';else if(i===cur)cls='active';
+          return `<button class="status-step ${cls}" data-status="${s}">${s}</button>`;
+        }).join('')}</div>
+      </div>
+    </div>
+    <div class="card" style="margin-bottom:14px">
+      <div class="card-head"><h3>Pemakaian Material</h3>
+        <button class="btn btn-primary btn-sm" id="addUsage">+ Tambah</button></div>
+      ${movesHtml}
+    </div>
+    <div class="card">
+      <div class="card-head"><h3>HPP &amp; Margin</h3></div>
+      <div class="card-body"><div class="hpp-box">
+        <div class="hpp-row"><span>Nilai Order</span><b>${fmtRp(o.nilaiOrder)}</b></div>
+        <div class="hpp-row"><span>Biaya Jasa Internal</span><span>- ${fmtRp(o.biayaJasa)}</span></div>
+        <div class="hpp-row"><span>Biaya Material</span><span>- ${fmtRp(materialCost)}</span></div>
+        <div class="hpp-row total"><span>Laba Kotor</span>
+          <span style="color:${margin>=0?'var(--success)':'var(--danger)'}">${fmtRp(margin)}</span></div>
+        ${o.nilaiOrder>0?`<div class="hpp-row"><span style="color:var(--ink2);font-size:12px">Margin</span>
+          <b style="color:${margin>=0?'var(--success)':'var(--danger)'}">${((margin/o.nilaiOrder)*100).toFixed(1)}%</b></div>`:''}
+      </div></div>
+    </div>`;
 }
 
-function payPill(s) {
-  const m = { 'Belum Bayar':'belumbayar', 'DP':'dp', 'Lunas':'lunas' };
-  return `<span class="pill ${m[s]||'belumbayar'}">${esc(s||'Belum Bayar')}</span>`;
+function attachOrderDetailEvents(){
+  const id=state.orderId;
+  const o=state.orders.find(x=>x.id===id);
+  if(!o)return;
+  $('#editOrder').addEventListener('click',()=>openOrderForm(o));
+  $('#deleteOrder').addEventListener('click',async()=>{
+    if(!confirm('Hapus order '+o.noOrder+'?'))return;
+    try{
+      await deleteDoc(doc(db,COL.orders,id));
+      toast('Order dihapus.','success');
+      state.view='dashboard';state.orderId=null;render();
+    }catch(err){toast('Gagal: '+err.message,'error')}
+  });
+  $$('[data-status]').forEach(b=>b.addEventListener('click',async()=>{
+    if(b.dataset.status===o.status)return;
+    try{await updateDoc(doc(db,COL.orders,id),{status:b.dataset.status});
+      toast('Status: '+b.dataset.status,'success');
+    }catch(err){toast('Gagal: '+err.message,'error')}
+  }));
+  $('#addUsage').addEventListener('click',()=>openUsageForm(o));
+  $$('[data-del-move]').forEach(b=>b.addEventListener('click',async()=>{
+    if(!confirm('Hapus pemakaian ini? Stok akan dikembalikan.'))return;
+    const mv=state.moves.find(x=>x.id===b.dataset.delMove);if(!mv)return;
+    try{
+      const mat=state.materials.find(m=>m.id===mv.materialId);
+      if(mat)await updateDoc(doc(db,COL.materials,mat.id),{stok:(mat.stok||0)+mv.jumlah});
+      await deleteDoc(doc(db,COL.moves,mv.id));
+      toast('Pemakaian dihapus.','success');
+    }catch(err){toast('Gagal: '+err.message,'error')}
+  }));
 }
 
-// ============= USAGE FORM =============
-function openUsageForm(order) {
-  if (!state.materials.length) {
-    toast('Belum ada material. Tambah di menu Pengaturan ⚙️ → Material.', 'error');
-    return;
-  }
-  const opts = state.materials.map(m => 
-    `<option value="${m.id}">${esc(m.nama)} (stok: ${fmtNum(m.stok)} ${esc(m.satuan)})</option>`
-  ).join('');
-  $('#subModalTitle').textContent = 'Tambah Pemakaian Material';
-  $('#subModalBody').innerHTML = `
+/* ============ USAGE FORM ============ */
+function openUsageForm(order){
+  if(!state.materials.length){toast('Belum ada material. Tambahkan dulu di Pengaturan.','error');return}
+  openModal('Tambah Pemakaian Material',`
     <form id="usageForm">
-      <div class="field">
-        <label>Material <span class="req">*</span></label>
-        <select name="materialId" required>${opts}</select>
-      </div>
-      <div class="form-row">
-        <div class="field">
-          <label>Jumlah <span class="req">*</span></label>
-          <input type="number" name="jumlah" required min="0.01" step="any" value="1">
-        </div>
-        <div class="field">
-          <label>Keterangan</label>
-          <input name="ket" placeholder="Opsional">
-        </div>
-      </div>
+      <div class="field"><label>Material <span class="req">*</span></label>
+        <select name="materialId" required>${state.materials.map(m=>
+          `<option value="${m.id}">${esc(m.nama)} (stok: ${fmtNum(m.stok)} ${esc(m.satuan)})</option>`).join('')}
+        </select></div>
+      <div class="field"><label>Jumlah <span class="req">*</span></label>
+        <input type="number" name="jumlah" required min="0.01" step="any" value="1"></div>
+      <div class="field"><label>Keterangan</label>
+        <input name="ket" placeholder="Opsional"></div>
       <div class="modal-actions">
-        <button type="button" class="btn btn-ghost" data-close="subModal">Batal</button>
-        <button type="submit" class="btn btn-primary">Simpan</button>
+        <button type="button" class="btn btn-ghost" id="cancelUsage">Batal</button>
+        <button type="submit" class="btn btn-primary" id="submitUsage">Simpan</button>
       </div>
-    </form>
-  `;
-  openModal('subModal');
-  $('#usageForm').addEventListener('submit', async e => {
+    </form>`);
+  $('#cancelUsage').addEventListener('click',closeModal);
+  $('#usageForm').addEventListener('submit',async e=>{
     e.preventDefault();
-    const fd = new FormData(e.target);
-    const mat = state.materials.find(m => m.id === fd.get('materialId'));
-    const qty = +fd.get('jumlah');
-    if (!mat || !qty) return;
-    if (qty > (+mat.stok||0)) { toast('Stok tidak cukup (tersedia '+fmtNum(mat.stok)+').', 'error'); return; }
-    try {
-      await addDoc(collection(db, C.moves), {
-        materialId: mat.id, materialNama: mat.nama, satuan: mat.satuan,
-        tipe: 'keluar', jumlah: qty, harga: mat.harga,
-        keterangan: fd.get('ket').trim() || 'Pemakaian order ' + order.noOrder,
-        orderId: order.id, tanggal: today(), createdAt: serverTimestamp()
+    const fd=new FormData(e.target);
+    const matId=fd.get('materialId');const qty=+fd.get('jumlah');
+    const mat=state.materials.find(m=>m.id===matId);
+    if(!mat||!qty)return;
+    if(qty>(mat.stok||0)){toast('Stok tidak cukup (tersedia: '+fmtNum(mat.stok)+').','error');return}
+    const btn=$('#submitUsage');btn.disabled=true;btn.textContent='Menyimpan...';
+    try{
+      await updateDoc(doc(db,COL.materials,mat.id),{stok:(mat.stok||0)-qty});
+      await addDoc(collection(db,COL.moves),{
+        materialId:mat.id,materialNama:mat.nama,satuan:mat.satuan,tipe:'keluar',
+        jumlah:qty,harga:mat.harga||0,
+        keterangan:fd.get('ket').trim()||('Pemakaian order '+order.noOrder),
+        orderId:order.id,tanggal:today(),createdAt:Date.now()
       });
-      await updateDoc(doc(db, C.materials, mat.id), { stok: (+mat.stok||0) - qty });
-      toast('Pemakaian dicatat.', 'success');
-      closeModal('subModal');
-      openOrderDetail(order.id);
-    } catch(err) { toast('Gagal: ' + err.message, 'error'); }
+      toast('Pemakaian dicatat.','success');closeModal();
+    }catch(err){console.error(err);toast('Gagal: '+err.message,'error');
+      btn.disabled=false;btn.textContent='Simpan'}
   });
 }
 
-// ============= INVOICE =============
-function genInvoiceNo() {
-  const d = new Date();
-  const ym = d.getFullYear() + String(d.getMonth()+1).padStart(2,'0');
-  const prefix = 'INV-' + ym + '-';
-  const existing = state.invoices.filter(i => (i.noInvoice||'').startsWith(prefix));
-  const maxN = existing.reduce((m,i) => {
-    const n = parseInt((i.noInvoice||'').split('-')[2], 10);
-    return isNaN(n) ? m : Math.max(m, n);
-  }, 0);
-  return prefix + String(maxN + 1).padStart(4, '0');
+/* ============ SETTINGS ============ */
+function renderSettings(){
+  const tab=state.settingsTab;
+  let body='';
+  if(tab==='materials')body=renderMaterialsTab();
+  else if(tab==='expenses')body=renderExpensesTab();
+  else if(tab==='reports')body=renderReportsTab();
+  else if(tab==='about')body=renderAboutTab();
+  return `
+    <div class="tabs">
+      <button class="tab ${tab==='materials'?'active':''}" data-tab="materials">📦 Material</button>
+      <button class="tab ${tab==='expenses'?'active':''}" data-tab="expenses">💸 Pengeluaran</button>
+      <button class="tab ${tab==='reports'?'active':''}" data-tab="reports">📈 Laporan</button>
+      <button class="tab ${tab==='about'?'active':''}" data-tab="about">ℹ️ Tentang</button>
+    </div>${body}`;
 }
 
-function openInvoiceForm(order) {
-  $('#subModalTitle').textContent = 'Buat Invoice — ' + order.noOrder;
-  $('#subModalBody').innerHTML = `
-    <form id="invForm">
-      <div style="background:#fafbfd;padding:12px;border-radius:8px;margin-bottom:14px;font-size:13px">
-        Pelanggan: <b>${esc(order.pelanggan)}</b><br>
-        Nilai order: <b>${fmtRp(order.nilaiOrder)}</b>
-      </div>
-      <div class="form-row">
-        <div class="field">
-          <label>No. Invoice</label>
-          <input name="noInvoice" value="${genInvoiceNo()}" readonly style="background:#f0f2f7">
-        </div>
-        <div class="field">
-          <label>Tanggal</label>
-          <input type="date" name="tanggal" value="${today()}" required>
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="field">
-          <label>Total (Rp)</label>
-          <input type="number" name="total" value="${order.nilaiOrder||0}" min="0" required>
-        </div>
-        <div class="field">
-          <label>PPN (%)</label>
-          <input type="number" name="ppn" value="0" min="0" max="100" step="any">
-        </div>
-      </div>
-      <div class="field">
-        <label>Catatan</label>
-        <textarea name="catatan" placeholder="Opsional"></textarea>
-      </div>
-      <div class="modal-actions">
-        <button type="button" class="btn btn-ghost" data-close="subModal">Batal</button>
-        <button type="submit" class="btn btn-primary">Buat Invoice</button>
-      </div>
-    </form>
-  `;
-  openModal('subModal');
-  $('#invForm').addEventListener('submit', async e => {
-    e.preventDefault();
-    const fd = new FormData(e.target);
-    const ppn = +fd.get('ppn')||0;
-    const total = +fd.get('total')||0;
-    const finalTotal = total + (total * ppn / 100);
-    try {
-      await addDoc(collection(db, C.invoices), {
-        noInvoice: fd.get('noInvoice'),
-        orderId: order.id,
-        tanggal: fd.get('tanggal'),
-        total: finalTotal,
-        ppn,
-        catatan: fd.get('catatan').trim(),
-        status: 'Belum Bayar',
-        pembayaran: [],
-        createdAt: serverTimestamp()
-      });
-      toast('Invoice dibuat.', 'success');
-      closeModal('subModal');
-      openOrderDetail(order.id);
-    } catch(err) { toast('Gagal: ' + err.message, 'error'); }
-  });
-}
-
-function openInvoiceDetail(invoiceId) {
-  const inv = state.invoices.find(i => i.id === invoiceId);
-  if (!inv) return;
-  const o = state.orders.find(x => x.id === inv.orderId) || {};
-  const paid = (inv.pembayaran||[]).reduce((s,p) => s + (+p.jumlah||0), 0);
-  const remaining = (+inv.total||0) - paid;
-
-  $('#orderDetailTitle').textContent = 'Invoice — ' + inv.noInvoice;
-  $('#orderDetailBody').innerHTML = `
-    <div style="display:flex;gap:8px;justify-content:flex-end;margin-bottom:12px;flex-wrap:wrap">
-      <button class="btn btn-ghost btn-sm" id="backToOrder">← Kembali ke Order</button>
-      <button class="btn btn-ghost btn-sm" id="printInv">🖨 Print Invoice</button>
-    </div>
-    <div class="card-box">
-      <h4>Detail Invoice</h4>
-      <div class="info-grid">
-        <div class="info-item"><div class="k">No. Invoice</div><div class="v mono">${esc(inv.noInvoice)}</div></div>
-        <div class="info-item"><div class="k">Pelanggan</div><div class="v">${esc(o.pelanggan||'-')}</div></div>
-        <div class="info-item"><div class="k">No. Order</div><div class="v mono">${esc(o.noOrder||'-')}</div></div>
-        <div class="info-item"><div class="k">Jenis</div><div class="v">${esc(o.jenis||'-')}</div></div>
-        <div class="info-item"><div class="k">Tanggal</div><div class="v">${fmtDate(inv.tanggal)}</div></div>
-        <div class="info-item"><div class="k">Status</div><div class="v">${payPill(inv.status)}</div></div>
-        <div class="info-item"><div class="k">Total</div><div class="v">${fmtRp(inv.total)}</div></div>
-        <div class="info-item"><div class="k">Sudah Dibayar</div><div class="v" style="color:var(--success)">${fmtRp(paid)}</div></div>
-        <div class="info-item"><div class="k">Sisa</div>
-          <div class="v" style="color:${remaining>0?'var(--danger)':'var(--success)'}">${fmtRp(remaining)}</div></div>
-      </div>
-    </div>
-    <div class="card-box">
-      <h4>Riwayat Pembayaran
-        ${remaining>0?`<button class="btn btn-primary btn-sm" id="addPayBtn">+ Bayar</button>`:''}</h4>
-      ${(inv.pembayaran||[]).length ? `<table>
-        <thead><tr><th>Tanggal</th><th>Metode</th><th class="text-right">Jumlah</th></tr></thead>
-        <tbody>${inv.pembayaran.map(p => `
-          <tr><td>${fmtDate(p.tanggal)}</td><td>${esc(p.metode)||'-'}</td>
-          <td class="text-right mono">${fmtRp(p.jumlah)}</td></tr>
-        `).join('')}</tbody>
-      </table>` : `<p style="font-size:12.5px;color:var(--ink2);text-align:center;padding:16px 0">Belum ada pembayaran.</p>`}
-    </div>
-    <div class="card-box">
-      <h4>Ubah Status</h4>
-      <select id="invStatusSelect" style="width:100%;padding:10px 12px;border-radius:8px;
-        border:1.5px solid var(--line);background:#fff;outline:none;font-size:13.5px">
-        ${['Belum Bayar','DP','Lunas'].map(s => `<option ${s===inv.status?'selected':''}>${s}</option>`).join('')}
-      </select>
-    </div>
-  `;
-  openModal('orderDetailModal');
-
-  $('#backToOrder').onclick = () => openOrderDetail(o.id);
-  $('#printInv').onclick = () => printInvoice(inv, o);
-  const addPayBtn = $('#addPayBtn');
-  if (addPayBtn) addPayBtn.onclick = () => openPaymentForm(inv, remaining);
-  $('#invStatusSelect').onchange = async e => {
-    try {
-      await updateDoc(doc(db, C.invoices, inv.id), { status: e.target.value });
-      toast('Status invoice diperbarui.', 'success');
-      openInvoiceDetail(inv.id);
-    } catch(err) { toast('Gagal: ' + err.message, 'error'); }
-  };
-}
-
-function openPaymentForm(inv, remaining) {
-  $('#subModalTitle').textContent = 'Tambah Pembayaran';
-  $('#subModalBody').innerHTML = `
-    <form id="payForm">
-      <div style="background:#fafbfd;padding:12px;border-radius:8px;margin-bottom:14px;font-size:13px">
-        Total: <b>${fmtRp(inv.total)}</b><br>
-        Sisa: <b style="color:var(--danger)">${fmtRp(remaining)}</b>
-      </div>
-      <div class="form-row">
-        <div class="field">
-          <label>Tanggal</label>
-          <input type="date" name="tanggal" value="${today()}" required>
-        </div>
-        <div class="field">
-          <label>Metode</label>
-          <select name="metode">
-            <option>Transfer</option><option>Tunai</option><option>Cek</option><option>Lainnya</option>
-          </select>
-        </div>
-      </div>
-      <div class="field">
-        <label>Jumlah (Rp) <span class="req">*</span></label>
-        <input type="number" name="jumlah" min="0.01" step="any" value="${remaining}" required>
-      </div>
-      <div class="modal-actions">
-        <button type="button" class="btn btn-ghost" data-close="subModal">Batal</button>
-        <button type="submit" class="btn btn-primary">Simpan</button>
-      </div>
-    </form>
-  `;
-  openModal('subModal');
-  $('#payForm').addEventListener('submit', async e => {
-    e.preventDefault();
-    const fd = new FormData(e.target);
-    const jumlah = +fd.get('jumlah');
-    if (!jumlah) return;
-    const pembayaran = [...(inv.pembayaran||[]), {
-      tanggal: fd.get('tanggal'), metode: fd.get('metode'), jumlah
-    }];
-    const totalPaid = pembayaran.reduce((s,p) => s + (+p.jumlah||0), 0);
-    const status = totalPaid >= inv.total ? 'Lunas' : (totalPaid > 0 ? 'DP' : 'Belum Bayar');
-    try {
-      await updateDoc(doc(db, C.invoices, inv.id), { pembayaran, status });
-      toast('Pembayaran dicatat.', 'success');
-      closeModal('subModal');
-      openInvoiceDetail(inv.id);
-    } catch(err) { toast('Gagal: ' + err.message, 'error'); }
-  });
-}
-
-// ============= SETTINGS PANEL =============
-let settingsTab = 'materials';
-
-$('#gearBtn').addEventListener('click', () => {
-  openModal('settingsModal');
-  renderSettingsTab(settingsTab);
-});
-
-$('#settingsTabs').addEventListener('click', e => {
-  const btn = e.target.closest('button[data-tab]');
-  if (!btn) return;
-  settingsTab = btn.dataset.tab;
-  $$('#settingsTabs button').forEach(b => b.classList.toggle('active', b.dataset.tab === settingsTab));
-  renderSettingsTab(settingsTab);
-});
-
-function renderSettingsTab(tab) {
-  const box = $('#settingsBody');
-  if (tab === 'materials') {
-    box.innerHTML = `
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px">
-        <div>
-          <h3 style="font-size:15px;font-weight:800">Stok Material</h3>
-          <p style="font-size:12.5px;color:var(--ink2);margin-top:2px">${state.materials.length} material terdaftar</p>
-        </div>
-        <button class="btn btn-primary" id="addMatBtn">+ Tambah Material</button>
-      </div>
-      ${state.materials.length ? `<div class="table-wrap"><table>
-        <thead><tr><th>Nama</th><th>Satuan</th><th class="text-right">Stok</th>
-        <th class="text-right">Min</th><th class="text-right">Harga</th><th>Status</th><th></th></tr></thead>
-        <tbody>${state.materials.map(m => {
-          const low = (+m.stok||0) <= (+m.stokMin||0);
-          return `<tr>
-            <td><b>${esc(m.nama)}</b>${m.supplier?`<br><small style="color:var(--ink2)">${esc(m.supplier)}</small>`:''}</td>
-            <td>${esc(m.satuan)}</td>
-            <td class="text-right"><b>${fmtNum(m.stok)}</b></td>
-            <td class="text-right">${fmtNum(m.stokMin)}</td>
-            <td class="text-right mono">${fmtRp(m.harga)}</td>
-            <td>${low?'<span class="pill kritis">Kritis</span>':'<span class="pill ok">Aman</span>'}</td>
-            <td class="text-right">
-              <div style="display:flex;gap:4px;justify-content:flex-end;flex-wrap:wrap">
-                <button class="btn-icon" data-in="${m.id}" title="Stok Masuk">+</button>
-                <button class="btn-icon" data-out="${m.id}" title="Stok Keluar">−</button>
-                <button class="btn-icon" data-hist="${m.id}" title="Riwayat">📋</button>
-                <button class="btn-icon" data-edit="${m.id}" title="Edit">✏</button>
-                <button class="btn-icon" data-del="${m.id}" title="Hapus">🗑</button>
-              </div>
-            </td>
-          </tr>`;
-        }).join('')}</tbody>
-      </table></div>` : `<div class="empty"><div class="ico">📦</div>
-        <p>Belum ada material. Klik <b>+ Tambah Material</b> untuk mulai.</p></div>`}
-    `;
-    $('#addMatBtn').onclick = () => openMatForm();
-    $$('[data-edit]', box).forEach(b => b.onclick = () => openMatForm(state.materials.find(m=>m.id===b.dataset.edit)));
-    $$('[data-del]', box).forEach(b => b.onclick = async () => {
-      const m = state.materials.find(x=>x.id===b.dataset.del);
-      if (!m || !confirm('Hapus material "'+m.nama+'"?')) return;
-      try { await deleteDoc(doc(db, C.materials, m.id)); toast('Dihapus.', 'success'); renderSettingsTab('materials'); }
-      catch(err) { toast('Gagal: ' + err.message, 'error'); }
+function renderMaterialsTab(){
+  const lowStock=state.materials.filter(m=>(m.stok||0)<=(m.stokMin||0));
+  let listHtml;
+  if(!state.materials.length){
+    listHtml=`<div class="empty" style="padding:24px"><div class="ico">📦</div><p>Belum ada material.</p></div>`;
+  }else{
+    listHtml='<div class="card-body" style="padding:0 16px">';
+    state.materials.forEach(m=>{
+      const low=(m.stok||0)<=(m.stokMin||0);
+      listHtml+=`<div class="mat-item">
+        <div class="mat-info"><b>${esc(m.nama)}</b>
+          <small>${m.supplier?esc(m.supplier)+' · ':''}${fmtRp(m.harga)} / ${esc(m.satuan)}</small></div>
+        <div class="mat-stock">
+          <b style="color:${low?'var(--danger)':'var(--ink)'}">${fmtNum(m.stok)} ${esc(m.satuan)}</b>
+          <small style="color:var(--ink2)">min ${fmtNum(m.stokMin)}</small></div>
+        <div class="mat-actions">
+          <button class="btn-icon" data-in="${m.id}" title="Stok masuk">+</button>
+          <button class="btn-icon" data-out="${m.id}" title="Stok keluar">−</button>
+          <button class="btn-icon" data-hist="${m.id}" title="Riwayat">📋</button>
+          <button class="btn-icon" data-edit="${m.id}" title="Edit">✏</button>
+          <button class="btn-icon" data-del="${m.id}" title="Hapus">🗑</button>
+        </div></div>`;
     });
-    $$('[data-in]', box).forEach(b => b.onclick = () => openMoveForm(b.dataset.in, 'masuk'));
-    $$('[data-out]', box).forEach(b => b.onclick = () => openMoveForm(b.dataset.out, 'keluar'));
-    $$('[data-hist]', box).forEach(b => b.onclick = () => showHistory(b.dataset.hist));
+    listHtml+='</div>';
   }
-  else if (tab === 'expenses') {
-    box.innerHTML = `
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px">
-        <h3 style="font-size:15px;font-weight:800">Pengeluaran</h3>
-        <button class="btn btn-primary" id="addExpBtn">+ Tambah</button>
+  return `<div class="section-head">
+      <h2>Stok Material ${lowStock.length?`<span style="font-size:12px;color:var(--danger);margin-left:8px">${lowStock.length} kritis</span>`:''}</h2>
+      <button class="btn btn-primary" id="addMatBtn">+ Tambah Material</button></div>
+    <div class="card">${listHtml}</div>`;
+}
+
+function renderExpensesTab(){
+  const list=state.expenses.slice(0,100);
+  const total=list.reduce((s,x)=>s+(+x.jumlah||0),0);
+  let body;
+  if(!list.length){
+    body=`<div class="empty" style="padding:24px"><div class="ico">💸</div><p>Belum ada pengeluaran.</p></div>`;
+  }else{
+    body=`<div class="table-wrap"><table>
+      <thead><tr><th>Tanggal</th><th>Kategori</th><th>Keterangan</th>
+      <th class="text-right">Jumlah</th><th></th></tr></thead>
+      <tbody>${list.map(x=>`<tr>
+        <td>${fmtDate(x.tanggal)}</td><td><b>${esc(x.kategori)}</b></td>
+        <td>${esc(x.keterangan)}</td>
+        <td class="text-right mono">${fmtRp(x.jumlah)}</td>
+        <td class="text-right"><button class="btn-icon" data-exp-del="${x.id}">🗑</button></td>
+      </tr>`).join('')}</tbody></table></div>`;
+  }
+  return `<div class="section-head">
+      <h2>Pengeluaran <span style="font-size:12px;color:var(--ink2);margin-left:8px">Total: ${fmtRp(total)}</span></h2>
+      <button class="btn btn-primary" id="addExpBtn">+ Tambah</button></div>
+    <div class="card">${body}</div>`;
+}
+
+function renderReportsTab(){
+  const ym=state.reportYM||thisYM();
+  const orders=state.orders.filter(o=>(o.tanggal||'').startsWith(ym));
+  const revenue=orders.filter(o=>['Selesai','Diambil'].includes(o.status))
+    .reduce((s,o)=>s+(+o.nilaiOrder||0),0);
+  const expenses=state.expenses.filter(x=>(x.tanggal||'').startsWith(ym))
+    .reduce((s,x)=>s+(+x.jumlah||0),0);
+  const profit=revenue-expenses;
+  const byCust={};
+  orders.forEach(o=>{if(!byCust[o.pelanggan])byCust[o.pelanggan]={count:0,total:0};
+    byCust[o.pelanggan].count++;byCust[o.pelanggan].total+=(+o.nilaiOrder||0)});
+  const topCust=Object.entries(byCust).sort((a,b)=>b[1].total-a[1].total).slice(0,10);
+  const byJenis={};
+  orders.forEach(o=>{if(!byJenis[o.jenis])byJenis[o.jenis]={count:0,total:0};
+    byJenis[o.jenis].count++;byJenis[o.jenis].total+=(+o.nilaiOrder||0)});
+  const topJenis=Object.entries(byJenis).sort((a,b)=>b[1].total-a[1].total);
+
+  return `<div class="section-head">
+      <h2>Laporan Bulanan</h2>
+      <input type="month" id="reportMonth" value="${ym}"
+        style="padding:8px 12px;border-radius:8px;border:1.5px solid var(--line);outline:none;background:#fff">
+    </div>
+    <div class="stats" style="margin-bottom:16px">
+      <div class="stat teal"><div class="stat-label">Pendapatan</div>
+        <div class="stat-value">${fmtRp(revenue)}</div></div>
+      <div class="stat danger"><div class="stat-label">Pengeluaran</div>
+        <div class="stat-value">${fmtRp(expenses)}</div></div>
+      <div class="stat ${profit>=0?'teal':''}"><div class="stat-label">Laba Bersih</div>
+        <div class="stat-value" style="color:${profit>=0?'var(--success)':'var(--danger)'}">${fmtRp(profit)}</div></div>
+      <div class="stat warn"><div class="stat-label">Total Order</div>
+        <div class="stat-value">${orders.length}</div></div>
+    </div>
+    <div class="report-grid">
+      <div class="card"><div class="card-head"><h3>Top Pelanggan</h3></div>
+        ${topCust.length?`<div class="table-wrap"><table>
+          <thead><tr><th>Pelanggan</th><th class="text-right">Order</th><th class="text-right">Total</th></tr></thead>
+          <tbody>${topCust.map(([k,v])=>`<tr><td>${esc(k)}</td>
+            <td class="text-right">${v.count}</td>
+            <td class="text-right mono">${fmtRp(v.total)}</td></tr>`).join('')}</tbody></table></div>`:
+          `<div class="empty" style="padding:30px"><p>Belum ada data.</p></div>`}
       </div>
-      ${state.expenses.length ? `<div class="table-wrap"><table>
-        <thead><tr><th>Tanggal</th><th>Kategori</th><th>Keterangan</th>
-        <th class="text-right">Jumlah</th><th></th></tr></thead>
-        <tbody>${state.expenses.map(x=>`
-          <tr><td>${fmtDate(x.tanggal)}</td><td><b>${esc(x.kategori)}</b></td>
-          <td>${esc(x.keterangan)}</td>
-          <td class="text-right mono">${fmtRp(x.jumlah)}</td>
-          <td class="text-right"><button class="btn-icon" data-exp-del="${x.id}">🗑</button></td></tr>
-        `).join('')}</tbody>
-      </table></div>` : `<div class="empty"><div class="ico">💸</div><p>Belum ada pengeluaran.</p></div>`}
-    `;
-    $('#addExpBtn').onclick = openExpenseForm;
-    $$('[data-exp-del]', box).forEach(b => b.onclick = async () => {
-      if (!confirm('Hapus pengeluaran ini?')) return;
-      try { await deleteDoc(doc(db, C.expenses, b.dataset.expDel)); toast('Dihapus.', 'success'); renderSettingsTab('expenses'); }
-      catch(err) { toast('Gagal: ' + err.message, 'error'); }
+      <div class="card"><div class="card-head"><h3>Per Jenis Pekerjaan</h3></div>
+        ${topJenis.length?`<div class="table-wrap"><table>
+          <thead><tr><th>Jenis</th><th class="text-right">Order</th><th class="text-right">Total</th></tr></thead>
+          <tbody>${topJenis.map(([k,v])=>`<tr><td>${esc(k)}</td>
+            <td class="text-right">${v.count}</td>
+            <td class="text-right mono">${fmtRp(v.total)}</td></tr>`).join('')}</tbody></table></div>`:
+          `<div class="empty" style="padding:30px"><p>Belum ada data.</p></div>`}
+      </div>
+    </div>`;
+}
+
+function renderAboutTab(){
+  return `<div class="card">
+      <div class="card-head"><h3>Tentang Aplikasi</h3></div>
+      <div class="card-body">
+        <div class="about-row"><span class="k">Perusahaan</span><span class="v">CV Jaya Anugrah Tehnik</span></div>
+        <div class="about-row"><span class="k">Alamat</span><span class="v">Jl. Bawang VI No.163, Tangerang, Banten</span></div>
+        <div class="about-row"><span class="k">Telepon</span><span class="v">0851-3871-9054</span></div>
+        <div class="about-row"><span class="k">Database</span><span class="v">Firebase Firestore</span></div>
+        <div class="about-row"><span class="k">Koleksi</span><span class="v mono">jayaanugrahteknik_*</span></div>
+        <div class="about-row"><span class="k">Versi</span><span class="v">2.0</span></div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:14px">
+      <div class="card-head"><h3>Aksi</h3></div>
+      <div class="card-body">
+        <button class="btn btn-danger" id="logoutBtn" style="width:100%">🚪 Keluar / Logout</button>
+      </div>
+    </div>`;
+}
+
+function attachSettingsEvents(){
+  $$('.tab').forEach(t=>t.addEventListener('click',()=>{
+    state.settingsTab=t.dataset.tab;render();
+  }));
+  if(state.settingsTab==='materials'){
+    const a=$('#addMatBtn');if(a)a.addEventListener('click',()=>openMatForm());
+    $$('[data-edit]').forEach(b=>b.addEventListener('click',()=>
+      openMatForm(state.materials.find(m=>m.id===b.dataset.edit))));
+    $$('[data-del]').forEach(b=>b.addEventListener('click',async()=>{
+      const m=state.materials.find(x=>x.id===b.dataset.del);
+      if(!m||!confirm('Hapus material "'+m.nama+'"?'))return;
+      try{await deleteDoc(doc(db,COL.materials,m.id));toast('Material dihapus.','success')}
+      catch(err){toast('Gagal: '+err.message,'error')}
+    }));
+    $$('[data-in]').forEach(b=>b.addEventListener('click',()=>openMoveForm(b.dataset.in,'masuk')));
+    $$('[data-out]').forEach(b=>b.addEventListener('click',()=>openMoveForm(b.dataset.out,'keluar')));
+    $$('[data-hist]').forEach(b=>b.addEventListener('click',()=>showHistory(b.dataset.hist)));
+  }
+  if(state.settingsTab==='expenses'){
+    const a=$('#addExpBtn');if(a)a.addEventListener('click',()=>openExpForm());
+    $$('[data-exp-del]').forEach(b=>b.addEventListener('click',async()=>{
+      if(!confirm('Hapus pengeluaran ini?'))return;
+      try{await deleteDoc(doc(db,COL.expenses,b.dataset.expDel));toast('Dihapus.','success')}
+      catch(err){toast('Gagal: '+err.message,'error')}
+    }));
+  }
+  if(state.settingsTab==='reports'){
+    const mi=$('#reportMonth');
+    if(mi)mi.addEventListener('change',()=>{state.reportYM=mi.value;render()});
+  }
+  if(state.settingsTab==='about'){
+    const lo=$('#logoutBtn');
+    if(lo)lo.addEventListener('click',()=>{
+      if(!confirm('Keluar dari aplikasi?'))return;
+      localStorage.removeItem(SESSION_KEY);location.reload();
     });
   }
-  else if (tab === 'invoices') {
-    box.innerHTML = `
-      <h3 style="font-size:15px;font-weight:800;margin-bottom:16px">Semua Invoice</h3>
-      ${state.invoices.length ? `<div class="table-wrap"><table>
-        <thead><tr><th>No.</th><th>Tanggal</th><th>Pelanggan</th>
-        <th class="text-right">Total</th><th>Status</th><th></th></tr></thead>
-        <tbody>${state.invoices.map(inv=>{
-          const o = state.orders.find(x=>x.id===inv.orderId)||{};
-          return `<tr>
-            <td class="mono">${esc(inv.noInvoice)}</td>
-            <td>${fmtDate(inv.tanggal)}</td>
-            <td>${esc(o.pelanggan||'-')}</td>
-            <td class="text-right mono">${fmtRp(inv.total)}</td>
-            <td>${payPill(inv.status)}</td>
-            <td class="text-right"><button class="btn-icon" data-inv-open="${inv.id}">→</button></td>
-          </tr>`;
-        }).join('')}</tbody>
-      </table></div>` : `<div class="empty"><div class="ico">🧾</div><p>Belum ada invoice. Buat dari detail order yang sudah selesai.</p></div>`}
-    `;
-    $$('[data-inv-open]', box).forEach(b => b.onclick = () => {
-      closeModal('settingsModal');
-      openInvoiceDetail(b.dataset.invOpen);
-    });
-  }
-  else if (tab === 'company') {
-    const s = state.settings;
-    box.innerHTML = `
-      <h3 style="font-size:15px;font-weight:800;margin-bottom:16px">Informasi Perusahaan</h3>
-      <form id="companyForm" style="max-width:560px">
-        <div class="field">
-          <label>Nama Perusahaan</label>
-          <input name="namaPerusahaan" value="${esc(s.namaPerusahaan)}">
-        </div>
-        <div class="field">
-          <label>Alamat</label>
-          <textarea name="alamat">${esc(s.alamat)}</textarea>
-        </div>
-        <div class="form-row">
-          <div class="field">
-            <label>Telepon</label>
-            <input name="telepon" value="${esc(s.telepon)}">
-          </div>
-          <div class="field">
-            <label>Email</label>
-            <input type="email" name="email" value="${esc(s.email||'')}">
-          </div>
-        </div>
-        <button class="btn btn-primary" type="submit">Simpan</button>
-      </form>
-    `;
-    $('#companyForm').onsubmit = async e => {
-      e.preventDefault();
-      const fd = new FormData(e.target);
-      const data = {
-        namaPerusahaan: fd.get('namaPerusahaan').trim(),
-        alamat: fd.get('alamat').trim(),
-        telepon: fd.get('telepon').trim(),
-        email: fd.get('email').trim()
-      };
-      try {
-        await setDoc(doc(db, C.settings, 'main'), data, { merge: true });
-        state.settings = { ...state.settings, ...data };
-        toast('Pengaturan disimpan.', 'success');
-      } catch(err) { toast('Gagal: ' + err.message, 'error'); }
-    };
-  }
-  else if (tab === 'backup') {
-    box.innerHTML = `
-      <h3 style="font-size:15px;font-weight:800;margin-bottom:8px">Backup &amp; Restore</h3>
-      <p style="font-size:13px;color:var(--ink2);margin-bottom:16px">
-        Data tersimpan di Firebase Firestore (cloud). Backup ini untuk arsip lokal.
-      </p>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px">
-        <button class="btn btn-primary" id="exportBtn">⬇ Download Backup (JSON)</button>
-      </div>
-      <hr style="border:0;border-top:1px solid var(--line);margin:20px 0">
-      <h4 style="font-size:13px;font-weight:800;margin-bottom:8px">Info Sistem</h4>
-      <div style="font-size:12.5px;color:var(--ink2);line-height:1.8">
-        <div>📦 Orders: ${state.orders.length}</div>
-        <div>📊 Materials: ${state.materials.length}</div>
-        <div>💸 Expenses: ${state.expenses.length}</div>
-        <div>🧾 Invoices: ${state.invoices.length}</div>
-        <div>📋 Moves: ${state.moves.length}</div>
-        <div style="margin-top:8px">🔥 Firebase Project: <b>${esc(firebaseConfig.projectId)}</b></div>
-      </div>
-    `;
-    $('#exportBtn').onclick = () => {
-      const backup = {
-        exportedAt: new Date().toISOString(),
-        settings: state.settings,
-        orders: state.orders,
-        materials: state.materials,
-        moves: state.moves,
-        invoices: state.invoices,
-        expenses: state.expenses
-      };
-      const blob = new Blob([JSON.stringify(backup, null, 2)], {type:'application/json'});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url; a.download = 'backup-jat-'+today()+'.json'; a.click();
-      URL.revokeObjectURL(url);
-      toast('Backup diunduh.', 'success');
-    };
-  }
 }
 
-// ============= MATERIAL FORM =============
-function openMatForm(edit=null) {
-  const m = edit || { nama:'', satuan:'kg', harga:0, stok:0, stokMin:0, supplier:'' };
-  $('#subModalTitle').textContent = edit ? 'Edit Material' : 'Tambah Material';
-  $('#subModalBody').innerHTML = `
+/* ============ MATERIAL FORM ============ */
+function openMatForm(edit=null){
+  const m=edit||{nama:'',satuan:'kg',harga:0,stok:0,stokMin:0,supplier:''};
+  openModal(edit?'Edit Material':'Tambah Material',`
     <form id="matForm">
-      <div class="field">
-        <label>Nama Material <span class="req">*</span></label>
-        <input name="nama" required value="${esc(m.nama)}" placeholder="Contoh: Besi Plat 5mm">
-      </div>
+      <div class="field"><label>Nama Material <span class="req">*</span></label>
+        <input name="nama" required value="${esc(m.nama)}"></div>
       <div class="form-row three">
-        <div class="field">
-          <label>Satuan <span class="req">*</span></label>
-          <select name="satuan">${SATUAN.map(s=>`<option ${s===m.satuan?'selected':''}>${s}</option>`).join('')}</select>
-        </div>
-        <div class="field">
-          <label>Harga Satuan (Rp) <span class="req">*</span></label>
-          <input type="number" name="harga" required min="0" value="${esc(m.harga)}">
-        </div>
-        <div class="field">
-          <label>Stok Awal</label>
+        <div class="field"><label>Satuan <span class="req">*</span></label>
+          <select name="satuan">${SATUAN.map(s=>`<option ${s===m.satuan?'selected':''}>${s}</option>`).join('')}</select></div>
+        <div class="field"><label>Harga/Satuan <span class="req">*</span></label>
+          <input type="number" name="harga" required min="0" value="${esc(m.harga)}"></div>
+        <div class="field"><label>Stok Awal</label>
           <input type="number" name="stok" min="0" step="any" value="${esc(m.stok)}" ${edit?'readonly style="background:#f0f2f7"':''}>
-          <div class="hint">${edit?'Ubah via tombol + / −':'Hanya untuk tambah baru'}</div>
-        </div>
+          <div class="hint">${edit?'Ubah via tombol +/−':'Stok awal'}</div></div>
       </div>
       <div class="form-row">
-        <div class="field">
-          <label>Stok Minimum</label>
-          <input type="number" name="stokMin" min="0" step="any" value="${esc(m.stokMin)}">
-          <div class="hint">Notifikasi jika stok ≤ nilai ini</div>
-        </div>
-        <div class="field">
-          <label>Supplier</label>
-          <input name="supplier" value="${esc(m.supplier||'')}" placeholder="Nama supplier">
-        </div>
+        <div class="field"><label>Stok Minimum</label>
+          <input type="number" name="stokMin" min="0" step="any" value="${esc(m.stokMin)}"></div>
+        <div class="field"><label>Supplier</label>
+          <input name="supplier" value="${esc(m.supplier)}"></div>
       </div>
       <div class="modal-actions">
-        <button type="button" class="btn btn-ghost" data-close="subModal">Batal</button>
-        <button type="submit" class="btn btn-primary">${edit?'Simpan':'Tambah'}</button>
+        <button type="button" class="btn btn-ghost" id="cancelMat">Batal</button>
+        <button type="submit" class="btn btn-primary" id="submitMat">${edit?'Simpan':'Tambah'}</button>
       </div>
-    </form>
-  `;
-  openModal('subModal');
-  $('#matForm').addEventListener('submit', async e => {
+    </form>`);
+  $('#cancelMat').addEventListener('click',closeModal);
+  $('#matForm').addEventListener('submit',async e=>{
     e.preventDefault();
-    const fd = new FormData(e.target);
-    const data = {
-      nama: fd.get('nama').trim(),
-      satuan: fd.get('satuan'),
-      harga: +fd.get('harga')||0,
-      stokMin: +fd.get('stokMin')||0,
-      supplier: fd.get('supplier').trim()
-    };
-    if (edit) {
-      try {
-        await updateDoc(doc(db, C.materials, edit.id), data);
-        toast('Material diperbarui.', 'success');
-        closeModal('subModal');
-        renderSettingsTab('materials');
-      } catch(err) { toast('Gagal: ' + err.message, 'error'); }
-    } else {
-      data.stok = +fd.get('stok')||0;
-      data.createdAt = serverTimestamp();
-      try {
-        await addDoc(collection(db, C.materials), data);
-        toast('Material ditambahkan.', 'success');
-        closeModal('subModal');
-        renderSettingsTab('materials');
-      } catch(err) { toast('Gagal: ' + err.message, 'error'); }
-    }
+    const fd=new FormData(e.target);
+    const data={nama:fd.get('nama').trim(),satuan:fd.get('satuan'),
+      harga:+fd.get('harga')||0,stokMin:+fd.get('stokMin')||0,
+      supplier:fd.get('supplier').trim()};
+    if(!edit)data.stok=+fd.get('stok')||0;
+    const btn=$('#submitMat');btn.disabled=true;btn.textContent='Menyimpan...';
+    try{
+      if(edit){await updateDoc(doc(db,COL.materials,edit.id),data);toast('Material diperbarui.','success')}
+      else{await addDoc(collection(db,COL.materials),{...data,createdAt:Date.now()});toast('Material ditambahkan.','success')}
+      closeModal();
+    }catch(err){console.error(err);toast('Gagal: '+err.message,'error');
+      btn.disabled=false;btn.textContent=edit?'Simpan':'Tambah'}
   });
 }
 
-function openMoveForm(materialId, tipe) {
-  const m = state.materials.find(x=>x.id===materialId);
-  if (!m) return;
-  $('#subModalTitle').textContent = (tipe==='masuk'?'Stok Masuk':'Stok Keluar')+' — '+m.nama;
-  $('#subModalBody').innerHTML = `
+function openMoveForm(matId,tipe){
+  const m=state.materials.find(x=>x.id===matId);if(!m)return;
+  openModal((tipe==='masuk'?'Stok Masuk':'Stok Keluar')+' — '+m.nama,`
     <form id="moveForm">
-      <div style="background:#fafbfd;padding:12px;border-radius:8px;margin-bottom:14px;font-size:13px">
-        <b>${esc(m.nama)}</b> — stok saat ini: <b>${fmtNum(m.stok)} ${esc(m.satuan)}</b>
-      </div>
+      <div style="background:#f9fafc;padding:12px;border-radius:8px;margin-bottom:14px;font-size:13px">
+        <b>${esc(m.nama)}</b> — stok saat ini: <b>${fmtNum(m.stok)} ${esc(m.satuan)}</b></div>
       <div class="form-row">
-        <div class="field">
-          <label>Jumlah <span class="req">*</span></label>
-          <input type="number" name="jumlah" required min="0.01" step="any" value="1">
-        </div>
-        <div class="field">
-          <label>Tanggal</label>
-          <input type="date" name="tanggal" value="${today()}">
-        </div>
+        <div class="field"><label>Jumlah <span class="req">*</span></label>
+          <input type="number" name="jumlah" required min="0.01" step="any" value="1"></div>
+        <div class="field"><label>Tanggal</label>
+          <input type="date" name="tanggal" value="${today()}"></div>
       </div>
-      <div class="field">
-        <label>Keterangan</label>
-        <input name="ket" placeholder="${tipe==='masuk'?'Pembelian / supplier':'Pemakaian / rusak'}">
-      </div>
+      <div class="field"><label>Keterangan</label>
+        <input name="ket" placeholder="${tipe==='masuk'?'Pembelian':'Pemakaian'}"></div>
       <div class="modal-actions">
-        <button type="button" class="btn btn-ghost" data-close="subModal">Batal</button>
-        <button type="submit" class="btn btn-primary">Simpan</button>
+        <button type="button" class="btn btn-ghost" id="cancelMove">Batal</button>
+        <button type="submit" class="btn btn-primary" id="submitMove">Simpan</button>
       </div>
-    </form>
-  `;
-  openModal('subModal');
-  $('#moveForm').addEventListener('submit', async e => {
+    </form>`);
+  $('#cancelMove').addEventListener('click',closeModal);
+  $('#moveForm').addEventListener('submit',async e=>{
     e.preventDefault();
-    const fd = new FormData(e.target);
-    const qty = +fd.get('jumlah');
-    if (!qty) return;
-    if (tipe === 'keluar' && qty > (+m.stok||0)) { toast('Stok tidak cukup.', 'error'); return; }
-    try {
-      await addDoc(collection(db, C.moves), {
-        materialId: m.id, materialNama: m.nama, satuan: m.satuan,
-        tipe, jumlah: qty, harga: m.harga,
-        keterangan: fd.get('ket').trim(),
-        orderId: null, tanggal: fd.get('tanggal'), createdAt: serverTimestamp()
+    const fd=new FormData(e.target);
+    const qty=+fd.get('jumlah');if(!qty)return;
+    if(tipe==='keluar'&&qty>(m.stok||0)){
+      toast('Stok tidak cukup (tersedia: '+fmtNum(m.stok)+').','error');return;
+    }
+    const newStok=tipe==='masuk'?(m.stok||0)+qty:(m.stok||0)-qty;
+    const btn=$('#submitMove');btn.disabled=true;btn.textContent='Menyimpan...';
+    try{
+      await updateDoc(doc(db,COL.materials,m.id),{stok:newStok});
+      await addDoc(collection(db,COL.moves),{
+        materialId:m.id,materialNama:m.nama,satuan:m.satuan,tipe,jumlah:qty,
+        harga:m.harga||0,
+        keterangan:fd.get('ket').trim()||(tipe==='masuk'?'Stok masuk':'Stok keluar'),
+        orderId:null,tanggal:fd.get('tanggal')||today(),createdAt:Date.now()
       });
-      const newStok = tipe === 'masuk' ? (+m.stok||0) + qty : (+m.stok||0) - qty;
-      await updateDoc(doc(db, C.materials, m.id), { stok: newStok });
-      toast('Stok diperbarui.', 'success');
-      closeModal('subModal');
-      renderSettingsTab('materials');
-    } catch(err) { toast('Gagal: ' + err.message, 'error'); }
+      toast('Stok diperbarui.','success');closeModal();
+    }catch(err){console.error(err);toast('Gagal: '+err.message,'error');
+      btn.disabled=false;btn.textContent='Simpan'}
   });
 }
 
-function showHistory(materialId) {
-  const m = state.materials.find(x=>x.id===materialId);
-  const list = state.moves.filter(x=>x.materialId===materialId)
-    .sort((a,b) => tsMs(b.createdAt) - tsMs(a.createdAt));
-  $('#subModalTitle').textContent = 'Riwayat — ' + m.nama;
-  $('#subModalBody').innerHTML = `
-    ${list.length ? `<div class="table-wrap"><table>
+function showHistory(matId){
+  const m=state.materials.find(x=>x.id===matId);if(!m)return;
+  const list=state.moves.filter(x=>x.materialId===matId).slice(0,50);
+  openModal('Riwayat Stok — '+m.nama,`
+    ${list.length?`<div class="table-wrap"><table>
       <thead><tr><th>Tanggal</th><th>Tipe</th><th class="text-right">Jumlah</th>
       <th>Keterangan</th></tr></thead>
-      <tbody>${list.map(x=>`
-        <tr>
-          <td>${fmtDate(x.tanggal)}</td>
-          <td><span class="pill ${x.tipe==='masuk'?'selesai':'produksi'}">${x.tipe}</span></td>
-          <td class="text-right"><b>${x.tipe==='masuk'?'+':'−'}${fmtNum(x.jumlah)}</b> ${esc(x.satuan||'')}</td>
-          <td>${esc(x.keterangan)||'-'}</td>
-        </tr>
-      `).join('')}</tbody>
-    </table></div>` : `<div class="empty"><p>Belum ada riwayat.</p></div>`}
-    <div class="modal-actions"><button class="btn btn-ghost" data-close="subModal">Tutup</button></div>
-  `;
-  openModal('subModal');
+      <tbody>${list.map(x=>`<tr>
+        <td>${fmtDate(x.tanggal)}</td>
+        <td><span class="pill ${x.tipe==='masuk'?'selesai':'produksi'}">${x.tipe}</span></td>
+        <td class="text-right"><b>${x.tipe==='masuk'?'+':'−'}${fmtNum(x.jumlah)}</b> ${esc(x.satuan)}</td>
+        <td>${esc(x.keterangan)||'-'}</td></tr>`).join('')}</tbody></table></div>`:
+      `<div class="empty" style="padding:24px"><p>Belum ada riwayat.</p></div>`}
+    <div class="modal-actions"><button class="btn btn-ghost" id="closeHist">Tutup</button></div>`,
+    {wide:true});
+  $('#closeHist').addEventListener('click',closeModal);
 }
 
-// ============= EXPENSE FORM =============
-function openExpenseForm() {
-  $('#subModalTitle').textContent = 'Tambah Pengeluaran';
-  $('#subModalBody').innerHTML = `
+/* ============ EXPENSE FORM ============ */
+function openExpForm(){
+  openModal('Tambah Pengeluaran',`
     <form id="expForm">
       <div class="form-row">
-        <div class="field">
-          <label>Tanggal <span class="req">*</span></label>
-          <input type="date" name="tanggal" value="${today()}" required>
-        </div>
-        <div class="field">
-          <label>Kategori <span class="req">*</span></label>
+        <div class="field"><label>Tanggal <span class="req">*</span></label>
+          <input type="date" name="tanggal" value="${today()}" required></div>
+        <div class="field"><label>Kategori <span class="req">*</span></label>
           <select name="kategori">
             <option>Beli Material</option><option>Operasional</option>
             <option>Listrik &amp; Air</option><option>Gaji</option>
             <option>Transport</option><option>Maintenance</option><option>Lainnya</option>
-          </select>
-        </div>
+          </select></div>
       </div>
-      <div class="field">
-        <label>Keterangan <span class="req">*</span></label>
-        <input name="keterangan" required placeholder="Contoh: Beli oli mesin bubut">
-      </div>
-      <div class="field">
-        <label>Jumlah (Rp) <span class="req">*</span></label>
-        <input type="number" name="jumlah" min="0" required>
-      </div>
+      <div class="field"><label>Keterangan <span class="req">*</span></label>
+        <input name="keterangan" required></div>
+      <div class="field"><label>Jumlah <span class="req">*</span></label>
+        <input type="number" name="jumlah" min="0" required></div>
       <div class="modal-actions">
-        <button type="button" class="btn btn-ghost" data-close="subModal">Batal</button>
-        <button type="submit" class="btn btn-primary">Simpan</button>
+        <button type="button" class="btn btn-ghost" id="cancelExp">Batal</button>
+        <button type="submit" class="btn btn-primary" id="submitExp">Simpan</button>
       </div>
-    </form>
-  `;
-  openModal('subModal');
-  $('#expForm').addEventListener('submit', async e => {
+    </form>`);
+  $('#cancelExp').addEventListener('click',closeModal);
+  $('#expForm').addEventListener('submit',async e=>{
     e.preventDefault();
-    const fd = new FormData(e.target);
-    try {
-      await addDoc(collection(db, C.expenses), {
-        tanggal: fd.get('tanggal'),
-        kategori: fd.get('kategori'),
-        keterangan: fd.get('keterangan').trim(),
-        jumlah: +fd.get('jumlah')||0,
-        createdAt: serverTimestamp()
+    const fd=new FormData(e.target);
+    const btn=$('#submitExp');btn.disabled=true;btn.textContent='Menyimpan...';
+    try{
+      await addDoc(collection(db,COL.expenses),{
+        tanggal:fd.get('tanggal'),kategori:fd.get('kategori'),
+        keterangan:fd.get('keterangan').trim(),jumlah:+fd.get('jumlah')||0,
+        createdAt:Date.now()
       });
-      toast('Pengeluaran ditambahkan.', 'success');
-      closeModal('subModal');
-      renderSettingsTab('expenses');
-    } catch(err) { toast('Gagal: ' + err.message, 'error'); }
+      toast('Pengeluaran dicatat.','success');closeModal();
+    }catch(err){console.error(err);toast('Gagal: '+err.message,'error');
+      btn.disabled=false;btn.textContent='Simpan'}
   });
 }
 
-// ============= PRINT =============
-function printSpk(o) {
-  const s = state.settings;
-  const html = `<!DOCTYPE html><html><head><meta charset="UTF-8">
-    <title>SPK ${esc(o.noOrder)}</title>
-    <style>
-    body{font-family:Arial,sans-serif;padding:30px;max-width:800px;margin:0 auto;color:#000}
-    h1{font-size:18px;margin:0}
-    .head{display:flex;justify-content:space-between;align-items:flex-start;
-      border-bottom:2px solid #000;padding-bottom:12px;margin-bottom:20px}
-    .head img{max-height:60px;max-width:80px;margin-right:12px}
-    .brand{display:flex;align-items:center}
-    .brand small{font-size:11px;color:#555;display:block;margin-top:2px;max-width:400px}
-    .brand b{font-size:15px;display:block}
-    .doc-title{text-align:right;font-size:14px;font-weight:bold}
-    .doc-title small{font-weight:normal;display:block;font-size:11px;margin-top:4px}
-    table{width:100%;border-collapse:collapse;font-size:13px;margin:14px 0}
-    th,td{padding:8px 10px;border:1px solid #ccc;text-align:left}
-    th{background:#f0f0f0;font-size:11px;text-transform:uppercase}
-    .sign{display:flex;justify-content:space-between;margin-top:60px}
-    .sign div{text-align:center;font-size:12px}
-    .sign .line{width:180px;border-top:1px solid #000;margin-top:60px;padding-top:6px}
-    </style></head><body>
-    <div class="head">
-      <div class="brand">
-        <img src="logo.png" onerror="this.style.display='none'">
-        <div><b>${esc(s.namaPerusahaan)}</b>
-        <small>${esc(s.alamat)}<br>Telp: ${esc(s.telepon)}</small></div>
-      </div>
-      <div class="doc-title">SURAT PERINTAH KERJA<small>No: ${esc(o.noOrder)}<br>Tanggal: ${fmtDate(o.tanggal)}</small></div>
-    </div>
-    <table>
-      <tr><th style="width:140px">Pelanggan</th><td>${esc(o.pelanggan)}</td></tr>
-      <tr><th>Telepon</th><td>${esc(o.telepon)||'-'}</td></tr>
-      <tr><th>Jenis Pekerjaan</th><td>${esc(o.jenis)}</td></tr>
-      <tr><th>Deskripsi</th><td>${esc(o.pekerjaan)}</td></tr>
-      <tr><th>Jumlah</th><td>${fmtNum(o.jumlah)} ${esc(o.satuan)}</td></tr>
-      <tr><th>Deadline</th><td>${o.deadline?fmtDate(o.deadline):'-'}</td></tr>
-      <tr><th>Nilai Order</th><td><b>${fmtRp(o.nilaiOrder)}</b></td></tr>
-      ${o.catatan?`<tr><th>Catatan</th><td>${esc(o.catatan)}</td></tr>`:''}
-    </table>
-    <div class="sign">
-      <div>Pelanggan<div class="line"></div></div>
-      <div>Admin / Penerima Order<div class="line"></div></div>
-    </div>
-    </body></html>`;
-  const w = window.open('', '', 'width=900,height=800');
-  w.document.write(html); w.document.close();
-  setTimeout(()=>w.print(), 300);
+/* ============ MODAL ============ */
+function openModal(title,bodyHTML,opts={}){
+  $('#modalTitle').textContent=title;
+  $('#modalBody').innerHTML=bodyHTML;
+  $('#modalCard').classList.toggle('wide',!!opts.wide);
+  $('#modal').classList.add('open');
 }
-
-function printInvoice(inv, o) {
-  const s = state.settings;
-  const paid = (inv.pembayaran||[]).reduce((s,p) => s + (+p.jumlah||0), 0);
-  const html = `<!DOCTYPE html><html><head><meta charset="UTF-8">
-    <title>Invoice ${esc(inv.noInvoice)}</title>
-    <style>
-    body{font-family:Arial,sans-serif;padding:30px;max-width:800px;margin:0 auto;color:#000}
-    .head{display:flex;justify-content:space-between;align-items:flex-start;
-      border-bottom:2px solid #000;padding-bottom:12px;margin-bottom:20px}
-    .head img{max-height:60px;max-width:80px;margin-right:12px}
-    .brand{display:flex;align-items:center}
-    .brand small{font-size:11px;color:#555;display:block;margin-top:2px;max-width:400px}
-    .brand b{font-size:15px;display:block}
-    .doc-title{text-align:right}
-    .doc-title h2{font-size:22px;margin:0;color:#000}
-    .doc-title small{font-size:11px;display:block;margin-top:4px}
-    table{width:100%;border-collapse:collapse;font-size:13px;margin:14px 0}
-    th,td{padding:8px 10px;border-bottom:1px solid #ddd;text-align:left}
-    th{background:#f0f0f0;font-size:11px;text-transform:uppercase}
-    .total-row{background:#f9f9f9;font-weight:bold}
-    .summary{margin-top:14px;text-align:right;font-size:14px}
-    .summary .line{display:flex;justify-content:flex-end;gap:30px;margin:4px 0}
-    .status{display:inline-block;padding:4px 12px;border-radius:4px;
-      background:#e8f9ee;color:#0a8f4a;font-size:12px;font-weight:bold;margin-top:8px}
-    </style></head><body>
-    <div class="head">
-      <div class="brand">
-        <img src="logo.png" onerror="this.style.display='none'">
-        <div><b>${esc(s.namaPerusahaan)}</b>
-        <small>${esc(s.alamat)}<br>Telp: ${esc(s.telepon)}</small></div>
-      </div>
-      <div class="doc-title"><h2>INVOICE</h2>
-        <small>No: ${esc(inv.noInvoice)}<br>Tanggal: ${fmtDate(inv.tanggal)}</small></div>
-    </div>
-    <table>
-      <tr><th style="width:150px">Pelanggan</th><td>${esc(o.pelanggan)||'-'}</td></tr>
-      <tr><th>No. Order</th><td>${esc(o.noOrder)||'-'}</td></tr>
-      <tr><th>Jenis Pekerjaan</th><td>${esc(o.jenis)||'-'}</td></tr>
-      ${o.pekerjaan?`<tr><th>Deskripsi</th><td>${esc(o.pekerjaan)}</td></tr>`:''}
-    </table>
-    <table>
-      <thead><tr><th>Deskripsi</th><th style="text-align:right;width:140px">Jumlah</th></tr></thead>
-      <tbody>
-        <tr><td>${esc(o.jenis)||'Jasa'} — ${esc(o.pekerjaan)||''}</td>
-          <td style="text-align:right">${fmtRp(inv.total/(1+inv.ppn/100))}</td></tr>
-        ${inv.ppn>0?`<tr><td>PPN ${inv.ppn}%</td>
-          <td style="text-align:right">${fmtRp(inv.total - inv.total/(1+inv.ppn/100))}</td></tr>`:''}
-        <tr class="total-row"><td>Total</td><td style="text-align:right">${fmtRp(inv.total)}</td></tr>
-      </tbody>
-    </table>
-    <div class="summary">
-      <div class="line"><span>Sudah Dibayar:</span><b>${fmtRp(paid)}</b></div>
-      <div class="line"><span>Sisa Tagihan:</span><b>${fmtRp(inv.total-paid)}</b></div>
-      <div class="status">${inv.status}</div>
-    </div>
-    <div style="margin-top:60px;text-align:right;font-size:12px">
-      Hormat kami,<br><br><br><b>${esc(s.namaPerusahaan)}</b>
-    </div>
-    </body></html>`;
-  const w = window.open('', '', 'width=900,height=800');
-  w.document.write(html); w.document.close();
-  setTimeout(()=>w.print(), 300);
+function closeModal(){
+  $('#modal').classList.remove('open');
+  setTimeout(()=>{$('#modalBody').innerHTML=''},200);
 }
+$('#modalClose').addEventListener('click',closeModal);
+$('#modal').addEventListener('click',e=>{if(e.target===$('#modal'))closeModal()});
 
-// Start
-init();
+/* ============ INIT ============ */
+if(isLoggedIn())showApp();
+else $('#loginScreen').classList.remove('hidden');
+
+window.closeModal=closeModal;
 </script>
 </body>
 </html>
